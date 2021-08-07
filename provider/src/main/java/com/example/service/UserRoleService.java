@@ -13,4 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserRoleService extends IService<UserRole> {
     boolean removeByRId(Integer rid);
+
+    boolean removeByUId(Integer uid);
 }

@@ -1,14 +1,11 @@
 package com.example.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
-import com.baomidou.mybatisplus.annotation.Version;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -27,8 +24,11 @@ public class Role implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty(value = "角色名称")
+    @ApiModelProperty(value ="角色名称")
     private String name;
+
+    @ApiModelProperty(value = "角色昵称")
+    private String nickname;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
@@ -59,6 +59,14 @@ public class Role implements Serializable {
         this.name = name;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -86,11 +94,12 @@ public class Role implements Serializable {
     @Override
     public String toString() {
         return "Role{" +
-        "id=" + id +
-        ", name=" + name +
-        ", createTime=" + createTime +
-        ", updateTime=" + updateTime +
-        ", version=" + version +
-        "}";
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", version=" + version +
+                '}';
     }
 }

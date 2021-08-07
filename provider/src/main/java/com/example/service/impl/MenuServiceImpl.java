@@ -1,5 +1,6 @@
 package com.example.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.entity.Menu;
 import com.example.mapper.MenuMapper;
@@ -35,6 +36,14 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         PageHelper.startPage(pageNum, pageSize);
         List<Menu> menus = menuMapper.selectList(null);
         return new PageInfo<>(menus);
+    }
+
+    @Override
+    public List<Menu> selectLike(List<Integer> types) {
+        return menuMapper.selectList(
+                new QueryWrapper<Menu>()
+                .in("type", types)
+        );
     }
 
     @Transactional(rollbackFor = Exception.class)

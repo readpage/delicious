@@ -16,4 +16,9 @@ public interface UserService extends IService<User> {
     boolean save(User user);
 
     PageInfo<User> selectPage(int pageNum, int pageSize);
+
+    boolean removeById(Integer id) throws Exception;
+
+    boolean selectIsUser(String username);
+
 }

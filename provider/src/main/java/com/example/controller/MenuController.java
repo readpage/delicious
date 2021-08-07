@@ -2,6 +2,7 @@ package com.example.controller;
 
 
 import com.example.entity.Menu;
+import com.example.service.MenuRoleService;
 import com.example.service.MenuService;
 import com.example.utils.PageInfo;
 import com.example.utils.result.Result;
@@ -13,7 +14,13 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -30,8 +37,11 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
+    @Autowired
+    private MenuRoleService menuRoleService;
+
     @ApiOperation("添加菜单")
-    @ApiOperationSupport(includeParameters = {"menu.pattern"})
+    @ApiOperationSupport(ignoreParameters = {"menu.id", "menu.createTime", "menu.updateTime", "menu.version", "menu.roles"})
     @PostMapping("/save")
     public Result<Object> save(@RequestBody Menu menu) {
         if (menuService.save(menu)) {
@@ -50,8 +60,20 @@ public class MenuController {
         return ResultUtils.ok(ResultEnum.RETRIEVE_SUCCESS, menuService.selectPage(pageNum, pageSize));
     }
 
+    @ApiOperation("查询当前用户菜单")
+    @GetMapping("/like")
+    public Result<List<Menu>> selectLike() {
+        List<String> names = new ArrayList<>();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        for (GrantedAuthority auth : authentication.getAuthorities()) {
+            names.add(String.valueOf(auth));
+        }
+        names.add("tourist");
+        return ResultUtils.ok(ResultEnum.RETRIEVE_SUCCESS, menuRoleService.selectByName(names));
+    }
+
     @ApiOperation("修改菜单")
-    @ApiOperationSupport(includeParameters = {"menu.id", "menu.pattern"})
+    @ApiOperationSupport(ignoreParameters = {"menu.createTime", "menu.updateTime", "menu.version", "menu.roles"})
     @PutMapping("/update")
     public Result<Object> updateById(@RequestBody Menu menu) {
         if (menuService.updateById(menu)) {

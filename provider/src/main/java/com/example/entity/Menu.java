@@ -1,6 +1,7 @@
 package com.example.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -25,8 +26,29 @@ public class Menu implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty(value = "url地址")
-    private String pattern;
+    @ApiModelProperty(value = "路由")
+    private String path;
+
+    @ApiModelProperty(value = "名称")
+    private String name;
+
+    @ApiModelProperty(value = "类型")
+    private Integer type;
+
+    @ApiModelProperty(value = "父节点")
+    private Integer parentId;
+
+    @ApiModelProperty(value = "父路由")
+    private String parent;
+
+    @ApiModelProperty(value = "组件")
+    private String component;
+
+    @ApiModelProperty(value = "标题")
+    private String title;
+
+    @ApiModelProperty(value = "图标")
+    private String icon;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
@@ -40,6 +62,7 @@ public class Menu implements Serializable {
     @Version
     private Integer version;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @TableField(exist = false)
     private List<Role> roles;
 
@@ -51,12 +74,68 @@ public class Menu implements Serializable {
         this.id = id;
     }
 
-    public String getPattern() {
-        return pattern;
+    public String getPath() {
+        return path;
     }
 
-    public void setPattern(String pattern) {
-        this.pattern = pattern;
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getParent() {
+        return parent;
+    }
+
+    public void setParent(String parent) {
+        this.parent = parent;
+    }
+
+    public String getComponent() {
+        return component;
+    }
+
+    public void setComponent(String component) {
+        this.component = component;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public Date getCreateTime() {
@@ -95,7 +174,14 @@ public class Menu implements Serializable {
     public String toString() {
         return "Menu{" +
                 "id=" + id +
-                ", pattern='" + pattern + '\'' +
+                ", path='" + path + '\'' +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", parentId=" + parentId +
+                ", parent='" + parent + '\'' +
+                ", component='" + component + '\'' +
+                ", title='" + title + '\'' +
+                ", icon='" + icon + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 ", version=" + version +

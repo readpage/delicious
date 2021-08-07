@@ -67,6 +67,12 @@ public class UserController {
         return ResultUtils.ok(ResultEnum.RETRIEVE_SUCCESS, userService.selectPage(pageNum, pageSize));
     }
 
+    @ApiOperation("查询用户是否存在")
+    @GetMapping("/selectIsUser")
+    public Result<Object> selectIsUser(String username) {
+        return ResultUtils.ok(userService.selectIsUser(username));
+    }
+
     @ApiOperation("修改用户")
     @ApiOperationSupport(includeParameters = {"user.id", "user.username", "user.password"})
     @PutMapping("/update")
@@ -80,7 +86,7 @@ public class UserController {
     @ApiOperation("删除用户")
     @DeleteMapping("/remove/{id}")
     @ApiImplicitParam(name = "id", value = "用户id", dataType = "Integer", required = true)
-    public Result<Object> removeById(@PathVariable Integer id) {
+    public Result<Object> removeById(@PathVariable Integer id) throws Exception {
         if (userService.removeById(id)) {
             return ResultUtils.ok(ResultEnum.DELETE_SUCCESS);
         }
@@ -96,5 +102,7 @@ public class UserController {
         }
         return ResultUtils.fail(ResultEnum.DELETE_FAIL);
     }
+
+
 }
 

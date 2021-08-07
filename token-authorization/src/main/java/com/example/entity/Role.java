@@ -22,6 +22,8 @@ public class Role implements Serializable {
 
     private String name;
 
+    private String nickname;
+
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
@@ -30,7 +32,6 @@ public class Role implements Serializable {
 
     @Version
     private Integer version;
-
 
     public Integer getId() {
         return id;
@@ -46,6 +47,14 @@ public class Role implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public Date getCreateTime() {
@@ -75,11 +84,12 @@ public class Role implements Serializable {
     @Override
     public String toString() {
         return "Role{" +
-        "id=" + id +
-        ", name=" + name +
-        ", createTime=" + createTime +
-        ", updateTime=" + updateTime +
-        ", version=" + version +
-        "}";
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", version=" + version +
+                '}';
     }
 }

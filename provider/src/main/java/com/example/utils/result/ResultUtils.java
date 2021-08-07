@@ -28,7 +28,7 @@ public class ResultUtils<T> {
     }
 
     public static<T> Result<T> ok() {
-        return ok("");
+        return ok(ResultEnum.SUCCESS.getMsg());
     }
 
 

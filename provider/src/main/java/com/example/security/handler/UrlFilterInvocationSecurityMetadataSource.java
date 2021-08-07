@@ -35,7 +35,10 @@ public class UrlFilterInvocationSecurityMetadataSource implements FilterInvocati
         List<Menu> allMenu=menuMapper.selectAll();
         //如果和请求url匹配上就把他存入到Collection<ConfigAttribute>里
         for (Menu menu : allMenu) {
-            if (antPathMatcher.match(menu.getPattern(), requestUrl)) {
+            if (menu.getType() == 2) {
+                menu.setPath(menu.getPath() + "/**");
+            }
+            if (antPathMatcher.match(menu.getPath(), requestUrl)) {
                 //如果匹配上就获取到所需要的角色列表
                 List<Role> roles=menu.getRoles();
                 String[] strList=new String[roles.size()];

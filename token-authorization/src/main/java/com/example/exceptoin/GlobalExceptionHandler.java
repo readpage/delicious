@@ -27,6 +27,6 @@ public class GlobalExceptionHandler {
         } else if(e instanceof InvalidGrantException){
             resultEnum = ResultEnum.PASSWORD_ERROR;
         }
-        return ResultUtils.fail(resultEnum);
+        return ResultUtils.ok(resultEnum, e.getMessage());
     }
 }

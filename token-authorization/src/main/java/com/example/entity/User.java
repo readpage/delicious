@@ -42,14 +42,6 @@ public class User implements Serializable, UserDetails {
     @TableField(exist = false)
     private List<Role> roles;
 
-    public Collection<? extends GrantedAuthority> getAuthority() {
-        ArrayList<GrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-        }
-        return authorities;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -92,7 +84,11 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        return authorities;
     }
 
     public String getPassword() {
@@ -127,15 +123,24 @@ public class User implements Serializable, UserDetails {
         this.version = version;
     }
 
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-        "id=" + id +
-        ", username=" + username +
-        ", password=" + password +
-        ", createTime=" + createTime +
-        ", updateTime=" + updateTime +
-        ", version=" + version +
-        "}";
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", version=" + version +
+                ", roles=" + roles +
+                '}';
     }
 }

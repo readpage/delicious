@@ -44,10 +44,8 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/oauth/logout/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin();  //通过表单验证方式
+                .antMatchers("/oauth/**").permitAll()
+                .anyRequest().authenticated();
     }
 
     @Bean

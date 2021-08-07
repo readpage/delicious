@@ -1,14 +1,18 @@
 package com.example.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.entity.User;
 import com.example.mapper.UserMapper;
+import com.example.service.UserRoleService;
 import com.example.service.UserService;
 import com.example.utils.PageInfo;
+import com.example.utils.result.ResultEnum;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,6 +30,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private UserMapper userMapper;
     @Autowired
     private PasswordEncoder pw;
+
+    @Autowired
+    private UserRoleService userRoleService;
+
     @Override
     public boolean save(User user) {
         user.setPassword(pw.encode(user.getPassword()));
@@ -38,4 +46,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         List<User> users = userMapper.selectList(null);
         return new PageInfo<>(users);
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean removeById(Integer id) throws Exception {
+        if (!userRoleService.removeByUId(id)) {
+            throw new Exception(ResultEnum.DELETE_FAIL.getMsg());
+        }
+        return userMapper.deleteById(id) > 0;
+    }
+
+    @Override
+    public boolean selectIsUser(String username) {
+        return userMapper.selectCount(
+                new QueryWrapper<User>()
+                .eq("username", username)
+        ) > 0;
+    }
+
+
 }

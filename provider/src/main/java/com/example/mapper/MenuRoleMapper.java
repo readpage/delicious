@@ -1,7 +1,10 @@
 package com.example.mapper;
 
-import com.example.entity.MenuRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.entity.Menu;
+import com.example.entity.MenuRole;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2021-07-29
  */
 public interface MenuRoleMapper extends BaseMapper<MenuRole> {
-
+    List<Menu> selectByName(List<String> names);
 }

@@ -3,15 +3,25 @@
 <mapper namespace="com.example.mapper.MenuMapper">
     <resultMap id="menuMap" type="Menu">
         <id property="id" column="id"/>
-        <result property="pattern" column="pattern"/>
+        <result property="path" column="path"/>
+        <result property="name" column="name"/>
+        <result property="type" column="type"/>
+        <result property="component" column="component"/>
+        <result property="title" column="title"/>
+        <result property="icon" column="icon"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
+        <result property="version" column="version"/>
         <collection property="roles" ofType="Role">
-            <result property="name" column="name"/>
+            <id property="id" column="id"/>
+            <result property="name" column="r_name"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="version" column="version"/>
         </collection>
     </resultMap>
     <select id="selectAll" resultMap="menuMap">
-        SELECT m.*, r.name
+        SELECT m.*, r.*, r.name r_name
         FROM menu m, role r, menu_role mr
         WHERE m.id = mr.mid AND r.id = mr.rid
     </select>

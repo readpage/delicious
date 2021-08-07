@@ -29,4 +29,12 @@ public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> i
                         .eq("rid", rid)
         ) > 0;
     }
+
+    @Override
+    public boolean removeByUId(Integer uid) {
+        return userRoleMapper.delete(
+                new QueryWrapper<UserRole>()
+                .eq("uid", uid)
+        ) > 0;
+    }
 }

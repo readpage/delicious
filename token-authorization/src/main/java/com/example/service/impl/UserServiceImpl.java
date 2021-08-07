@@ -1,8 +1,7 @@
 package com.example.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.entity.User;
-import com.example.mapper.UserMapper;
+import com.example.mapper.UserRoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,17 +17,21 @@ import org.springframework.stereotype.Service;
  * @since 2021-07-28
  */
 @Service
-public class UserServiceImpl implements UserDetailsService {
+public class UserServiceImpl implements UserDetailsService, UserService {
     @Autowired
-    private UserMapper userMapper;
+    private UserRoleMapper userRoleMapper;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        System.out.println(s + "\t1");
-        User user = userMapper.selectOne(
-                new QueryWrapper<User>()
-                        .eq("username", s)
-        );
+        User user = this.selectByUsername(s);
+        if (user == null) {
+            throw new UsernameNotFoundException("");
+        }
         return user;
+    }
+
+    @Override
+    public User selectByUsername(String username) {
+        return userRoleMapper.selectByUsername(username);
     }
 }

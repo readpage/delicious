@@ -1,7 +1,10 @@
 package com.example.service;
 
-import com.example.entity.MenuRole;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.entity.Menu;
+import com.example.entity.MenuRole;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +20,6 @@ public interface MenuRoleService extends IService<MenuRole> {
     boolean removeByMId(Integer mid);
 
     boolean removeByRId(Integer rid);
+
+    List<Menu> selectByName(List<String> names);
 }

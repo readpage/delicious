@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.service.impl.UserService;
 import com.example.utils.result.Result;
 import com.example.utils.result.ResultEnum;
 import com.example.utils.result.ResultUtils;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +23,14 @@ public class AuthController {
     private TokenEndpoint tokenEndpoint;
 
     @Autowired
+    private TokenStore tokenStore;
+
+    @Autowired
     private ConsumerTokenServices consumerTokenServices;
+
+    @Autowired
+    private UserService userService;
+
 
     //oauth2登录认证
     @PostMapping("/token")
@@ -38,4 +47,5 @@ public class AuthController {
         }
         return ResultUtils.fail(ResultEnum.LOGOUT_FAIL);
     }
+
 }
