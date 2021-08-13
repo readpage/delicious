@@ -1,5 +1,5 @@
 <template>
-  log
+  <div>log</div>
 </template>
 
 <script setup lang="ts">

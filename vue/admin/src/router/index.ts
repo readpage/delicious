@@ -1,19 +1,11 @@
-import { useRoutes, getRoutes } from '@/hooks/useRoutes';
 import { createRouter, createWebHistory } from "vue-router"
+
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [],
 });
 
-let routes = getRoutes()
-if (routes) {
-  setRoutes(routes)
-} else {
-  useRoutes().then(res => {
-    setRoutes(res)
-  })
-}
 export function setRoutes(val: any) {
   let menu = val.filter((item: any) => {
     return item.type == 1
@@ -22,7 +14,7 @@ export function setRoutes(val: any) {
   menu.forEach((item: any) => {
     
     if (item.path == "/") {
-      item.redirect = "/system/user"
+      item.redirect = "/data"
     }
     if (item.component == "layout") {
       item.component = () => import("@/layouts/index.vue")
@@ -43,9 +35,16 @@ export function setRoutes(val: any) {
   router.replace(router.currentRoute.value.fullPath)
 }
 
-
 router.beforeEach( async (to, form, next) => {
+  let overlay = document.getElementById("overlay");
+  if (overlay && document.body.clientWidth < 768) {
+    overlay.click()
+  }
   next()
+})
+
+router.afterEach(to => {
+  document.title = to.meta.title as string
 })
 
 export default router;

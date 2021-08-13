@@ -1,11 +1,16 @@
 package com.example.controller;
 
-import com.example.service.impl.UserService;
+import com.example.entity.User;
+import com.example.service.UserService;
 import com.example.utils.result.Result;
 import com.example.utils.result.ResultEnum;
 import com.example.utils.result.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.OAuth2RefreshToken;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -36,7 +41,14 @@ public class AuthController {
     @PostMapping("/token")
     public Result<OAuth2AccessToken> postAccessToken(Principal principal, @RequestParam Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
         OAuth2AccessToken oAuth2AccessToken = tokenEndpoint.postAccessToken(principal, parameters).getBody();
-        return ResultUtils.ok(ResultEnum.LOGIN_SUCCESS, oAuth2AccessToken);
+        String username= tokenStore.readAuthentication(oAuth2AccessToken).getName();
+        User user = new User();
+        user.setUsername(username);
+        user.setAccessToken(oAuth2AccessToken.getValue());
+        if (userService.updateByUsername(user)) {
+            return ResultUtils.ok(ResultEnum.LOGIN_SUCCESS, oAuth2AccessToken);
+        }
+        return ResultUtils.fail();
     }
 
     //注销账户
@@ -48,4 +60,19 @@ public class AuthController {
         return ResultUtils.fail(ResultEnum.LOGOUT_FAIL);
     }
 
+    @PutMapping("/test")
+    public Result<Object> test() {
+        String token = "efde6c30-acb8-464c-a80b-03a45bb0156f";
+        OAuth2Authentication originalOAuth2Authentication  = tokenStore.readAuthentication(token);
+        OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(token);
+        OAuth2RefreshToken oAuth2RefreshToken = tokenStore.readRefreshToken(String.valueOf(oAuth2AccessToken.getRefreshToken()));
+
+
+        UserDetails userDetails = userService.selectByUsername("user");
+        UsernamePasswordAuthenticationToken usernamePasswordAuthentication = new UsernamePasswordAuthenticationToken(userDetails, "N_A", userDetails.getAuthorities());
+        OAuth2Authentication oauth2Authentication = new OAuth2Authentication(originalOAuth2Authentication.getOAuth2Request(), usernamePasswordAuthentication);
+        tokenStore.storeAccessToken(oAuth2AccessToken, oauth2Authentication);
+        tokenStore.storeRefreshToken(oAuth2RefreshToken, oauth2Authentication);
+        return ResultUtils.ok(oAuth2RefreshToken);
+    }
 }

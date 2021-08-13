@@ -1,11 +1,14 @@
 package com.example.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -27,8 +30,28 @@ public class User implements Serializable {
     @ApiModelProperty(value = "用户名")
     private String username;
 
+    @ApiModelProperty(value = "昵称")
+    private String nickname;
+
+    @JsonIgnore
     @ApiModelProperty(value = "密码")
     private String password;
+
+    @JsonIgnore
+    @ApiModelProperty(value = "授权令牌")
+    private String accessToken;
+
+    @ApiModelProperty(value = "头像")
+    private String headImg;
+
+    @ApiModelProperty(value = "手机号码")
+    private String phone;
+
+    @ApiModelProperty(value = "邮箱")
+    private String email;
+
+    @ApiModelProperty(value = "状态")
+    private boolean status;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
@@ -41,6 +64,10 @@ public class User implements Serializable {
     @ApiModelProperty(value = "乐观锁")
     @Version
     private Integer version;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @TableField(exist = false)
+    private List<Role> roles;
 
     public Integer getId() {
         return id;
@@ -58,12 +85,60 @@ public class User implements Serializable {
         this.username = username;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public String getHeadImg() {
+        return headImg;
+    }
+
+    public void setHeadImg(String headImg) {
+        this.headImg = headImg;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public Date getCreateTime() {
@@ -90,15 +165,30 @@ public class User implements Serializable {
         this.version = version;
     }
 
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-        "id=" + id +
-        ", username=" + username +
-        ", password=" + password +
-        ", createTime=" + createTime +
-        ", updateTime=" + updateTime +
-        ", version=" + version +
-        "}";
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", password='" + password + '\'' +
+                ", accessToken='" + accessToken + '\'' +
+                ", headImg='" + headImg + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", version=" + version +
+                ", roles=" + roles +
+                '}';
     }
 }

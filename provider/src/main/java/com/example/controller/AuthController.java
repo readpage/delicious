@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @Api(tags = "认证管理")
@@ -40,4 +42,11 @@ public class AuthController {
     public Result<Object> refresh(String refreshToken) {
         return authService.refresh(refreshToken);
     }
+
+    @GetMapping("/test")
+    public Result<Object> test() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authService.test(authentication);
+    }
+    
 }

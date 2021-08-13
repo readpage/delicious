@@ -10,9 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
-/**
- * 获取登录用户的角色，并与 访问 所需要的角色进行对比，决定是否可以访问
- */
+// 获取登录用户的角色，并与 访问 所需要的角色进行对比，决定是否可以访问
 @Component
 public class UrlAccessDecisionManager implements AccessDecisionManager {
     @Override

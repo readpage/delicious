@@ -3,6 +3,7 @@ package com.example.exceptoin;
 import com.example.utils.result.Result;
 import com.example.utils.result.ResultEnum;
 import com.example.utils.result.ResultUtils;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
 import org.springframework.security.oauth2.common.exceptions.UnsupportedGrantTypeException;
@@ -16,6 +17,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public Result<Object> handleOauth2(Exception e) {
+        System.out.println(e.getClass());
         ResultEnum resultEnum = ResultEnum.ERROR;
         //不支持的认证
         if(e instanceof UnsupportedGrantTypeException){
@@ -26,7 +28,9 @@ public class GlobalExceptionHandler {
             //密码错误
         } else if(e instanceof InvalidGrantException){
             resultEnum = ResultEnum.PASSWORD_ERROR;
+        } else if(e instanceof InternalAuthenticationServiceException) {
+            return ResultUtils.fail(e.getMessage());
         }
-        return ResultUtils.ok(resultEnum, e.getMessage());
+        return ResultUtils.ok(resultEnum, e.getClass());
     }
 }

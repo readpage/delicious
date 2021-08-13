@@ -1,11 +1,16 @@
 package com.example.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.service.AuthService;
 import com.example.utils.JsonUtils;
 import com.example.utils.result.Result;
+import com.example.utils.result.ResultEnum;
 import com.example.utils.result.ResultUtils;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -44,11 +49,24 @@ public class AuthServiceImpl implements AuthService {
         body.add("grant_type", "refresh_token");
         body.add("refresh_token", refreshToken);
         Result<Object> result = JsonUtils.exchange(url, HttpMethod.POST, new HttpEntity<>(body, null), Object.class);
-        if (result.getCode() == 200) {
-            return ResultUtils.ok("刷新成功!😀", result.getData());
+        if (result.getCode() == 201) {
+            return ResultUtils.ok(ResultEnum.REFRESH_SUCCESS, result.getData());
         } else {
-            return ResultUtils.ok("刷新失败!😜");
+            return ResultUtils.ok(ResultEnum.REFRESH_FAIL);
         }
+    }
+
+    @Override
+    public Result<Object> test(Authentication authentication) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("Authorization", "bearer e344fb9d-9bcd-4ef4-9ec2-cb05a24708b7");
+        String url = "http://localhost:8080/oauth/test";
+        System.out.println(authentication.getAuthorities());
+        String json = JSONObject.toJSONString(authentication);
+        System.out.println(json);
+        Result<Object> result = JsonUtils.exchange(url, HttpMethod.PUT, new HttpEntity<>(json, headers), Object.class);
+        return ResultUtils.ok(result.getData());
     }
 
 }

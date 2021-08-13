@@ -6,6 +6,7 @@
   >
     <i :class="[collapse ? 'el-icon-s-unfold' : 'el-icon-s-fold']"></i>
   </div>
+  <Breadcrumb />
   <div class="flex1"></div>
   <div class="topbar_user">
     <el-dropdown trigger="click" @command="onCommand">
@@ -28,6 +29,7 @@
 <script setup lang="ts">
 import { useStore } from "@/store";
 import { toRefs } from "vue";
+import Breadcrumb from "./components/Breadcrumb.vue";
 
 const { state, commit } = useStore();
 const { collapse } = toRefs(state.user);
@@ -35,6 +37,7 @@ const { collapse } = toRefs(state.user);
 function onCommand(name: string) {
 
 }
+
 </script>
 
 <style lang="scss" scoped>

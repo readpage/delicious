@@ -1,5 +1,5 @@
 <template>
-  orders
+  <div>orders</div>
 </template>
 
 <script setup lang="ts">

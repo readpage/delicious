@@ -6,6 +6,8 @@ import { store, key } from './store'
 
 createApp(App)
   .use(plugins)
-  .use(router)
   .use(store, key)
+  .use(router)
   .mount('#app')
+
+store.dispatch("user/appLoad")

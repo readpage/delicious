@@ -2,24 +2,24 @@
   <div class="app-slider">
     <div class="app-slider__logo"></div>
     <div class="app-slider__menu">
-      <el-menu
-        class="aside-menu"
-        :default-active="$route.path"
-        background-color="#304156"
-        text-color="#bfcbd9"
-        active-text-color="#409eff"
-        router
-        style="height: 100%"
-        :collapse="collapse"
-      >
+      <el-scrollbar>
+        <el-menu
+          :default-active="$route.path"
+          background-color="#304156"
+          text-color="#bfcbd9"
+          active-text-color="#409eff"
+          router
+          :collapse="collapse"
+          unique-opened
+        >
         <MenuTree :menu="menu" />
       </el-menu>
+      </el-scrollbar>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useMenu } from "@/hooks/useMenu";
 import { useStore } from "@/store";
 import { computed, onMounted, reactive, ref, toRefs } from "vue"
 import MenuTree from "./components/MenuTree.vue";
@@ -31,11 +31,11 @@ function init() {
     let screenWidth = document.body.clientWidth
     if (screenWidth <= 768) {
       commit("user/updateCollapse", true)
-    } 
+    }
   }
 }
 const menu = computed(() => {
-  return state.user.menu
+  return state.menu.menu
 })
 onMounted(() => {
   init()
@@ -56,6 +56,7 @@ onMounted(() => {
     cursor: pointer;
   }
   &__menu {
+    height: calc(100% - 80px);
     .el-menu {
       border: 0;
     }

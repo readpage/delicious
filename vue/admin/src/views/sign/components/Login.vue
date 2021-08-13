@@ -26,9 +26,8 @@
 
 <script setup lang="ts">
 import { Alogin } from "@/api"
-import { useMenu } from "@/hooks/useMenu"
-import { useRoutes } from "@/hooks/useRoutes"
-import { setRoutes } from "@/router"
+import storage from "@/hooks/storage"
+import { useStore } from "@/store"
 import { ElMessage } from "element-plus"
 import { reactive, ref } from "vue"
 import { useRouter } from "vue-router"
@@ -41,6 +40,7 @@ type userType = keyof typeof user
 
 const userRef = ref()
 const router = useRouter()
+const { dispatch } = useStore()
 
 const rules = reactive({
   username: {
@@ -54,21 +54,23 @@ const rules = reactive({
 })
 
 function login() {
-  userRef.value.validate((valid: any) => {
+  userRef.value.validate(async (valid: any) => {
     if (valid) {
-      const param = new FormData()
+      const form = new FormData()
       Object.keys(user).forEach(key => {
-        param.append(key, user[key as userType])
+        form.append(key, user[key as userType])
       })
-      Alogin(param).then(res => {
-        ElMessage.success(res.msg)
-        localStorage.setItem("token", JSON.stringify(res.data))
-        useMenu()
-        useRoutes().then(res => {
-          setRoutes(res)
-          router.push("/")
-        })
+      // 登录
+      await Alogin(form).then(res => {
+        storage.set("token", res.data)
+        return res
       })
+
+      // 用户信息
+
+      // 权限菜单
+      await dispatch("menu/permMenu")
+      router.push("/")
     }
   })
   

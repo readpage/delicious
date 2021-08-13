@@ -1,15 +1,12 @@
 package com.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.entity.Menu;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.entity.MenuRole;
 import com.example.mapper.MenuRoleMapper;
 import com.example.service.MenuRoleService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * <p>
@@ -50,8 +47,4 @@ public class MenuRoleServiceImpl extends ServiceImpl<MenuRoleMapper, MenuRole> i
         ) > 0;
     }
 
-    @Override
-    public List<Menu> selectByName(List<String> names) {
-        return menuRoleMapper.selectByName(names);
-    }
 }

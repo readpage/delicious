@@ -14,5 +14,7 @@ import java.util.List;
  * @since 2021-07-28
  */
 public interface MenuMapper extends BaseMapper<Menu> {
+    List<Menu> selectByName(List<String> names);
+
     List<Menu> selectAll();
 }

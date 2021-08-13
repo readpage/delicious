@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.MenuMapper">
+    <select id="selectByName" parameterType="String" resultType="Menu">
+        SELECT m.* FROM menu m, menu_role mr, role r
+        WHERE m.id=mr.mid AND r.id= mr.rid
+        AND r.name IN
+        <foreach collection="list" item="names" open="(" separator="," close=")">
+            #{names}
+        </foreach>
+        GROUP BY id
+        ORDER BY id
+    </select>
+
     <resultMap id="menuMap" type="Menu">
         <id property="id" column="id"/>
         <result property="path" column="path"/>
         <result property="name" column="name"/>
         <result property="type" column="type"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="parent" column="parent"/>
         <result property="component" column="component"/>
         <result property="title" column="title"/>
         <result property="icon" column="icon"/>

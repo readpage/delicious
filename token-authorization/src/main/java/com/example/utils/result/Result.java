@@ -1,6 +1,5 @@
 package com.example.utils.result;
 
-
 public class Result<T> {
     private Integer code;
     private String msg;

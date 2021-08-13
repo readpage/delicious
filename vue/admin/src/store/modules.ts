@@ -1,7 +1,9 @@
 import user from "./modules/user"
+import menu from "./modules/menu"
 
 const modules = {
-  user
+  user,
+  menu,
 }
 
 export {

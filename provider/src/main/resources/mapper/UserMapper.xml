@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.UserMapper">
-
+    <resultMap id="userMap" type="User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="nickname" column="nickname"/>
+        <result property="accessToken" column="access_token"/>
+        <result property="headImg" column="head_img"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="version" column="version"/>
+        <collection property="roles" ofType="Role">
+            <result property="nickname" column="r_nickname"/>
+        </collection>
+    </resultMap>
+    <select id="selectAll" resultMap="userMap">
+        SELECT u.*, r.nickname as r_nickname, r.id as r_id
+        FROM user u, role r, user_role ur
+        WHERE u.id=ur.uid AND r.id=ur.rid
+    </select>
 </mapper>

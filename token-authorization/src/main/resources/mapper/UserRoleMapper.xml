@@ -7,6 +7,8 @@
         <id property="id" column="id"></id>
         <result property="username" column="username"/>
         <result property="password" column="password"/>
+        <result property="accessToken" column="access_token"/>
+        <result property="status" column="status"/>
         <collection property="roles" ofType="Role">
             <result property="name" column="name"/>
         </collection>

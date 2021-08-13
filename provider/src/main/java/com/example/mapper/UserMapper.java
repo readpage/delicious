@@ -1,7 +1,9 @@
 package com.example.mapper;
 
-import com.example.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.entity.User;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +14,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2021-07-28
  */
 public interface UserMapper extends BaseMapper<User> {
-
+    List<User> selectAll();
 }

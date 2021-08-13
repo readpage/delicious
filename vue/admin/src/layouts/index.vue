@@ -10,11 +10,19 @@
       <div class="page-layout__topbar">
         <Topbar />
       </div>
+
+      <div class="page-layout__process">
+        <Tags />
+      </div>
       <!-- 页面视图 -->
       <div class="page-layout__container">
-        <el-scrollbar>
-          <router-view></router-view>
-        </el-scrollbar>
+        <router-view v-slot="{ Component }">
+          <transition :name="transitionName" mode="out-in">
+            <keep-alive>
+              <component :is="Component" />
+            </keep-alive>
+          </transition>
+        </router-view>
       </div>
     </div>
   </div>
@@ -22,12 +30,22 @@
 
 <script setup lang="ts">
 import { useStore } from "@/store";
-import { toRefs } from "vue";
+import { ref, toRefs } from "vue";
+import { onBeforeRouteUpdate, useRoute } from "vue-router";
 import Slider from "./components/slider/Slider.vue";
-import Topbar from "./components/Topbar.vue";
-const { state, commit } = useStore();
+import Tags from "./components/Tags.vue";
+import Topbar from "./components/topbar/Topbar.vue";
 
+const { state, commit } = useStore();
+const route = useRoute()
 const { collapse } = toRefs(state.user);
+const transitionName = ref("slide-fade")
+
+const keepalive = ref(route.meta.keepalive)
+onBeforeRouteUpdate((to) => {
+  keepalive.value = to.meta.keepalive
+});
+
 </script>
 
 <style lang="scss" scoped>
@@ -35,15 +53,14 @@ const { collapse } = toRefs(state.user);
   display: flex;
   height: 100vh;
   background-color: #f7f7f7;
-  overflow: hidden;
 
   &__mask {
 		position: fixed;
 		left: 0;
 		top: 0;
 		background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
 		height: 100%;
-		width: 100%;
 		z-index: 999;
 	}
 
@@ -53,13 +70,26 @@ const { collapse } = toRefs(state.user);
     transition: left 0.2s;
   }
 
+  &__right {
+    width: calc(100% - 250px);
+  }
+  
   &__topbar {
+    height: 50px;
     margin-bottom: 10px;
   }
 
-  &__right {
-    width: calc(100% - 255px);
-  }
+  &__process {
+    height: 40px;
+		padding: 0 10px;
+	}
+
+  &__container {
+    height: calc(100% - 100px);
+    box-sizing: border-box;
+    overflow: hidden;
+    margin: 0 10px;
+	}
 
   @media (max-width: 768px) {
     .page-layout__left {
@@ -104,5 +134,20 @@ const { collapse } = toRefs(state.user);
       }
     }
   }
+}
+
+
+.slide-fade-enter-active {
+  transition: all .3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
 }
 </style>

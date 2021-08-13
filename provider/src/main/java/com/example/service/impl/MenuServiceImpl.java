@@ -6,9 +6,7 @@ import com.example.entity.Menu;
 import com.example.mapper.MenuMapper;
 import com.example.service.MenuRoleService;
 import com.example.service.MenuService;
-import com.example.utils.PageInfo;
 import com.example.utils.result.ResultEnum;
-import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,13 +30,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     private MenuRoleService menuRoleService;
 
     @Override
-    public PageInfo<Menu> selectPage(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<Menu> menus = menuMapper.selectList(null);
-        return new PageInfo<>(menus);
-    }
-
-    @Override
     public List<Menu> selectLike(List<Integer> types) {
         return menuMapper.selectList(
                 new QueryWrapper<Menu>()
@@ -54,4 +45,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         }
         return menuMapper.deleteById(id) > 0;
     }
+
+    @Override
+    public List<Menu> selectByName(List<String> names) {
+        return menuMapper.selectByName(names);
+    }
+
 }

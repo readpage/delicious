@@ -1,14 +1,14 @@
-import { useRoutes } from '@/hooks/useRoutes';
-import { useMenu } from "@/hooks/useMenu";
+import { closeLoad } from '@/hooks/useUser';
+import { Alogin } from "@/api";
 import { ActionContext } from "vuex";
-import { userState } from "./store";
+import { menuState } from "../menu/store";
+import { store } from '@/store';
 
 const actions = {
-  updMenu({commit}: ActionContext<userState, unknown>) {
-    useMenu().then(res => {
-      commit("updMenu", res)
-    })
-  },
+  async appLoad({ commit, dispatch }: ActionContext<menuState, unknown>) {
+    await store.dispatch("menu/permMenu")
+    closeLoad()
+  }
 }
 
 export default actions

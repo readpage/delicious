@@ -30,6 +30,10 @@ public class User implements Serializable, UserDetails {
 
     private String password;
 
+    private String accessToken;
+
+    private boolean status = true;
+
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
@@ -75,7 +79,7 @@ public class User implements Serializable, UserDetails {
     //当前账户是否可用
     @Override
     public boolean isEnabled() {
-        return true;
+        return status;
     }
 
     public void setUsername(String username) {
@@ -101,6 +105,14 @@ public class User implements Serializable, UserDetails {
 
     public Date getCreateTime() {
         return createTime;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public void setCreateTime(Date createTime) {
@@ -131,12 +143,22 @@ public class User implements Serializable, UserDetails {
         this.roles = roles;
     }
 
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", accessToken='" + accessToken + '\'' +
+                ", status=" + status +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 ", version=" + version +

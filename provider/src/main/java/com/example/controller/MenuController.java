@@ -2,16 +2,13 @@ package com.example.controller;
 
 
 import com.example.entity.Menu;
-import com.example.service.MenuRoleService;
 import com.example.service.MenuService;
-import com.example.utils.PageInfo;
 import com.example.utils.result.Result;
 import com.example.utils.result.ResultEnum;
 import com.example.utils.result.ResultUtils;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -37,9 +34,6 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
-    @Autowired
-    private MenuRoleService menuRoleService;
-
     @ApiOperation("添加菜单")
     @ApiOperationSupport(ignoreParameters = {"menu.id", "menu.createTime", "menu.updateTime", "menu.version", "menu.roles"})
     @PostMapping("/save")
@@ -50,26 +44,22 @@ public class MenuController {
         return ResultUtils.fail(ResultEnum.CREATE_FAIL);
     }
 
-    @ApiOperation("分页查询菜单")
-    @GetMapping("/page/{pageNum}/{pageSize}")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNum", value = "页数", required = true),
-            @ApiImplicitParam(name = "pageSize", value = "页大小", required = true)
-    })
-    public Result<PageInfo<Menu>> selectPage(@PathVariable int pageNum, @PathVariable int pageSize) {
-        return ResultUtils.ok(ResultEnum.RETRIEVE_SUCCESS, menuService.selectPage(pageNum, pageSize));
+    @ApiOperation("查询所有菜单")
+    @GetMapping("/list")
+    public Result<List<Menu>> selectAll() {
+        return ResultUtils.ok(ResultEnum.RETRIEVE_SUCCESS, menuService.list());
     }
 
     @ApiOperation("查询当前用户菜单")
-    @GetMapping("/like")
-    public Result<List<Menu>> selectLike() {
+    @GetMapping("/permMenu")
+    public Result<List<Menu>> selectPermMenu() {
         List<String> names = new ArrayList<>();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         for (GrantedAuthority auth : authentication.getAuthorities()) {
             names.add(String.valueOf(auth));
         }
         names.add("tourist");
-        return ResultUtils.ok(ResultEnum.RETRIEVE_SUCCESS, menuRoleService.selectByName(names));
+        return ResultUtils.ok(ResultEnum.RETRIEVE_SUCCESS, menuService.selectByName(names));
     }
 
     @ApiOperation("修改菜单")
@@ -91,5 +81,7 @@ public class MenuController {
         }
         return ResultUtils.fail(ResultEnum.DELETE_FAIL);
     }
+
+
 }
 

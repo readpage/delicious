@@ -1,13 +1,25 @@
 import { apiAxios, } from "./requests"
 
-const AgetMenu = apiAxios("/menu/like/")
+const ApermMenu = apiAxios("/menu/permMenu")
 const Alogin = apiAxios("/oauth/login", "post")
 const Aregister = apiAxios("/user/save", "post")
 const AisUser = apiAxios("/user/selectIsUser")
 
+const ArefToken = apiAxios("/oauth/refresh", "put")
+
+const Auser = apiAxios("/user/page")
+const Arole = apiAxios("/role/page")
+const Amenu = apiAxios("/menu/list")
+
+
+
 export {
-  AgetMenu,
+  ApermMenu,
   Alogin,
   Aregister,
-  AisUser
+  AisUser,
+  ArefToken,
+  Auser,
+  Arole,
+  Amenu,
 }

@@ -22,7 +22,7 @@
 import { ref, toRefs } from "vue";
 
 const props = defineProps<{
-  menu: IMenu[];
+  menu: Imenu[];
 }>();
 const { menu } = toRefs(props);
 </script>

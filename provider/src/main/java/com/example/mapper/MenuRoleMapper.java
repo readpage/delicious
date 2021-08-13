@@ -15,5 +15,5 @@ import java.util.List;
  * @since 2021-07-29
  */
 public interface MenuRoleMapper extends BaseMapper<MenuRole> {
-    List<Menu> selectByName(List<String> names);
+    List<Menu> selectAll();
 }

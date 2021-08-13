@@ -2,7 +2,6 @@ package com.example.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.entity.Menu;
-import com.example.utils.PageInfo;
 
 import java.util.List;
 
@@ -15,10 +14,10 @@ import java.util.List;
  * @since 2021-07-28
  */
 public interface MenuService extends IService<Menu> {
-    PageInfo<Menu> selectPage(int pageNum, int pageSize);
-
     List<Menu> selectLike(List<Integer> types);
 
     boolean removeById(Integer id) throws Exception;
+
+    List<Menu> selectByName(List<String> names);
 
 }

@@ -1,19 +1,18 @@
 <template>
-  <router-view v-if="showRouter"></router-view>
+  <el-config-provider :locale="locale">
+    <router-view v-if="showRouter"></router-view>
+  </el-config-provider>
 </template>
 
 <script setup lang="ts">
 import { nextTick, provide, ref, toRefs, watch } from "vue";
-import { useMenu } from "./hooks/useMenu";
 import { useStore } from "./store";
+import { ElConfigProvider } from 'element-plus'
+import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 
+const locale = zhCn
 const showRouter = ref(true)
 const { state, dispatch } = useStore()
-
-
-if (!localStorage.menu) {
-  dispatch("user/updMenu")
-}
 
 function reload() {
   showRouter.value = false
@@ -22,6 +21,9 @@ function reload() {
   })
 }
 provide("reload", reload)
+
+
+
 </script>
 
 
@@ -29,5 +31,8 @@ provide("reload", reload)
   * {
     padding: 0;
     margin: 0;
+  }
+  body {
+    overflow: hidden;
   }
 </style>
