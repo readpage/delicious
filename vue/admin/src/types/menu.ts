@@ -6,6 +6,7 @@ interface meta {
 interface Imenu {
   id: number,
   path: string,
+  orderNum: number,
   name: string,
   parent: string,
   type: number,

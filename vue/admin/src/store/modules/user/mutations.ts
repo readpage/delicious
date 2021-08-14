@@ -1,6 +1,7 @@
 import { userState } from "./store";
 import Nprogress from "nprogress";
 import "nprogress/nprogress.css";
+import { closeLoad } from "@/hooks/useUser";
 
 const mutations = {
   updateCollapse (state: userState, val: boolean) {
@@ -13,6 +14,7 @@ const mutations = {
   hideLoading(state: userState) {
     state.loading = false
     Nprogress.done()
+    closeLoad()
   }
 }
 

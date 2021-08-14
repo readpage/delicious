@@ -32,6 +32,9 @@ public class Menu implements Serializable {
     @ApiModelProperty(value = "名称")
     private String name;
 
+    @ApiModelProperty(value = "排序")
+    private Integer orderNum;
+
     @ApiModelProperty(value = "类型")
     private Integer type;
 
@@ -88,6 +91,14 @@ public class Menu implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(Integer orderNum) {
+        this.orderNum = orderNum;
     }
 
     public Integer getType() {
@@ -176,6 +187,7 @@ public class Menu implements Serializable {
                 "id=" + id +
                 ", path='" + path + '\'' +
                 ", name='" + name + '\'' +
+                ", orderNum=" + orderNum +
                 ", type=" + type +
                 ", parentId=" + parentId +
                 ", parent='" + parent + '\'' +

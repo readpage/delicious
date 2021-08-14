@@ -14,7 +14,7 @@ const actions = {
         return item
       })
 
-      const menu = translateToTree(perMenu.filter(item => item.type != 2 && !(item.type == 1 && item.parent != "layout")))
+      const menu = translateToTree(perMenu.filter(item => item.type != 2 && !(item.type == 1 && item.parent != "back")))
       
       commit("setMenu", menu)
 

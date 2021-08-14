@@ -52,6 +52,7 @@ onBeforeRouteUpdate((to) => {
 .page-layout {
   display: flex;
   height: 100vh;
+  overflow: hidden;
   background-color: #f7f7f7;
 
   &__mask {
@@ -87,7 +88,6 @@ onBeforeRouteUpdate((to) => {
   &__container {
     height: calc(100% - 100px);
     box-sizing: border-box;
-    overflow: hidden;
     margin: 0 10px;
 	}
 

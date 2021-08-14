@@ -37,7 +37,7 @@ public class UserController {
     @Autowired
     private UserRoleService userRoleService;
 
-    @ApiOperation("添加用户")
+    @ApiOperation(value = "添加用户", notes = "请求实列还需要添加password(密码)字段")
     @ApiOperationSupport(includeParameters = {"user.username", "user.password"})
     @PostMapping("/save")
     public Result<Object> save(@RequestBody User user) {
@@ -73,7 +73,7 @@ public class UserController {
         return ResultUtils.ok(userService.selectIsUser(username));
     }
 
-    @ApiOperation("修改用户")
+    @ApiOperation(value = "修改用户", notes = "请求实列还需要添加password(密码)字段")
     @ApiOperationSupport(includeParameters = {"user.id", "user.username", "user.password"})
     @PutMapping("/update")
     public Result<Object> updateById(@RequestBody User user) {

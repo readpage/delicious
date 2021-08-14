@@ -7,32 +7,39 @@
 <script setup lang="ts">
 import { nextTick, provide, ref, toRefs, watch } from "vue";
 import { useStore } from "./store";
-import { ElConfigProvider } from 'element-plus'
-import zhCn from 'element-plus/lib/locale/lang/zh-cn'
+import { ElConfigProvider } from "element-plus";
+import zhCn from "element-plus/lib/locale/lang/zh-cn";
 
-const locale = zhCn
-const showRouter = ref(true)
-const { state, dispatch } = useStore()
+const locale = zhCn;
+const showRouter = ref(true);
+const { state, dispatch } = useStore();
 
 function reload() {
-  showRouter.value = false
+  showRouter.value = false;
   nextTick(() => {
-    showRouter.value = true
-  })
+    showRouter.value = true;
+  });
 }
-provide("reload", reload)
-
-
-
+provide("reload", reload);
 </script>
 
-
 <style lang="scss">
-  * {
-    padding: 0;
-    margin: 0;
-  }
-  body {
-    overflow: hidden;
-  }
+* {
+  padding: 0;
+  margin: 0;
+}
+
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar {
+  width: 6px; /*滚动条宽度*/
+  height: 8px; /*滚动条高度*/
+  background-color: white;
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 0px white;
+  background-color: rgb(193, 193, 193); /*滚动条的背景颜色*/
+  border-radius: 30px;
+}
 </style>

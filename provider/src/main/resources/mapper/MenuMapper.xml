@@ -9,7 +9,7 @@
             #{names}
         </foreach>
         GROUP BY id
-        ORDER BY id
+        ORDER BY order_num
     </select>
 
     <resultMap id="menuMap" type="Menu">

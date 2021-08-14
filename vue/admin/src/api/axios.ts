@@ -1,8 +1,10 @@
+import { closeLoad } from '@/hooks/useUser';
 import storage from "@/hooks/storage";
 import axios from "axios"
 import { ElMessage } from "element-plus"
 import { ArefToken } from '.';
 import { store } from "@/store";
+import router from "@/router";
 
 const service = axios.create({
   baseURL: "/api"
@@ -29,6 +31,9 @@ service.interceptors.response.use(response  => {
   const res = response.data
   if (Math.trunc(res.code/100) != 2) {
     switch (res.code) {
+      case 501:
+        router.push("/sign")
+        break
       case 504:
         const token: Itoken = storage.get("token")
         const params = new FormData()
@@ -43,11 +48,13 @@ service.interceptors.response.use(response  => {
         break
       case 507:
         storage.clearAll()
+        router.push("/507")
+        break
+      case 403:
         ElMessage.warning(res.msg)
-        location.reload()
         break
       default:
-        ElMessage.warning(res.msg)
+        router.push("/500")
         break
     }
     throw response
@@ -57,20 +64,21 @@ service.interceptors.response.use(response  => {
   return response
 },error => {
   store.commit("user/hideLoading")
-  switch (error.response.status) {
-    case 404:
-      ElMessage.error("网络请求异常, 请稍后重新尝试!😉")
-      break
-    case 401:
-      ElMessage.error(error.response.data)
-      break
-    case 500:
-      ElMessage.error("服务器出问题了!😭")
-      break
-    default:
-      ElMessage.error("出错了")
-      break
-  }
+  router.push("/500")
+  // switch (error.response.status) {
+  //   case 404:
+  //     ElMessage.error("网络请求异常, 请稍后重新尝试!😉")
+  //     break
+  //   case 401:
+  //     ElMessage.error(error.response.data)
+  //     break
+  //   case 500:
+  //     ElMessage.error("服务器出问题了!😭")
+  //     break
+  //   default:
+  //     router.push("/500")
+  //     break
+  // }
   return Promise.reject(error)
 })
 

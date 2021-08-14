@@ -62,7 +62,7 @@ public class AuthController {
 
     @PutMapping("/test")
     public Result<Object> test() {
-        String token = "efde6c30-acb8-464c-a80b-03a45bb0156f";
+        String token = "3b189dfc-6e0a-45fb-9d46-384bce51dee6";
         OAuth2Authentication originalOAuth2Authentication  = tokenStore.readAuthentication(token);
         OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(token);
         OAuth2RefreshToken oAuth2RefreshToken = tokenStore.readRefreshToken(String.valueOf(oAuth2AccessToken.getRefreshToken()));

@@ -1,6 +1,7 @@
 package com.example.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.entity.Menu;
 import com.example.service.MenuService;
 import com.example.utils.result.Result;
@@ -47,7 +48,10 @@ public class MenuController {
     @ApiOperation("查询所有菜单")
     @GetMapping("/list")
     public Result<List<Menu>> selectAll() {
-        return ResultUtils.ok(ResultEnum.RETRIEVE_SUCCESS, menuService.list());
+        return ResultUtils.ok(ResultEnum.RETRIEVE_SUCCESS, menuService.list(
+                new QueryWrapper<Menu>()
+                .orderByAsc("order_num")
+        ));
     }
 
     @ApiOperation("查询当前用户菜单")
