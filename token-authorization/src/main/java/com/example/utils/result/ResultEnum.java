@@ -17,7 +17,7 @@ public enum ResultEnum {
     LOGOUT_FAIL(508, "注销失败!😣"),
     CREATE_SUCCESS(204, "添加成功!😎"),
     CREATE_FAIL(509, "添加失败!😩"),
-    RETRIEVE_SUCCESS(205, "查询成功!🤔"),
+    RETRIEVE_SUCCESS(205, "查询成功!😍"),
     RETRIEVE_FAIL(510, "查询失败!😅"),
     UPDATE_SUCCESS(206, "更新成功!😏"),
     UPDATE_FAIL(511, "更新失败!😨"),

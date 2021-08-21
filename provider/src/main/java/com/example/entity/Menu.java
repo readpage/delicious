@@ -41,9 +41,6 @@ public class Menu implements Serializable {
     @ApiModelProperty(value = "父节点")
     private Integer parentId;
 
-    @ApiModelProperty(value = "父路由")
-    private String parent;
-
     @ApiModelProperty(value = "组件")
     private String component;
 
@@ -117,14 +114,6 @@ public class Menu implements Serializable {
         this.parentId = parentId;
     }
 
-    public String getParent() {
-        return parent;
-    }
-
-    public void setParent(String parent) {
-        this.parent = parent;
-    }
-
     public String getComponent() {
         return component;
     }
@@ -190,7 +179,6 @@ public class Menu implements Serializable {
                 ", orderNum=" + orderNum +
                 ", type=" + type +
                 ", parentId=" + parentId +
-                ", parent='" + parent + '\'' +
                 ", component='" + component + '\'' +
                 ", title='" + title + '\'' +
                 ", icon='" + icon + '\'' +

@@ -58,8 +58,8 @@ public class RoleController {
     @ApiOperation("分页查询角色")
     @GetMapping("/page/{pageNum}/{pageSize}")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNum", value = "页数", required = true),
-            @ApiImplicitParam(name = "pageSize", value = "页大小", required = true)
+            @ApiImplicitParam(name = "pageNum", value = "页数", required = true, dataType = "int", example = "1"),
+            @ApiImplicitParam(name = "pageSize", value = "页大小", required = true, dataType = "int", example = "5")
     })
     public Result<PageInfo<Role>> selectPage(@PathVariable int pageNum, @PathVariable int pageSize) {
         return ResultUtils.ok(ResultEnum.RETRIEVE_SUCCESS, roleService.selectPage(pageNum, pageSize));

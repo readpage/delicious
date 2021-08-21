@@ -1,0 +1,1 @@
+import{_ as a}from"./ErrorPage.600200ba.js";import{d as o,o as r,c as s}from"./vendor.58eb613c.js";import"./index.bf43a737.js";var e=o({setup:o=>(o,e)=>(r(),s(a,{code:"500",desc:"糟糕，出了点问题"}))});e.__scopeId="data-v-b8570bdc";export{e as default};

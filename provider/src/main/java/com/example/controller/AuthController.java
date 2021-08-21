@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.service.AuthService;
 import com.example.utils.result.Result;
+import com.example.utils.result.ResultUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -10,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Api(tags = "认证管理")
 @RestController
@@ -25,8 +29,8 @@ public class AuthController {
             @ApiImplicitParam(name = "username", value = "用户名", dataType = "String", required = true),
             @ApiImplicitParam(name = "password", value = "密码", dataType = "String", required = true)
     })
-    public Result<Object> login(String username, String password) {
-        return authService.login(username, password);
+    public Result<Object> login(String username, String password, @ApiIgnore HttpServletRequest request) {
+        return authService.login(request, username, password);
     }
 
     @ApiOperation("注销")
@@ -43,10 +47,11 @@ public class AuthController {
         return authService.refresh(refreshToken);
     }
 
+
     @GetMapping("/test")
     public Result<Object> test() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authService.test(authentication);
+        return ResultUtils.ok();
     }
-    
+
 }

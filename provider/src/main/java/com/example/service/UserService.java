@@ -21,4 +21,5 @@ public interface UserService extends IService<User> {
 
     boolean selectIsUser(String username);
 
+    User selectByUsername(String username);
 }

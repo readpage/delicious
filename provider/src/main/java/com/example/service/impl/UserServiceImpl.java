@@ -43,8 +43,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public PageInfo<User> selectPage(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<User> users = userMapper.selectAll();
-        return new PageInfo<>(users);
+        List<User> users = userMapper.selectPage();
+        return new PageInfo<User>(users);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -64,5 +64,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         ) > 0;
     }
 
+    @Override
+    public User selectByUsername(String username) {
+        return userMapper.selectByUsername(username);
+    }
 
 }

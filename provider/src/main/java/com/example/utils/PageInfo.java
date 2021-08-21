@@ -11,8 +11,8 @@ import java.util.List;
 public class PageInfo<T> extends PageSerializable<T> {
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "数量")
-    private  long total;
+    @ApiModelProperty(value = "总数")
+    private long total;
 
     @ApiModelProperty(value = "数据")
     private List<T> list;

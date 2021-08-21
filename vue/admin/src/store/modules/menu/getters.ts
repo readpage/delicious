@@ -1,9 +1,8 @@
 import { menuState } from './store';
 
 const getters = {
-  routes:(state: menuState) => {
-    return state.routes
-  }
+  // routes:(state: menuState) => state.routes,
+  // menu: (state: menuState) => state.menu
 }
 
 export default getters

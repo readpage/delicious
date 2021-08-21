@@ -4,12 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.entity.User;
 import com.example.mapper.UserMapper;
-import com.example.mapper.UserRoleMapper;
 import com.example.service.UserService;
 import com.example.utils.result.ResultEnum;
+import com.example.utils.result.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,26 +24,24 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserDetailsService, UserService {
-    @Autowired
-    private UserRoleMapper userRoleMapper;
 
     @Autowired
     private UserMapper userMapper;
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws AuthenticationException {
+    public UserDetails loadUserByUsername(String s) {
         User user = this.selectByUsername(s);
         if (user == null) {
-            throw new UsernameNotFoundException("");
+            throw new UsernameNotFoundException(ResultUtils.toJson(ResultEnum.ACCOUNT_NOT_EXIST));
         } else if(!user.isStatus()) {
-            throw new DisabledException(ResultEnum.ACCOUNT_DISABLE.getMsg());
+            throw new DisabledException(ResultUtils.toJson(ResultEnum.ACCOUNT_DISABLE));
         }
         return user;
     }
 
     @Override
     public User selectByUsername(String username) {
-        return userRoleMapper.selectByUsername(username);
+        return userMapper.selectByUsername(username);
     }
 
     @Override

@@ -1,6 +1,6 @@
 # 操作指南
 
-1. msqyl创建数据库delicious,sql文件下导人delicious.sql文件.
+1. mysql创建数据库delicious,字符集:utf8mb4,排序规则:utf8mb4_0900_ai_ci,并导入数据脚本,在sql目录下delicious.sql文件.
 
 2. 运行认证服务器token-authorization
 
@@ -17,3 +17,5 @@
    npm run dev
    ```
 
+6. 登录
+   - 账户:user, 密码: user

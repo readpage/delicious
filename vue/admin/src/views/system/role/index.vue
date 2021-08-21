@@ -38,9 +38,8 @@
 <script setup lang="ts">
 import { Arole } from "@/api";
 import { useStore } from "@/store";
-import { inject, onMounted, reactive, ref } from "vue"
+import { onMounted, reactive, ref } from "vue"
 
-const reload = inject("reload")
 const { state } = useStore()
 
 const table = reactive({
@@ -51,20 +50,21 @@ const table = reactive({
 })
 function handleSizeChange(val: number) {
   table.pageSize = val
-  page()
+  reload()
 }
 function handleCurrentChange(val: number) {
   table.pageNum = val
-  page()
+  reload()
 }
 
-function page() {
+function reload() {
   Arole({urlParam: `/${table.pageNum}/${table.pageSize}`}).then(res => {
     table.role = res.data.list
     table.total = res.data.total
   })
 }
-page()
+
+reload()
 </script>
 
 <style lang="scss" scoped>

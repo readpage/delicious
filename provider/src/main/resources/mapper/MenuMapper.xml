@@ -18,7 +18,6 @@
         <result property="name" column="name"/>
         <result property="type" column="type"/>
         <result property="parentId" column="parent_id"/>
-        <result property="parent" column="parent"/>
         <result property="component" column="component"/>
         <result property="title" column="title"/>
         <result property="icon" column="icon"/>

@@ -1,5 +1,7 @@
 <template>
-  <div>goods</div>
+  <div>
+    <icon-svg></icon-svg>
+  </div>
 </template>
 
 <script setup lang="ts">

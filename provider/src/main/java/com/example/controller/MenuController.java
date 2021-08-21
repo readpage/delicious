@@ -16,7 +16,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +58,7 @@ public class MenuController {
 
     @ApiOperation("查询当前用户菜单")
     @GetMapping("/permMenu")
-    public Result<List<Menu>> selectPermMenu() {
+    public Result<List<Menu>> selectPermMenu(@ApiIgnore HttpServletRequest request) {
         List<String> names = new ArrayList<>();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         for (GrantedAuthority auth : authentication.getAuthorities()) {

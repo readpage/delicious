@@ -1,0 +1,90 @@
+.cl-dialog {
+	.el-dialog {
+		&__header {
+			padding: 10px !important;
+			text-align: center;
+			border-bottom: 1px solid #f7f7f7;
+
+			.el-dialog__title {
+				font-size: 15px;
+				letter-spacing: 0.5px;
+			}
+
+			.el-dialog__headerbtn {
+				display: none;
+				top: 13px;
+
+				.el-dialog__close {
+					font-size: 18px;
+				}
+			}
+
+			&-slot {
+				&.is-drag {
+					-moz-user-select: none;
+					-webkit-user-select: none;
+					-ms-user-select: none;
+					-khtml-user-select: none;
+					user-select: none;
+					cursor: move;
+				}
+			}
+		}
+
+		&__body {
+			padding: 20px;
+		}
+
+		&__footer {
+			padding-bottom: 15px;
+		}
+	}
+
+	&__header {
+		height: 25px;
+		line-height: 25px;
+		text-align: center;
+		position: relative;
+	}
+
+	&__title {
+		display: block;
+		font-size: 15px;
+		letter-spacing: 0.5px;
+	}
+
+	&__headerbtn {
+		display: flex;
+		justify-content: flex-end;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 9;
+
+		.minimize, .maximize, .close {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 25px;
+			width: 40px;
+			border: 0;
+			background-color: #fff;
+			cursor: pointer;
+			outline: none;
+
+			i {
+				font-size: 16px;
+
+				&:hover {
+					opacity: 0.7;
+				}
+			}
+		}
+	}
+
+	&.hidden-header {
+		.el-dialog__header {
+			display: none;
+		}
+	}
+}

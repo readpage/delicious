@@ -12,7 +12,7 @@
           element-loading-text="拼命加载中"
           element-loading-spinner="el-icon-loading"
         >
-          <el-table-column prop="meta.title" label="名称" min-width="180"></el-table-column>
+          <el-table-column prop="meta.title" label="名称" show-overflow-tooltip min-width="180"></el-table-column>
           <el-table-column label="图标" width="80">
             <template #default="scope">
               <i :class="scope.row.meta.icon"></i>
@@ -41,30 +41,32 @@
 </template>
 
 <script setup lang="ts">
-import { Amenu } from "@/api";
+import { Amenu, Arole } from "@/api";
 import { translateToTree } from "@/hooks/useMenu";
 import { useStore } from "@/store";
-import { computed, inject, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 
-const reload = inject("reload")
 const { state } = useStore()
 const menu = ref<Imenu[]>([]);
-const table = ref()
-Amenu().then((res) => {
-  menu.value = translateToTree(
-    res.data.map((item: any) => {
-      item.meta = { title: item.title, icon: item.icon };
-      delete item.title;
-      delete item.icon;
-      return item;
-    })
-  );
-});
+function reload() {
+    Amenu().then((res) => {
+    menu.value = translateToTree(
+      res.data.map((item: any) => {
+        item.meta = { title: item.title, icon: item.icon };
+        delete item.title;
+        delete item.icon;
+        return item;
+      })
+    );
+  });
+}
+reload()
 function setType(row: Imenu): string {
   switch(row.type) {
     case 0:
       return "目录"
     case 1:
+    case 3:
       return "菜单"
     case 2:
       return "权限"
@@ -73,6 +75,7 @@ function setType(row: Imenu): string {
   }
 }
 
+const table = ref()
 function expandChange(row: Imenu, expanded: boolean) {
   if (expanded) {
     function tree(menu: Imenu[]) {
@@ -90,7 +93,6 @@ function expandChange(row: Imenu, expanded: boolean) {
     tree(menu.value)
   }
 }
-
 </script>
 
 <style lang="scss" scoped>

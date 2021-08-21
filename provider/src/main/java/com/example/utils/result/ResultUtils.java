@@ -1,6 +1,10 @@
 package com.example.utils.result;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class ResultUtils<T> {
 
     public static<T> Result<T> ok(Integer code, String msg, T data) {
@@ -32,6 +36,11 @@ public class ResultUtils<T> {
     }
 
 
+    public static<T> Result<T> query(T data) {
+        return ok(ResultEnum.RETRIEVE_SUCCESS, data);
+    }
+
+
     public static<T> Result<T> fail(Integer code, String msg) {
         return new Result<>(code, msg, null);
     }
@@ -46,6 +55,29 @@ public class ResultUtils<T> {
 
     public static<T> Result<T> fail() {
         return fail(ResultEnum.ERROR);
+    }
+
+
+    public static String toJson(ResultEnum resultEnum) {
+        Result<Object> result = new Result<>(resultEnum.getCode(), resultEnum.getMsg(), null);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(result);
+        } catch (JsonProcessingException e) {
+            return resultEnum.getMsg();
+        }
+    }
+
+    public static<T> Result<T> typeConvert(Object object, Class<T> type) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String str = mapper.writeValueAsString(object);
+            Result<T> result = mapper.readValue(str, new TypeReference<Result<T>>() {});
+            return result;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

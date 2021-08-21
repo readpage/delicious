@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.UserMapper">
-    <resultMap id="userMap" type="User">
+    <resultMap id="baseMap" type="User">
         <id property="id" column="id"/>
         <result property="username" column="username"/>
         <result property="nickname" column="nickname"/>
@@ -13,13 +13,36 @@
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
         <result property="version" column="version"/>
-        <collection property="roles" ofType="Role">
-            <result property="nickname" column="r_nickname"/>
+    </resultMap>
+
+    <!--property：对应JavaBean中的字段-->
+    <!--ofType：对应JavaBean的类型-->
+    <!--javaType：对应返回值的类型-->
+    <!--column：对应数据库column的字段，不是JavaBean中的字段-->
+    <!--select：对应查询子集的sql-->
+    <!--extends: 可以实现存在继承关系的两个类实体的映射。extends填父类的resultMap。-->
+
+    <resultMap id="userMap" type="User" extends="baseMap">
+        <!-- column="id" 对应bSelectAll parameterType对应的参数查询
+        id 的值对应 user的id-->
+        <collection property="roles" column="id" ofType="Role" select="selectRole">
+            <id property="id" column="id"/>
+            <result property="nickname" column="nickname"/>
         </collection>
     </resultMap>
-    <select id="selectAll" resultMap="userMap">
-        SELECT u.*, r.nickname as r_nickname, r.id as r_id
+
+    <select id="selectRole" resultType="Role">
+        SELECT r.id, r.nickname, u.id as uid
         FROM user u, role r, user_role ur
         WHERE u.id=ur.uid AND r.id=ur.rid
+        AND u.id = #{id}
     </select>
+    <select id="selectPage" resultMap="userMap">
+        SELECT * FROM user
+    </select>
+
+    <select id="selectByUsername"  resultMap="userMap">
+        SELECT * FROM user WHERE username=#{username}
+    </select>
+
 </mapper>

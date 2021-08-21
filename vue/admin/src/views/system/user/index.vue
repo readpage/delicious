@@ -4,11 +4,15 @@
       <div class="user">
         <el-space :size="10">
           <el-button size="mini" icon="el-icon-refresh" @click="reload">刷新</el-button>
+          <Add />
+          <Edit type="success" icon="el-icon-edit" msg="修改" />
         </el-space>
-        <el-table :data="table.user" stripe ref="tableRef"
+        <el-table :data="table.user" stripe
           :header-cell-style="{ background: '#f5f7fa', color: '#606266' }"
           max-height="500"
           @expand-change="expandChange"
+          row-key="id"
+          :expand-row-keys="expands"
           v-loading="state.user.loading"
           element-loading-text="拼命加载中"
           element-loading-spinner="el-icon-loading">
@@ -55,7 +59,7 @@
           <el-table-column label="修改时间" prop="updateTime" width="160"></el-table-column>
           <el-table-column label="操作" fixed="right" width="130">
             <el-space>
-              <el-button type="primary" size="mini" icon="el-icon-edit"></el-button>
+              <Edit type="primary" icon="el-icon-edit" />
               <el-button type="danger" size="mini" icon="el-icon-delete"></el-button>
             </el-space>
           </el-table-column>
@@ -76,11 +80,10 @@
 import { Auser } from "@/api";
 import { useStore } from "@/store";
 import { inject, onMounted, reactive, ref } from "vue"
+import Add from "./components/Add.vue";
+import Edit from "./components/Edit.vue";
 
-const reload = inject("reload")
 const { state } = useStore()
-const tableRef = ref()
-
 const table = reactive({
   total: 0,
   pageSize: 5,
@@ -89,28 +92,27 @@ const table = reactive({
 })
 function handleSizeChange(val: number) {
   table.pageSize = val
-  page()
+  reload()
 }
 function handleCurrentChange(val: number) {
   table.pageNum = val
-  page()
+  reload()
 }
-
-function page() {
+function reload() {
   Auser({urlParam: `/${table.pageNum}/${table.pageSize}`}).then(res => {
     table.user = res.data.list
     table.total = res.data.total
   })
 }
-page()
+reload()
 
+const expands = ref<number[]>([])
 function expandChange(row: Iuser, expandedRows : Iuser[]) {
-  if (expandedRows.length > 1) {
-    expandedRows.forEach(item => {
-      if (row.id != item.id) {
-        tableRef.value.toggleRowExpansion(item, false)
-      }
-    })
+  if (expands.value[0] == row.id) {
+    expands.value = []
+  } else {
+    expands.value = []
+    expands.value.push(row.id)
   }
 }
 </script>

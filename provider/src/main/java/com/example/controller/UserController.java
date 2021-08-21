@@ -15,6 +15,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -60,11 +62,18 @@ public class UserController {
     @ApiOperation("分页查询用户")
     @GetMapping("/page/{pageNum}/{pageSize}")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNum", value = "页数", required = true),
-            @ApiImplicitParam(name = "pageSize", value = "页大小", required = true)
+            @ApiImplicitParam(name = "pageNum", value = "页数", required = true, dataType = "int", example = "1"),
+            @ApiImplicitParam(name = "pageSize", value = "页大小", required = true, dataType = "int", example = "5")
     })
     public Result<PageInfo<User>> selectPage(@PathVariable int pageNum, @PathVariable int pageSize) {
         return ResultUtils.ok(ResultEnum.RETRIEVE_SUCCESS, userService.selectPage(pageNum, pageSize));
+    }
+
+    @ApiOperation("用户信息")
+    @GetMapping("/info")
+    public Result<Object> info() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return ResultUtils.ok(ResultEnum.RETRIEVE_SUCCESS,userService.selectByUsername(auth.getName()));
     }
 
     @ApiOperation("查询用户是否存在")

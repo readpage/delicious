@@ -1,4 +1,5 @@
 export function translateToTree(data: Imenu[]) {
+  
   let parents = data.filter(item => !item.parentId)
   let childrens = data.filter(item => item.parentId )
   

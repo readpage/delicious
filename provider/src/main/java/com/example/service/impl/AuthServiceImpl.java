@@ -15,11 +15,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
+
 @Service
 public class AuthServiceImpl implements AuthService {
 
     @Override
-    public Result<Object> login(String username, String password) {
+    public Result<Object> login(HttpServletRequest request, String username, String password) {
+        HttpHeaders headers = new HttpHeaders();
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String key = (String) headerNames.nextElement();
+            String value = request.getHeader(key);
+            headers.add(key, value);
+        }
         String url = "http://localhost:8080/oauth/token";
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("client_id", "c1");
@@ -28,7 +38,7 @@ public class AuthServiceImpl implements AuthService {
         body.add("username", username);
         body.add("password", password);
         body.add("redirect_uri", "http://www.baidu.com");
-        HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(body, null);
+        HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(body, headers);
         return JsonUtils.exchange(url, HttpMethod.POST, httpEntity, Object.class);
     }
 

@@ -1,6 +1,7 @@
 package com.example.controller;
 
-import com.example.entity.User;
+
+import com.example.service.AuthService;
 import com.example.service.UserService;
 import com.example.utils.result.Result;
 import com.example.utils.result.ResultEnum;
@@ -14,9 +15,9 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.Map;
 
@@ -34,21 +35,16 @@ public class AuthController {
     private ConsumerTokenServices consumerTokenServices;
 
     @Autowired
+    private AuthService authService;
+
+    @Autowired
     private UserService userService;
 
 
     //oauth2登录认证
     @PostMapping("/token")
-    public Result<OAuth2AccessToken> postAccessToken(Principal principal, @RequestParam Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
-        OAuth2AccessToken oAuth2AccessToken = tokenEndpoint.postAccessToken(principal, parameters).getBody();
-        String username= tokenStore.readAuthentication(oAuth2AccessToken).getName();
-        User user = new User();
-        user.setUsername(username);
-        user.setAccessToken(oAuth2AccessToken.getValue());
-        if (userService.updateByUsername(user)) {
-            return ResultUtils.ok(ResultEnum.LOGIN_SUCCESS, oAuth2AccessToken);
-        }
-        return ResultUtils.fail();
+    public Result<OAuth2AccessToken> postAccessToken(Principal principal, @RequestParam Map<String, String> params, HttpServletRequest request) throws Exception {
+        return authService.login(principal, params, request);
     }
 
     //注销账户
