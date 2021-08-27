@@ -29,7 +29,7 @@ import MenuTree from "./components/MenuTree.vue";
 const { state, commit, getters } = useStore()
 
 const lock = {
-	collapse: null,
+	collapse: null as undefined,
 };
 const menu = computed(() => state.menu.menu)
 const browser = computed<browserType>(() => getters["user/browser"])

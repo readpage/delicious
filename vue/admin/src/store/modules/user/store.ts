@@ -9,7 +9,7 @@ export const createState = () => ({
   collapse: browser.isMini,
   loading: true,
   elLoading: undefined as unknown as ILoadingInstance,
-  info: storage.get("userInfo") as Iuser || {},
+  info: storage.get("userInfo") as Iuser,
 })
 
 

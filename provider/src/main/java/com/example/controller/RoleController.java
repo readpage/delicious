@@ -17,6 +17,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * <p>
  *  前端控制器
@@ -53,6 +55,12 @@ public class RoleController {
             return ResultUtils.ok(ResultEnum.CREATE_SUCCESS);
         }
         return ResultUtils.fail(ResultEnum.CREATE_FAIL);
+    }
+
+    @ApiOperation("查询所有角色")
+    @GetMapping("/list")
+    public Result<List<Role>> selectAll() {
+        return ResultUtils.query(roleService.list());
     }
 
     @ApiOperation("分页查询角色")

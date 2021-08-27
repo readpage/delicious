@@ -17,7 +17,6 @@ const mutations = {
 
   showLoading(state: userState) {
     state.loading = true
-    Nprogress.start()
   },
   
   hideLoading(state: userState) {
@@ -39,7 +38,6 @@ const mutations = {
       state.elLoading.close()
     }
   },
-
 
   setUserInfo(state: userState, val: Iuser) {
     state.info = val

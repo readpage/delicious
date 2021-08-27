@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { AisUser, Aregister } from "@/api";
+import { Aregister, Auser } from "@/api";
 import { reactive, ref } from "vue";
 
 const ruleForm = reactive({
@@ -67,7 +67,7 @@ const checkUsername: Ivalidate = (rule, value, callback) => {
   }
   const params: any = {}
   params.username = value
-  AisUser(params).then(res => {
+  Auser.isUser(params).then(res => {
     if (res.data == true) {
       callback("用户名已经存在😂")
     } else {

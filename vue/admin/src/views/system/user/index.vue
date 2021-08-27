@@ -58,10 +58,12 @@
           <el-table-column label="创建时间" prop="createTime" width="160"></el-table-column>
           <el-table-column label="修改时间" prop="updateTime" width="160"></el-table-column>
           <el-table-column label="操作" fixed="right" width="130">
-            <el-space>
-              <Edit type="primary" icon="el-icon-edit" />
-              <el-button type="danger" size="mini" icon="el-icon-delete"></el-button>
-            </el-space>
+            <template #default="scope">
+              <el-space>
+                <Edit type="primary" icon="el-icon-edit" @handleUpdate="handleUpdate(scope.row)" />
+                <el-button type="danger" size="mini" icon="el-icon-delete"></el-button>
+              </el-space>
+            </template>
           </el-table-column>
         </el-table>
         <el-pagination layout="total, sizes, pre, pager, next, jumper"
@@ -77,13 +79,13 @@
 </template>
 
 <script setup lang="ts">
-import { Auser } from "@/api";
+import { Arole, Auser } from "@/api";
 import { useStore } from "@/store";
-import { inject, onMounted, reactive, ref } from "vue"
+import { inject, onMounted, provide, reactive, ref } from "vue"
 import Add from "./components/Add.vue";
 import Edit from "./components/Edit.vue";
 
-const { state } = useStore()
+const { state, commit } = useStore()
 const table = reactive({
   total: 0,
   pageSize: 5,
@@ -99,7 +101,8 @@ function handleCurrentChange(val: number) {
   reload()
 }
 function reload() {
-  Auser({urlParam: `/${table.pageNum}/${table.pageSize}`}).then(res => {
+  commit("user/showLoading")
+  Auser.page({urlParam: `/${table.pageNum}/${table.pageSize}`}).then(res => {
     table.user = res.data.list
     table.total = res.data.total
   })
@@ -115,6 +118,25 @@ function expandChange(row: Iuser, expandedRows : Iuser[]) {
     expands.value.push(row.id)
   }
 }
+
+
+const data = ref()
+provide("data", data)
+function handleUpdate(row: any) {
+  const temp = Object.assign({}, row)
+  let ids= temp.roles.map((item: any) => {
+    return item.id
+  })
+  temp.roles = ids
+  data.value = temp
+}
+
+const roles = ref()
+provide("roles", roles)
+Arole.list().then(res => {
+  roles.value = res.data
+})
+
 </script>
 
 <style lang="scss" scoped>

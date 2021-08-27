@@ -1,0 +1,1 @@
+import{d as a,r as s,o as e,c as o,a as r}from"./vendor.341633ee.js";var t=a({setup:a=>(a,t)=>{const d=s("icon-svg");return e(),o("div",null,[r(d)])}});t.__scopeId="data-v-57a745b5";export{t as default};

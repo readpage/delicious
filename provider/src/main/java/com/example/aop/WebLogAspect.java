@@ -50,7 +50,7 @@ public class WebLogAspect {
         logInfo.setUsername(authentication.getName());
         logInfo.setRequestMethod(request.getMethod());
         logInfo.setUrl(request.getRequestURI());
-        logInfo.setMethod(joinPoint.getTarget().getClass().getName());
+        logInfo.setMethod(joinPoint.getSignature().toString());
     }
 
     @AfterReturning(returning = "object", pointcut = "webLog()")

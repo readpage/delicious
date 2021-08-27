@@ -11,6 +11,7 @@
           v-loading="state.user.loading"
           element-loading-text="拼命加载中"
           element-loading-spinner="el-icon-loading">
+          <el-table-column type="selection" width="50"></el-table-column>
           <el-table-column label="角色名称" prop="name" show-overflow-tooltip min-width="150"></el-table-column>
           <el-table-column label="昵称" prop="nickname" show-overflow-tooltip min-width="150"></el-table-column>
           <el-table-column label="创建时间" prop="createTime" width="180"></el-table-column>
@@ -40,7 +41,7 @@ import { Arole } from "@/api";
 import { useStore } from "@/store";
 import { onMounted, reactive, ref } from "vue"
 
-const { state } = useStore()
+const { state, commit } = useStore()
 
 const table = reactive({
   total: 0,
@@ -58,7 +59,8 @@ function handleCurrentChange(val: number) {
 }
 
 function reload() {
-  Arole({urlParam: `/${table.pageNum}/${table.pageSize}`}).then(res => {
+  commit("user/showLoading")
+  Arole.page({urlParam: `/${table.pageNum}/${table.pageSize}`}).then(res => {
     table.role = res.data.list
     table.total = res.data.total
   })

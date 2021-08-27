@@ -1,4 +1,4 @@
-import { Ainfo, Alogout, ArefToken } from '@/api';
+import { Alogout, ArefToken, Auser } from '@/api';
 import storage from '@/hooks/storage';
 import { closeLoad } from '@/hooks/useUser';
 import { store } from '@/store';
@@ -19,7 +19,7 @@ const actions = {
   },
 
   userInfo({ commit }: any) {
-    return Ainfo().then(res => {
+    return Auser.info().then(res => {
       commit("setUserInfo", res.data)
       return res
     })

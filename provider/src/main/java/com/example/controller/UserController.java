@@ -41,12 +41,16 @@ public class UserController {
 
     @ApiOperation(value = "添加用户", notes = "请求实列还需要添加password(密码)字段")
     @ApiOperationSupport(includeParameters = {"user.username", "user.password"})
-    @PostMapping("/save")
-    public Result<Object> save(@RequestBody User user) {
-        if (userService.save(user)) {
+    @PostMapping("/save/{list}")
+    @ApiImplicitParam(name = "list", value="角色id", required = true, dataType = "List<Integer>", example = "1, 2, 3")
+    public Result<Object> save(@RequestBody User user, @PathVariable List<Integer> list) {
+        System.out.println("------------------");
+        System.out.println(user);
+        System.out.println(list);
+        //        if (userService.save(user)) {
             return ResultUtils.ok(ResultEnum.CREATE_SUCCESS);
-        }
-        return ResultUtils.fail(ResultEnum.CREATE_FAIL);
+//        }
+//        return ResultUtils.fail(ResultEnum.CREATE_FAIL);
     }
 
     @ApiOperation("分配角色")
@@ -79,7 +83,7 @@ public class UserController {
     @ApiOperation("查询用户是否存在")
     @GetMapping("/selectIsUser")
     public Result<Object> selectIsUser(String username) {
-        return ResultUtils.ok(userService.selectIsUser(username));
+        return ResultUtils.query(userService.selectIsUser(username));
     }
 
     @ApiOperation(value = "修改用户", notes = "请求实列还需要添加password(密码)字段")

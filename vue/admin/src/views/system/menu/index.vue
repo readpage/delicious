@@ -41,15 +41,16 @@
 </template>
 
 <script setup lang="ts">
-import { Amenu, Arole } from "@/api";
+import { Amenu } from "@/api";
 import { translateToTree } from "@/hooks/useMenu";
 import { useStore } from "@/store";
 import { computed, onMounted, ref } from "vue";
 
-const { state } = useStore()
+const { state, commit } = useStore()
 const menu = ref<Imenu[]>([]);
 function reload() {
-    Amenu().then((res) => {
+  commit("user/showLoading")
+  Amenu.list().then((res) => {
     menu.value = translateToTree(
       res.data.map((item: any) => {
         item.meta = { title: item.title, icon: item.icon };

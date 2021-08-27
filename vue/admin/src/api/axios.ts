@@ -3,6 +3,8 @@ import axios from "axios"
 import { ElMessage, ElMessageBox } from "element-plus"
 import { store } from "@/store";
 import router from "@/router";
+import Nprogress from "nprogress";
+import "nprogress/nprogress.css";
 
 const service = axios.create({
   baseURL: "/api"
@@ -10,9 +12,8 @@ const service = axios.create({
 let num = 0
 
 service.interceptors.request.use(config => {
-  
   if (num++ == 0) {
-    store.commit("user/showLoading")
+    Nprogress.start()
   }
   const token = storage.get("token")
   if (token) {

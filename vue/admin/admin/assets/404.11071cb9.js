@@ -1,0 +1,1 @@
+import{_ as a}from"./ErrorPage.450f5b0a.js";import{d as e,o,c as r}from"./vendor.341633ee.js";import"./index.99dd7a58.js";var s=e({setup:e=>(e,s)=>(o(),r(a,{code:"404",desc:"找不到您要查找的页面"}))});s.__scopeId="data-v-34a24755";export{s as default};
