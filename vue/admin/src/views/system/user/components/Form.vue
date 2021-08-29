@@ -1,81 +1,104 @@
 <template>
-  <el-form
-    :model="data"
-    ref="formRef"
-    :rules="rules"
-    label-width="80px"
-    size="small"
-  >
-    <el-row>
-      <el-col :span="24">
-        <el-form-item style="width: 100%" label="用户名:" prop="username">
-          <el-input v-model="data.username"></el-input>
-        </el-form-item>
-      </el-col>
-      <el-col :span="12">
-        <el-form-item label="昵称:" prop="nickname">
-          <el-input v-model="data.nickname"></el-input>
-        </el-form-item>
-      </el-col>
-      <el-col :span="12">
-        <el-form-item label="密码:" prop="password">
-          <el-input v-model="data.password" show-password></el-input>
-        </el-form-item>
-      </el-col>
-      <el-col :span="24">
-        <el-form-item style="width: 100%" label="角色:" prop="roles">
-          <el-select
-            v-model="data.roles"
-            placeholder="请选择"
-            clearable
-            multiple
-            collapse-tags
-          >
-            <el-option
-              v-for="item in roles"
-              :key="item.id"
-              :label="item.nickname"
-              :value="item.id"
+  <el-dialog
+    :title="msg"
+    v-model="visible"
+    @close="handleClose"
+    :before-close="beforeClose">
+    <el-form
+      :model="data"
+      ref="formRef"
+      :rules="rules"
+      label-width="80px"
+      size="small"
+    >
+      <el-row>
+        <el-col :span="24">
+          <el-form-item style="width: 100%" label="用户名:" prop="username">
+            <el-input v-model="data.username"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="昵称:" prop="nickname">
+            <el-input v-model="data.nickname"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="密码:" prop="password">
+            <el-input v-model="data.password" show-password></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="24">
+          <el-form-item style="width: 100%" label="角色:" prop="roles">
+            <el-select
+              v-model="data.roles"
+              placeholder="请选择"
+              clearable
+              multiple
+              collapse-tags
             >
-            </el-option>
-          </el-select>
-        </el-form-item>
-      </el-col>
-      <el-col :span="12">
-        <el-form-item label="手机号码:" prop="phone">
-          <el-input v-model="data.phone"></el-input>
-        </el-form-item>
-      </el-col>
-      <el-col :span="12">
-        <el-form-item label="邮箱:" prop="email">
-          <el-input v-model="data.email"></el-input>
-        </el-form-item>
-      </el-col>
-      <el-col :span="24">
-        <el-form-item label="状态:">
-          <el-radio v-model="data.status" :label="true">开启</el-radio>
-          <el-radio v-model="data.status" :label="false">关闭</el-radio>
-        </el-form-item>
-      </el-col>
-    </el-row>
-  </el-form>
+              <el-option
+                v-for="item in roles"
+                :key="item.id"
+                :label="item.nickname"
+                :value="item.id"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="手机号码:" prop="phone">
+            <el-input v-model="data.phone"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="邮箱:" prop="email">
+            <el-input v-model="data.email"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="24">
+          <el-form-item label="状态:">
+            <el-radio v-model="data.status" :label="true">开启</el-radio>
+            <el-radio v-model="data.status" :label="false">关闭</el-radio>
+          </el-form-item>
+        </el-col>
+      </el-row>
+    </el-form>
+    <template #footer>
+      <el-button type="primary" size="small" :loading="state.user.btnLoading" @click="submit">确定</el-button>
+      <el-button size="small" @click="visible=false">取消</el-button>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup lang="ts">
+import { defineEmit, inject, reactive, ref } from "vue";
+import { IroleKey, IuserFormKey, role, userForm } from "@/symbols";
 import { Auser } from "@/api";
-import { defineEmit, inject, reactive, ref, watchEffect } from "vue";
+import { ElMessageBox } from "element-plus";
 import type { Ref } from "vue"
+import { useStore } from "@/store";
 
-const roles = inject<Ref<Irole[]>>("roles")
-const data: any = inject("data")
+const props = defineProps({
+  msg: String,
+})
+
+const { state, commit } = useStore()
+const visible = ref(false)
+const roles = inject(IroleKey, role)
+const data = inject(IuserFormKey, userForm)
+let username = inject<Ref<String>>("username", ref(""))
 
 const checkUsername: Ivalidate = (rule, value, callback) => {
   if (!value) {
     return callback("请输入用户名😒")
+  } else if (value == username.value) {
+    return callback()
   }
-  const params: any = {}
-  params.username = value
-  Auser.isUser(params).then(res => {
+  
+
+  commit("user/butLoading")
+  Auser.isUser({username: value}).then(res => {
     if (res.data == true) {
       callback("用户名已经存在😂")
     } else {
@@ -95,25 +118,30 @@ const rules = reactive({
 })
 
 const formRef = ref()
-function handleClosed() {
+function handleClose() {
   formRef.value.resetFields()
 }
-
-function update() {
+function beforeClose(done: any) {
+  ElMessageBox.confirm("确认关闭?")
+    .then(() => {
+      done()
+    })
 }
 
-function add() {
-  console.log(data);
+const emit = defineEmit(["submit"])
+function submit() {
+  formRef.value.validate((valid: any) => {
+    if (valid) {
+      emit("submit", data.value)
+    }
+  }) 
 }
 
 defineExpose({
-  handleClosed,
-  update,
-  add,
+  visible,
+  rules,
+  checkUsername,
 })
-
-
-
 
 </script>
 

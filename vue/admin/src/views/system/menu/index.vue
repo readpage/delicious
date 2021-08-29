@@ -4,6 +4,7 @@
       <div class="menu">
         <el-space :size="10">
           <el-button size="mini" icon="el-icon-refresh" @click="reload">刷新</el-button>
+          <Add />
         </el-space>
         <el-table :data="menu" ref="table" row-key="id" stripe
           max-height="500"
@@ -45,18 +46,19 @@ import { Amenu } from "@/api";
 import { translateToTree } from "@/hooks/useMenu";
 import { useStore } from "@/store";
 import { computed, onMounted, ref } from "vue";
+import Add from "./components/Add.vue";
 
 const { state, commit } = useStore()
 const menu = ref<Imenu[]>([]);
 function reload() {
   commit("user/showLoading")
-  Amenu.list().then((res) => {
+  Amenu.list().then(res => {
     menu.value = translateToTree(
       res.data.map((item: any) => {
-        item.meta = { title: item.title, icon: item.icon };
-        delete item.title;
-        delete item.icon;
-        return item;
+        item.meta = { title: item.title, icon: item.icon }
+        delete item.title
+        delete item.icon
+        return item
       })
     );
   });

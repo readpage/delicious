@@ -21,10 +21,14 @@ const mutations = {
   
   hideLoading(state: userState) {
     state.loading = false
+    state.btnLoading = false
     Nprogress.done()
     closeLoad()
   },
 
+  btnLoading(state: userState) {
+    state.btnLoading = true
+  },
 
   elLoading(state: userState) {
     state.elLoading = ElLoading.service({

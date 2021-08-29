@@ -9,7 +9,8 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/delicious?serverTimezone=GMT%2B8
+    # rewriteBatchedStatements参数置为true, 驱动才会帮你批量执行SQL
+    url: jdbc:mysql://localhost:3306/delicious?serverTimezone=GMT%2B8&rewriteBatchedStatements=true
     username: root
     password: root
     druid:

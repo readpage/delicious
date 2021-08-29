@@ -3,6 +3,7 @@ package com.example.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -33,7 +34,7 @@ public class User implements Serializable {
     @ApiModelProperty(value = "昵称")
     private String nickname;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ApiModelProperty(value = "密码")
     private String password;
 
@@ -65,6 +66,7 @@ public class User implements Serializable {
     @Version
     private Integer version;
 
+    @ApiModelProperty(value = "角色")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @TableField(exist = false)
     private List<Role> roles;

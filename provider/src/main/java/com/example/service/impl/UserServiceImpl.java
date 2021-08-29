@@ -2,7 +2,9 @@ package com.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.entity.Role;
 import com.example.entity.User;
+import com.example.entity.UserRole;
 import com.example.mapper.UserMapper;
 import com.example.service.UserRoleService;
 import com.example.service.UserService;
@@ -14,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,9 +38,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private UserRoleService userRoleService;
 
     @Override
-    public boolean save(User user) {
+    @Transactional(rollbackFor = Exception.class)
+    public boolean add(User user) {
         user.setPassword(pw.encode(user.getPassword()));
-        return userMapper.insert(user) > 0;
+        if (userMapper.insert(user) < 0) {
+            return false;
+        }
+
+        ArrayList<UserRole> userRoles = new ArrayList<>();
+        for (Role role : user.getRoles()) {
+            UserRole userRole = new UserRole();
+            userRole.setUid(user.getId());
+            userRole.setRid(role.getId());
+            userRoles.add(userRole);
+        }
+        return userRoleService.saveBatch(userRoles);
     }
 
     @Override

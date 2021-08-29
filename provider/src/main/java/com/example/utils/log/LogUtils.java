@@ -40,7 +40,7 @@ public class LogUtils {
         browserInfo.setOs(os.getName());
         browserInfo.setDeviceType(os.getDeviceType().getName());
         browserInfo.setIpAddr(getIpAddress(request));
-        browserInfo.setLocation(getLocation(browserInfo.getIpAddr()));
+//        browserInfo.setLocation(getLocation(browserInfo.getIpAddr()));
         return browserInfo;
     }
 

@@ -2,10 +2,6 @@ import storage from "@/hooks/storage";
 import { createRouter, createWebHistory } from "vue-router"
 
 
-const router = createRouter({
-  history: createWebHistory(),
-  routes: [],
-});
 
 // const modules = import.meta.glob("../views/**")
 // for (const path in modules) {
@@ -15,6 +11,12 @@ const router = createRouter({
 //     }
 //   })
 // }
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [],
+});
+
 const routes = [
   {
     path: "/",

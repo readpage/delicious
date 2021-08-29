@@ -1,8 +1,10 @@
 package com.example.service;
 
-import com.example.entity.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.entity.Role;
 import com.example.utils.PageInfo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,6 +16,8 @@ import com.example.utils.PageInfo;
  */
 public interface RoleService extends IService<Role> {
     boolean removeById(Integer id) throws Exception;
+
+    boolean add(Role role, List<Integer> menuIdList);
 
     PageInfo<Role> selectPage(int pageNum, int pageSize);
 }

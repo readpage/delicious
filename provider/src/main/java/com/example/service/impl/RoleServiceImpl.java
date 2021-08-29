@@ -1,6 +1,7 @@
 package com.example.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.entity.MenuRole;
 import com.example.entity.Role;
 import com.example.mapper.RoleMapper;
 import com.example.service.MenuRoleService;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,6 +44,25 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             throw new Exception(ResultEnum.DELETE_FAIL.getMsg());
         }
         return roleMapper.deleteById(id) > 0;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean add(Role role, List<Integer> menuIdList) {
+
+        if (roleMapper.insert(role) < 0) {
+            return false;
+        }
+
+        ArrayList<MenuRole> menuRoles = new ArrayList<>();
+        for (Integer item : menuIdList) {
+            MenuRole menuRole = new MenuRole();
+            menuRole.setMid(item);
+            menuRole.setRid(role.getId());
+            menuRoles.add(menuRole);
+        }
+
+        return menuRoleService.saveBatch(menuRoles);
     }
 
     @Override

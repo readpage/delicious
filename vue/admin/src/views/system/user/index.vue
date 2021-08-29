@@ -60,7 +60,7 @@
           <el-table-column label="操作" fixed="right" width="130">
             <template #default="scope">
               <el-space>
-                <Edit type="primary" icon="el-icon-edit" @handleUpdate="handleUpdate(scope.row)" />
+                <Edit type="primary" icon="el-icon-edit" @open="open(scope.row)" />
                 <el-button type="danger" size="mini" icon="el-icon-delete"></el-button>
               </el-space>
             </template>
@@ -81,6 +81,7 @@
 <script setup lang="ts">
 import { Arole, Auser } from "@/api";
 import { useStore } from "@/store";
+import { IroleKey, IuserFormKey } from "@/symbols";
 import { inject, onMounted, provide, reactive, ref } from "vue"
 import Add from "./components/Add.vue";
 import Edit from "./components/Edit.vue";
@@ -94,20 +95,30 @@ const table = reactive({
 })
 function handleSizeChange(val: number) {
   table.pageSize = val
-  reload()
+  page()
 }
 function handleCurrentChange(val: number) {
   table.pageNum = val
-  reload()
+  page()
 }
-function reload() {
+const roles = ref<Irole[]>()
+provide(IroleKey, roles)
+function page() {
   commit("user/showLoading")
   Auser.page({urlParam: `/${table.pageNum}/${table.pageSize}`}).then(res => {
     table.user = res.data.list
     table.total = res.data.total
   })
 }
+
+function reload() {
+  page()
+  Arole.list().then(res => {
+    roles.value = res.data
+  })
+}
 reload()
+provide("reload", reload)
 
 const expands = ref<number[]>([])
 function expandChange(row: Iuser, expandedRows : Iuser[]) {
@@ -120,22 +131,20 @@ function expandChange(row: Iuser, expandedRows : Iuser[]) {
 }
 
 
-const data = ref()
-provide("data", data)
-function handleUpdate(row: any) {
-  const temp = Object.assign({}, row)
-  let ids= temp.roles.map((item: any) => {
+const data = ref<IuserForm>()
+provide(IuserFormKey, data)
+const username = ref("")
+provide("username", username)
+function open(row: any) {
+  const temp = Object.assign({}, row) 
+  let ids= row.roles.map((item: any) => {
     return item.id
   })
+  username.value = temp.username
   temp.roles = ids
   data.value = temp
 }
 
-const roles = ref()
-provide("roles", roles)
-Arole.list().then(res => {
-  roles.value = res.data
-})
 
 </script>
 

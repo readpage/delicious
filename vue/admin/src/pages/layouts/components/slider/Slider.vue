@@ -10,6 +10,7 @@
           active-text-color="#409eff"
           router
           :collapse="collapse"
+          :collapse-transition="false"
           unique-opened
         >
         <MenuTree :menu="menu" />
@@ -29,7 +30,7 @@ import MenuTree from "./components/MenuTree.vue";
 const { state, commit, getters } = useStore()
 
 const lock = {
-	collapse: null as undefined,
+	collapse: null,
 };
 const menu = computed(() => state.menu.menu)
 const browser = computed<browserType>(() => getters["user/browser"])

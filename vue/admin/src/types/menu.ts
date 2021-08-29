@@ -15,6 +15,7 @@ interface Imenu {
   updateTime: string
   version: number
   children?: Imenu[]
+  label?: string
 }
 
 interface Itags {

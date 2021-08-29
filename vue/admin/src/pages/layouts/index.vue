@@ -68,10 +68,11 @@ onBeforeRouteUpdate((to) => {
   &__left {
     overflow: hidden;
     width: 250px;
-    transition: left 0.2s;
   }
 
   &__right {
+    display: flex;
+    flex-direction: column;
     width: calc(100% - 250px);
   }
   
@@ -86,7 +87,8 @@ onBeforeRouteUpdate((to) => {
 	}
 
   &__container {
-    height: calc(100% - 100px);
+    flex: 1;
+    overflow: hidden;
     box-sizing: border-box;
     margin: 0 10px;
 	}
@@ -98,7 +100,7 @@ onBeforeRouteUpdate((to) => {
       left: 0;
       z-index: 9999;
       transition: transform 0.3s cubic-bezier(0.7, 0.3, 0.1, 1),
-				box-shadow 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
+			box-shadow 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
     }
     .page-layout__right {
       width: 100%;
@@ -117,7 +119,7 @@ onBeforeRouteUpdate((to) => {
   @media (min-width: 768px) {
     .page-layout__left,
     .page-layout__right {
-      transition: width 0.2s;
+      transition: width 0.2s ease-in-out,
     }
 
     .page-layout__mask {
@@ -138,7 +140,7 @@ onBeforeRouteUpdate((to) => {
 
 
 .slide-fade-enter-active {
-  transition: all .3s ease-out;
+  transition: all .2s ease-out;
 }
 
 .slide-fade-leave-active {
@@ -147,7 +149,7 @@ onBeforeRouteUpdate((to) => {
 
 .slide-fade-enter-from,
 .slide-fade-leave-to {
-  transform: translateX(20px);
+  transform: translateX(30px);
   opacity: 0;
 }
 </style>

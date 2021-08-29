@@ -41,16 +41,17 @@ public class UserController {
 
     @ApiOperation(value = "添加用户", notes = "请求实列还需要添加password(密码)字段")
     @ApiOperationSupport(includeParameters = {"user.username", "user.password"})
-    @PostMapping("/save/{list}")
-    @ApiImplicitParam(name = "list", value="角色id", required = true, dataType = "List<Integer>", example = "1, 2, 3")
-    public Result<Object> save(@RequestBody User user, @PathVariable List<Integer> list) {
-        System.out.println("------------------");
-        System.out.println(user);
-        System.out.println(list);
-        //        if (userService.save(user)) {
-            return ResultUtils.ok(ResultEnum.CREATE_SUCCESS);
-//        }
-//        return ResultUtils.fail(ResultEnum.CREATE_FAIL);
+    @PostMapping("/add")
+    public Result<Object> add(@RequestBody User user) {
+        try {
+            if (userService.add(user)) {
+                return ResultUtils.ok(ResultEnum.CREATE_SUCCESS);
+            }
+            return ResultUtils.fail(ResultEnum.CREATE_FAIL);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtils.fail(ResultEnum.CREATE_FAIL);
+        }
     }
 
     @ApiOperation("分配角色")

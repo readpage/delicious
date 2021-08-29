@@ -1,9 +1,18 @@
 interface Irole {
   id: number
+  name: string
   nickname: string
   createTime: string
   updateTime: string
   version: number
+}
+
+interface IroleForm {
+  role: {
+    name: string
+    nickname: string
+  }
+  menuIdList: number[]
 }
 
 interface Iuser {
@@ -19,6 +28,18 @@ interface Iuser {
   updateTime: string
   version: number
   roles: Irole[]
+}
+
+interface IuserForm {
+  id?: number
+  username: string
+  nickname: string
+  password?: string
+  // headImg: string
+  phone: string
+  email: string
+  status: boolean
+  roles: Array<number>
 }
 
 interface Itoken {

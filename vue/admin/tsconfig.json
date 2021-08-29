@@ -3,7 +3,6 @@
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
-    "strictNullChecks": false,
     "strict": true,
     "jsx": "preserve",
     "sourceMap": true,

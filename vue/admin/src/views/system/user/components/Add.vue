@@ -1,53 +1,37 @@
 <template>
-  <el-button type="primary" size="mini" icon="el-icon-plus" @click="visible=true">新增</el-button>
-  <el-dialog
-    title="添加用户"
-    v-model="visible"
-    @close="handleClosed"
-    :before-close="handleClose"
-    >
-    <Form ref="form" />
-    <template #footer>
-      <el-button type="primary" size="small" @click="add">确定</el-button>
-      <el-button size="small" @click="visible=false">取消</el-button>
-    </template> 
-  </el-dialog>
-  
+  <el-button type="primary" size="mini" icon="el-icon-plus" @click="open">新增</el-button>
+  <Form msg="添加用户" ref="form" @submit="submit" />
 </template>
 
 <script setup lang="ts">
-import { ElMessageBox } from "element-plus"
-import { provide, reactive, ref } from "vue"
+import { Auser } from "@/api"
+import { useStore } from "@/store"
+import { IuserFormKey, userForm } from "@/symbols"
+import { inject, provide, ref } from "vue"
 import Form from "./Form.vue"
 
-const visible = ref(false)
-
-function handleClose(done: any) {
-  ElMessageBox.confirm("确认关闭?")
-    .then(() => {
-      done()
-    })
-}
-
+const reload = inject("reload") as any
 const form = ref()
-function handleClosed() {
-  form.value.handleClosed()
+function open() {
+  form.value.visible = true
 }
 
-function add() {
-  form.value.add()
+const { commit } = useStore()
+function submit(val: IuserForm) {
+  let data = Object.assign({}, val) as any
+  const roles = val.roles.map((item) => {
+    return {"id": item}
+  })
+  data.roles = roles
+  
+  commit("user/btnLoading")
+  Auser.add(data).then(res => {
+    form.value.visible = false
+    reload()
+  })
 }
 
-const data = ref({
-  username: "",
-  nickname: "",
-  password: "",
-  roles: [],
-  phone: "",
-  email: "",
-  status: true,
-})
-provide("data", data)
+provide(IuserFormKey, userForm)
 </script>
 
 <style lang="scss" scoped>

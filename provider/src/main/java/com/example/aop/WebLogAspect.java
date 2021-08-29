@@ -64,6 +64,7 @@ public class WebLogAspect {
     public void afterThrowing(JoinPoint joinPoint, Exception e) {
         String name = joinPoint.getSignature().getName();
         List<Object> args = Arrays.asList(joinPoint.getArgs());
+        logInfo.setMsg("操作失败!");
         logInfo.setError("连接点方法为: " +name + ",参数为:" +args+ ",异常为:" +e.getMessage());
         logInfoService.save(logInfo);
     }

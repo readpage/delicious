@@ -7,7 +7,8 @@ const browser: browserType = getBrowser()
 export const createState = () => ({
   browser,
   collapse: browser.isMini,
-  loading: true,
+  loading: false,
+  btnLoading: false,
   elLoading: undefined as unknown as ILoadingInstance,
   info: storage.get("userInfo") as Iuser,
 })

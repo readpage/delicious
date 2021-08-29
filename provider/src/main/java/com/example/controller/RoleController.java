@@ -9,7 +9,11 @@ import com.example.utils.PageInfo;
 import com.example.utils.result.Result;
 import com.example.utils.result.ResultEnum;
 import com.example.utils.result.ResultUtils;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.github.xiaoymin.knife4j.annotations.DynamicParameter;
+import com.github.xiaoymin.knife4j.annotations.DynamicParameters;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -18,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -37,14 +42,26 @@ public class RoleController {
     @Autowired
     private MenuRoleService menuRoleService;
 
+    @PostMapping("/add")
     @ApiOperation("添加角色")
-    @PostMapping("/save")
-    @ApiOperationSupport(includeParameters = {"role.name"})
-    public Result<Object> save(@RequestBody Role role) {
-        if (roleService.save(role)) {
-            return ResultUtils.ok(ResultEnum.CREATE_SUCCESS);
+    @DynamicParameters(name = "createRoleMap", properties = {
+            @DynamicParameter(name = "role", value = "角色", example = "{name: 'admin', nickname: '管理员' }", required = true, dataTypeClass = Role.class),
+            @DynamicParameter(name = "menuIdList", value = "功能权限", example = "['1', '2', '3']", required = true, dataTypeClass = List.class)
+    })
+    public Result<Object> add(@RequestBody Map<String, Object> map) {
+        ObjectMapper mapper = new ObjectMapper();
+        Role role = mapper.convertValue(map.get("role"), Role.class);
+        List<Integer> menuIdList = mapper.convertValue(map.get("menuIdList"), new TypeReference<List<Integer>>() {});
+        try {
+            if (roleService.add(role, menuIdList)) {
+                return ResultUtils.ok(ResultEnum.CREATE_SUCCESS);
+            } else {
+                return ResultUtils.fail(ResultEnum.CREATE_FAIL);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtils.fail(ResultEnum.CREATE_FAIL);
         }
-        return ResultUtils.fail(ResultEnum.CREATE_FAIL);
     }
 
     @ApiOperation("添加权限")

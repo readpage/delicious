@@ -4,6 +4,7 @@
       <div class="role">
         <el-space :size="10">
           <el-button size="mini" icon="el-icon-refresh" @click="reload">刷新</el-button>
+          <Add />
         </el-space>
         <el-table :data="table.role" stripe
           :header-cell-style="{ background: '#f5f7fa', color: '#606266' }"
@@ -37,9 +38,12 @@
 </template>
 
 <script setup lang="ts">
-import { Arole } from "@/api";
+import { Amenu, Arole } from "@/api";
+import { translateToTree } from "@/hooks/useMenu";
 import { useStore } from "@/store";
-import { onMounted, reactive, ref } from "vue"
+import { ImenuKey } from "@/symbols";
+import { onMounted, provide, reactive, ref } from "vue"
+import Add from "./components/Add.vue";
 
 const { state, commit } = useStore()
 
@@ -51,14 +55,16 @@ const table = reactive({
 })
 function handleSizeChange(val: number) {
   table.pageSize = val
-  reload()
+  page()
 }
 function handleCurrentChange(val: number) {
   table.pageNum = val
-  reload()
+  page()
 }
 
-function reload() {
+const menu = ref<Imenu[]>([])
+provide(ImenuKey, menu)
+function page() {
   commit("user/showLoading")
   Arole.page({urlParam: `/${table.pageNum}/${table.pageSize}`}).then(res => {
     table.role = res.data.list
@@ -66,7 +72,22 @@ function reload() {
   })
 }
 
+function reload() {
+  page()
+  Amenu.list().then(res => {
+    menu.value = translateToTree(
+      res.data.map((item: any) => {
+        item.meta = { title: item.title, icon: item.icon }
+        item.label = item.title
+        delete item.title
+        delete item.icon
+        return item
+      })
+    )
+  })
+}
 reload()
+
 </script>
 
 <style lang="scss" scoped>

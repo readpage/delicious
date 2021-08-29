@@ -1,17 +1,10 @@
 <template>
-  <el-button :type="props.type" size="mini" :icon="props.icon" @click="handleUpdate">{{props.msg}}</el-button>
-  <el-dialog
-    title="修改用户"
-    v-model="visible">
-    <Form ref="form" />
-    <template #footer>
-      <el-button type="primary" size="small" @click="update">确定</el-button>
-      <el-button size="small" @click="visible=false">取消</el-button>
-    </template>
-  </el-dialog>
+  <el-button :type="props.type" size="mini" :icon="props.icon" @click="open">{{props.msg}}</el-button>
+  <Form msg="修改用户" ref="form" @submit="submit" />
 </template>
 
 <script setup lang="ts">
+import { Auser } from "@/api/modules/user"
 import { defineEmit, ref } from "vue"
 import Form from "./Form.vue"
 
@@ -21,18 +14,20 @@ const props = defineProps({
   msg: String,
 })
 
-const visible = ref(false)
-
-const emit = defineEmit(["handleUpdate"])
-function handleUpdate() {
-  emit("handleUpdate", handleUpdate)
-  visible.value = true
-}
 
 const form = ref()
-function update() {
-  form.value.update()
+const emit = defineEmit(["open"])
+function open() {
+  emit("open")
+  delete form.value.rules.password
+  form.value.visible = true
 }
+
+function submit(val: IuserForm) {
+  console.log(val);
+  form.value.visible = false
+}
+
 </script>
 
 <style lang="scss" scoped>

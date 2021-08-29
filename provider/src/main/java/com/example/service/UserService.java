@@ -13,7 +13,7 @@ import com.example.utils.PageInfo;
  * @since 2021-07-28
  */
 public interface UserService extends IService<User> {
-    boolean save(User user);
+    boolean add(User user);
 
     PageInfo<User> selectPage(int pageNum, int pageSize);
 
