@@ -26,13 +26,11 @@
       <el-form-item label="排序号"></el-form-item>
       <el-form-item v-show="form.type == 2" label="权限"></el-form-item>
     </el-form>
-    
     <template #footer>
       <el-button type="primary" size="mini" @click="submit">确定</el-button>
       <el-button size="mini" @click="visible=false">取消</el-button>
     </template>
   </el-dialog>
-  
 </template>
 
 <script setup lang="ts">
