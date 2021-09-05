@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2021-08-21
  */
 public interface LogInfoMapper extends BaseMapper<LogInfo> {
-
+   int clearAll();
 }

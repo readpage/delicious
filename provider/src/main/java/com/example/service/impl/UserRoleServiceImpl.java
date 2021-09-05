@@ -8,6 +8,8 @@ import com.example.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -37,4 +39,10 @@ public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> i
                 .eq("uid", uid)
         ) > 0;
     }
+
+    @Override
+    public boolean removeByRids(List<Integer> list) {
+        return userRoleMapper.deleteBatchByRid(list) > 0;
+    }
+
 }

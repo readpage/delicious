@@ -97,7 +97,7 @@ const checkUsername: Ivalidate = (rule, value, callback) => {
   }
   
 
-  commit("user/butLoading")
+  commit("user/btnLoading")
   Auser.isUser({username: value}).then(res => {
     if (res.data == true) {
       callback("用户名已经存在😂")

@@ -10,7 +10,7 @@ import { IuserFormKey, userForm } from "@/symbols"
 import { inject, provide, ref } from "vue"
 import Form from "./Form.vue"
 
-const reload = inject("reload") as any
+const reload = inject<Function>("reload", Function)
 const form = ref()
 function open() {
   form.value.visible = true

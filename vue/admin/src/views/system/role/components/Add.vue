@@ -7,10 +7,11 @@
 import { Arole } from "@/api";
 import { useStore } from "@/store";
 import { IroleFormKey, roleForm } from "@/symbols";
-import { provide, ref } from "vue"
+import { inject, provide, ref } from "vue"
 import Form from "./Form.vue";
 
 const { commit } = useStore()
+const reload = inject<Function>("reload", Function)
 
 const form = ref()
 function open() {
@@ -21,10 +22,12 @@ function submit(val: IroleForm) {
   commit("user/btnLoading")
   Arole.add(val).then(res => {
     form.value.visible = false
+    reload()
   })
 }
 
 provide(IroleFormKey, roleForm)
+provide("menuIds", ref())
 </script>
 
 <style lang="scss" scoped>

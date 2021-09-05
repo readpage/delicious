@@ -23,7 +23,7 @@
     <!--extends: 可以实现存在继承关系的两个类实体的映射。extends填父类的resultMap。-->
 
     <resultMap id="userMap" type="User" extends="baseMap">
-        <!-- column="id" 对应bSelectAll parameterType对应的参数查询
+        <!-- column="id" 对应selectRole parameterType对应的参数查询
         id 的值对应 user的id-->
         <collection property="roles" column="id" ofType="Role" select="selectRole">
             <id property="id" column="id"/>

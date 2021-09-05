@@ -9,6 +9,7 @@ interface Irole {
 
 interface IroleForm {
   role: {
+    id: number
     name: string
     nickname: string
   }

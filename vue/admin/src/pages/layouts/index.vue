@@ -41,11 +41,6 @@ const route = useRoute()
 const collapse = computed(() => getters["user/collapse"])
 const transitionName = ref("slide-fade")
 
-const keepalive = ref(route.meta.keepalive)
-onBeforeRouteUpdate((to) => {
-  keepalive.value = to.meta.keepalive
-});
-
 </script>
 
 <style lang="scss" scoped>

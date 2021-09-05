@@ -10,6 +10,7 @@ import com.example.service.UserRoleService;
 import com.example.service.UserService;
 import com.example.utils.PageInfo;
 import com.example.utils.result.ResultEnum;
+import com.example.utils.result.ResultUtils;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,12 +40,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean add(User user) {
+    public boolean mySave(User user) throws Exception {
+        String result = ResultUtils.toJson(ResultEnum.CREATE_FAIL);
         user.setPassword(pw.encode(user.getPassword()));
         if (userMapper.insert(user) < 0) {
-            return false;
+            throw new Exception(result);
         }
-
         ArrayList<UserRole> userRoles = new ArrayList<>();
         for (Role role : user.getRoles()) {
             UserRole userRole = new UserRole();
@@ -52,7 +53,42 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             userRole.setRid(role.getId());
             userRoles.add(userRole);
         }
-        return userRoleService.saveBatch(userRoles);
+
+        if (!userRoleService.saveBatch(userRoles)) {
+            throw new Exception(result);
+        }
+        return true;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean myUpdateById(User user) throws Exception {
+        String result = ResultUtils.toJson(ResultEnum.UPDATE_FAIL);
+        if (!userRoleService.removeByUId(user.getId()) ) {
+            throw new Exception(result);
+        }
+        if (!(user.getPassword() == null || "".equals(user.getPassword()))) {
+            user.setPassword(pw.encode(user.getPassword()));
+        }
+
+        ArrayList<UserRole> userRoles = new ArrayList<>();
+
+        for (Role role : user.getRoles()) {
+            UserRole userRole = new UserRole();
+            userRole.setUid(user.getId());
+            userRole.setRid(role.getId());
+            userRoles.add(userRole);
+        }
+
+        if (!userRoleService.saveBatch(userRoles)) {
+            throw new Exception(result);
+        }
+
+        if (userMapper.updateById(user) < 0) {
+            throw new Exception(result);
+        }
+
+        return true;
     }
 
     @Override
@@ -82,6 +118,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public User selectByUsername(String username) {
         return userMapper.selectByUsername(username);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean myRemoveByIds(List<Integer> list) throws Exception {
+        String result = ResultUtils.toJson(ResultEnum.DELETE_FAIL);
+        for (Integer e : list) {
+            if (!userRoleService.removeByUId(e)) {
+                throw new Exception(result);
+            }
+            if (userMapper.deleteById(e) < 0) {
+                throw new Exception(result);
+            }
+        }
+
+        return true;
     }
 
 }

@@ -16,4 +16,6 @@ import java.util.List;
  */
 public interface MenuRoleMapper extends BaseMapper<MenuRole> {
     List<Menu> selectAll();
+
+    int deleteBatchByRid(List<Integer> list);
 }

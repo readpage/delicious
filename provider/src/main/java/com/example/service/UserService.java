@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.entity.User;
 import com.example.utils.PageInfo;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -13,7 +15,9 @@ import com.example.utils.PageInfo;
  * @since 2021-07-28
  */
 public interface UserService extends IService<User> {
-    boolean add(User user);
+    boolean mySave(User user) throws Exception;
+
+    boolean myUpdateById(User user) throws Exception;
 
     PageInfo<User> selectPage(int pageNum, int pageSize);
 
@@ -22,4 +26,6 @@ public interface UserService extends IService<User> {
     boolean selectIsUser(String username);
 
     User selectByUsername(String username);
+
+    boolean myRemoveByIds(List<Integer> list) throws Exception;
 }

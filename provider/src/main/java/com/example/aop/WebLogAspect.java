@@ -8,6 +8,7 @@ import com.example.utils.result.Result;
 import com.example.utils.result.ResultUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +17,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
@@ -50,7 +52,13 @@ public class WebLogAspect {
         logInfo.setUsername(authentication.getName());
         logInfo.setRequestMethod(request.getMethod());
         logInfo.setUrl(request.getRequestURI());
-        logInfo.setMethod(joinPoint.getSignature().toString());
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        // 获取切入点方法
+        Method method = signature.getMethod();
+
+        // 获取请求的类名
+        String className = joinPoint.getTarget().getClass().getName();
+        logInfo.setMethod(className+ "." +method.getName());
     }
 
     @AfterReturning(returning = "object", pointcut = "webLog()")

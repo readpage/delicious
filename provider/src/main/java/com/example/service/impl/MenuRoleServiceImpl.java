@@ -8,6 +8,8 @@ import com.example.service.MenuRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -45,6 +47,19 @@ public class MenuRoleServiceImpl extends ServiceImpl<MenuRoleMapper, MenuRole> i
                 new QueryWrapper<MenuRole>()
                 .eq("rid", rid)
         ) > 0;
+    }
+
+    @Override
+    public List<MenuRole> selectByRid(Integer rid) {
+        return menuRoleMapper.selectList(
+                new QueryWrapper<MenuRole>()
+                .eq("rid", rid)
+        );
+    }
+
+    @Override
+    public boolean removeByRids(List<Integer> list) {
+        return menuRoleMapper.deleteBatchByRid(list) > 0;
     }
 
 }

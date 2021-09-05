@@ -1,8 +1,8 @@
 export function closeLoad() {
+ setTimeout(() => {
   let loading = document.getElementById("loading") as Element;
   if (loading) {
-    setTimeout(() => {
-      document.body.removeChild(loading);
-    }, 500);
+    document.body.removeChild(loading);
   }
+ }, 500);
 }

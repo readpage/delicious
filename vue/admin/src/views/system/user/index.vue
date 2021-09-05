@@ -5,11 +5,14 @@
         <el-space :size="10">
           <el-button size="mini" icon="el-icon-refresh" @click="reload">刷新</el-button>
           <Add />
-          <Edit type="success" icon="el-icon-edit" msg="修改" />
+          <Edit :disabled="editDisabled" type="success" icon="el-icon-edit" msg="修改" @open="open(multipleSelection[0])" />
+          <Delete :disabled="deleteDisabled" :loading="state.user.btnLoading" msg="删除" @onDelete="onDelete(multipleSelection)" />
         </el-space>
         <el-table :data="table.user" stripe
+          ref="tableRef"
           :header-cell-style="{ background: '#f5f7fa', color: '#606266' }"
           max-height="500"
+          @selection-change="handleSelectionChange"
           @expand-change="expandChange"
           row-key="id"
           :expand-row-keys="expands"
@@ -57,11 +60,11 @@
           <el-table-column label="状态" prop="status" width="80"></el-table-column>
           <el-table-column label="创建时间" prop="createTime" width="160"></el-table-column>
           <el-table-column label="修改时间" prop="updateTime" width="160"></el-table-column>
-          <el-table-column label="操作" fixed="right" width="130">
+          <el-table-column label="操作" fixed="right" width="135">
             <template #default="scope">
               <el-space>
-                <Edit type="primary" icon="el-icon-edit" @open="open(scope.row)" />
-                <el-button type="danger" size="mini" icon="el-icon-delete"></el-button>
+                <Edit :disabled="false" type="primary" icon="el-icon-edit" @open="open(scope.row)" />
+                <Delete :loading="state.user.btnLoading" @onDelete="onDelete([scope.row])" />
               </el-space>
             </template>
           </el-table-column>
@@ -84,6 +87,7 @@ import { useStore } from "@/store";
 import { IroleKey, IuserFormKey } from "@/symbols";
 import { inject, onMounted, provide, reactive, ref } from "vue"
 import Add from "./components/Add.vue";
+import Delete from "./components/Delete.vue";
 import Edit from "./components/Edit.vue";
 
 const { state, commit } = useStore()
@@ -93,6 +97,10 @@ const table = reactive({
   pageNum: 1,
   user: [] as Iuser[],
 })
+const multipleSelection = ref([])
+const editDisabled = ref(true)
+const deleteDisabled = ref(true)
+
 function handleSizeChange(val: number) {
   table.pageSize = val
   page()
@@ -111,11 +119,15 @@ function page() {
   })
 }
 
+const tableRef = ref()
 function reload() {
   page()
   Arole.list().then(res => {
     roles.value = res.data
   })
+  if (tableRef.value) {
+    tableRef.value.clearSelection()
+  }
 }
 reload()
 provide("reload", reload)
@@ -128,6 +140,12 @@ function expandChange(row: Iuser, expandedRows : Iuser[]) {
     expands.value = []
     expands.value.push(row.id)
   }
+}
+
+function handleSelectionChange(val: any) {
+  editDisabled.value = val.length != 1
+  deleteDisabled.value = val.length == 0
+  multipleSelection.value = val
 }
 
 
@@ -145,6 +163,15 @@ function open(row: any) {
   data.value = temp
 }
 
+const uids = ref<number[]>([])
+provide("uids", uids)
+function onDelete(val: Iuser[]) {
+  
+  let list = val.map(e => {
+    return e.id
+  })
+  uids.value = list
+}
 
 </script>
 

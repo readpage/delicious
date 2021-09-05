@@ -1,7 +1,7 @@
-interface logInfo {
+interface IlogInfo {
   id: number
   username: string
-  reqeustMethod: string
+  requestMethod: string
   method: string
   url: string
   browser: string

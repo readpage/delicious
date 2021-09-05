@@ -1,7 +1,9 @@
 package com.example.service;
 
-import com.example.entity.UserRole;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.entity.UserRole;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +17,7 @@ public interface UserRoleService extends IService<UserRole> {
     boolean removeByRId(Integer rid);
 
     boolean removeByUId(Integer uid);
+
+    boolean removeByRids(List<Integer> list);
+
 }

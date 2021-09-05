@@ -1,18 +1,17 @@
 package com.example.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.service.LogInfoService;
 import com.example.utils.result.Result;
+import com.example.utils.result.ResultEnum;
 import com.example.utils.result.ResultUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -38,6 +37,15 @@ public class LogInfoController {
     })
     public Result<Object> page(@PathVariable int pageNum, @PathVariable int pageSize) {
         return ResultUtils.query(logInfoService.selectPage(pageNum, pageSize));
+    }
+
+    @ApiOperation("清空日志")
+    @DeleteMapping("/clearAll")
+    public Result<Object> clearAll() {
+        if (logInfoService.remove(new QueryWrapper<>())) {
+            return ResultUtils.ok(ResultEnum.DELETE_SUCCESS);
+        }
+        return ResultUtils.fail(ResultEnum.DELETE_FAIL);
     }
 }
 

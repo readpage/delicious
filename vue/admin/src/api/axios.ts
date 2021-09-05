@@ -70,7 +70,6 @@ service.interceptors.response.use(response  => {
   num--
   store.commit("user/closeElLoading")
   store.commit("user/hideLoading")
-  console.log("h");
   
   router.push("/500")
   return Promise.reject(error)

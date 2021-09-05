@@ -23,7 +23,10 @@ public class UrlAccessDecisionManager implements AccessDecisionManager {
             // 如果 url 与数据库匹配上了，判断 当前 用户有没有能访问的角色，如果有就 return ，没有抛出异常
             Collection<? extends GrantedAuthority> authorities=authentication.getAuthorities();
             for (GrantedAuthority authority : authorities) {
+                System.out.println(authority.getAuthority());
+                System.out.println(configAttribute.getAttribute());
                 if (authority.getAuthority().equals(configAttribute.getAttribute()))
+
                     return;
             }
         }

@@ -15,7 +15,11 @@
         <el-input v-model="keyword" placeholder="输入关键字进行过滤" size="small" clearable></el-input>
         <div class="scrollbar">
           <el-tree :data="menu"
+            v-loading="state.user.btnLoading"
+            element-loading-text="拼命加载中"
+            element-loading-spinner="el-icon-loading"
             ref="treeRef"
+            :props="{label: 'title'}"
             highlight-current 
             accordion
             node-key="id"
@@ -36,16 +40,18 @@
 </template>
 
 <script setup lang="ts">
-import { translateToTree } from "@/hooks/useMenu"
 import { useStore } from "@/store"
 import { ImenuKey, IroleFormKey, roleForm } from "@/symbols"
 import { ElMessageBox } from "element-plus"
 import { defineEmit, inject, reactive, ref, toRefs, watch } from "vue"
+import type { Ref } from "vue"
 
 // props
 const props = defineProps({
   msg: String,
 })
+
+
 
 // store
 const { state } = useStore()
@@ -53,11 +59,11 @@ const { state } = useStore()
 const menu = inject(ImenuKey)
 const data = inject(IroleFormKey, roleForm)
 const { role, menuIdList } = toRefs(data.value)
+const checked = inject<Ref<number[]>>("menuIds", ref<number[]>([]))
 
 // data
 const visible = ref(false)
 const formRef = ref()
-const checked = ref()
 const rules = reactive({
   name: { required: true, message: "请输入角色名"},
   nickname: { required: true, message: "请输入昵称" },
@@ -78,6 +84,7 @@ const treeRef = ref()
 function handleClose() {
   formRef.value.resetFields()
   treeRef.value.setCheckedKeys([])
+  checked.value = []
 }
 
 function beforeClose(done: any) {
@@ -94,7 +101,7 @@ function filterNode(val: string, data: any) {
   if (!val) return true
   // Array.prototype.includes方法返回一个布尔值，表示某个数组是否包含给定的值
   // [1, 2, 3].includes(2); // true
-  return data.label.includes(val)
+  return data.title.includes(val)
 }
 const keyword = ref("")
 watch(keyword, val => {
@@ -107,7 +114,7 @@ function handleCheckChange() {
   // 半选中的节点
   const halfChecked = treeRef.value.getHalfCheckedKeys()
   
-  menuIdList.value = [...checked, ...halfChecked]
+  menuIdList.value = JSON.parse(JSON.stringify([...checked, ...halfChecked]))
   
 }
 

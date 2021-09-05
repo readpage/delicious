@@ -1,14 +1,15 @@
 package com.example.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.entity.Menu;
 import com.example.entity.MenuRole;
 import com.example.entity.Role;
 import com.example.mapper.RoleMapper;
 import com.example.service.MenuRoleService;
+import com.example.service.MenuService;
 import com.example.service.RoleService;
 import com.example.service.UserRoleService;
 import com.example.utils.PageInfo;
-import com.example.utils.result.ResultEnum;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,13 +38,15 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     @Autowired
     private UserRoleService userRoleService;
 
+    @Autowired
+    private MenuService menuService;
+
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean removeById(Integer id) throws Exception {
-        if (!(menuRoleService.removeByRId(id) && userRoleService.removeByRId(id))) {
-            throw new Exception(ResultEnum.DELETE_FAIL.getMsg());
-        }
-        return roleMapper.deleteById(id) > 0;
+    public void removeByIds(List<Integer> list) {
+        menuRoleService.removeByRids(list);
+        userRoleService.removeByRids(list);
+        roleMapper.deleteBatchIds(list);
     }
 
     @Override
@@ -70,5 +73,41 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         PageHelper.startPage(pageNum, pageSize);
         List<Role> roles = roleMapper.selectList(null);
         return new PageInfo<>(roles);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateById(List<Integer> menuIds, Role role) {
+        menuRoleService.removeByRId(role.getId());
+
+        if (menuIds != null) {
+            ArrayList<MenuRole> menuRoles = new ArrayList<>();
+
+            for (Integer menuId : menuIds) {
+                MenuRole menuRole = new MenuRole();
+                menuRole.setMid(menuId);
+                menuRole.setRid(role.getId());
+                menuRoles.add(menuRole);
+            }
+
+            menuRoleService.saveBatch(menuRoles);
+        }
+
+        roleMapper.updateById(role);
+
+    }
+
+    @Override
+    public List<Menu> selectByRid(Integer rid) {
+        List<MenuRole> menuRoles = menuRoleService.selectByRid(rid);
+        if (menuRoles.isEmpty()) {
+            return null;
+        }
+        ArrayList<Integer> list = new ArrayList<>();
+        for (MenuRole menuRole : menuRoles) {
+            list.add(menuRole.getMid());
+        }
+
+        return menuService.listByIds(list);
     }
 }

@@ -41,17 +41,10 @@ public class UserController {
 
     @ApiOperation(value = "添加用户", notes = "请求实列还需要添加password(密码)字段")
     @ApiOperationSupport(includeParameters = {"user.username", "user.password"})
-    @PostMapping("/add")
-    public Result<Object> add(@RequestBody User user) {
-        try {
-            if (userService.add(user)) {
-                return ResultUtils.ok(ResultEnum.CREATE_SUCCESS);
-            }
-            return ResultUtils.fail(ResultEnum.CREATE_FAIL);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResultUtils.fail(ResultEnum.CREATE_FAIL);
-        }
+    @PostMapping("/save")
+    public Result<Object> save(@RequestBody User user) throws Exception {
+        userService.mySave(user);
+        return ResultUtils.ok(ResultEnum.CREATE_SUCCESS);
     }
 
     @ApiOperation("分配角色")
@@ -88,35 +81,19 @@ public class UserController {
     }
 
     @ApiOperation(value = "修改用户", notes = "请求实列还需要添加password(密码)字段")
-    @ApiOperationSupport(includeParameters = {"user.id", "user.username", "user.password"})
     @PutMapping("/update")
-    public Result<Object> updateById(@RequestBody User user) {
-        if (userService.updateById(user)) {
-            return ResultUtils.ok(ResultEnum.UPDATE_SUCCESS);
-        }
-        return ResultUtils.fail(ResultEnum.UPDATE_FAIL);
-    }
-
-    @ApiOperation("删除用户")
-    @DeleteMapping("/remove/{id}")
-    @ApiImplicitParam(name = "id", value = "用户id", dataType = "Integer", required = true)
-    public Result<Object> removeById(@PathVariable Integer id) throws Exception {
-        if (userService.removeById(id)) {
-            return ResultUtils.ok(ResultEnum.DELETE_SUCCESS);
-        }
-        return ResultUtils.fail(ResultEnum.DELETE_FAIL);
+    public Result<Object> updateById(@RequestBody User user) throws Exception {
+        userService.myUpdateById(user);
+        return ResultUtils.ok(ResultEnum.UPDATE_SUCCESS);
     }
 
     @ApiOperation("批量删除用户")
     @DeleteMapping("/removeByIds/{list}")
     @ApiImplicitParam(name = "list", value = "用户id", dataType = "list<Integer>", example = "1, 2, 3")
-    public Result<Object> removeByIds(@PathVariable List<Integer> list) {
-        if (userService.removeByIds(list)) {
-            return ResultUtils.ok((ResultEnum.DELETE_SUCCESS));
-        }
-        return ResultUtils.fail(ResultEnum.DELETE_FAIL);
+    public Result<Object> removeByIds(@PathVariable List<Integer> list) throws Exception {
+        userService.myRemoveByIds(list);
+        return ResultUtils.ok(ResultEnum.DELETE_SUCCESS);
     }
-
 
 }
 

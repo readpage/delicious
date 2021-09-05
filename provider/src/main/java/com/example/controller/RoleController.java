@@ -74,6 +74,12 @@ public class RoleController {
         return ResultUtils.fail(ResultEnum.CREATE_FAIL);
     }
 
+    @ApiOperation("id查询权限")
+    @GetMapping("/selectByRid/{rid}")
+    public Result<Object> selectById(@PathVariable Integer rid) {
+        return ResultUtils.query(roleService.selectByRid(rid));
+    }
+
     @ApiOperation("查询所有角色")
     @GetMapping("/list")
     public Result<List<Role>> selectAll() {
@@ -90,32 +96,29 @@ public class RoleController {
         return ResultUtils.ok(ResultEnum.RETRIEVE_SUCCESS, roleService.selectPage(pageNum, pageSize));
     }
 
-    @ApiOperation("修改权限")
-    @PostMapping("/update")
-    @ApiOperationSupport(includeParameters = {"role.id", "role.name"})
-    public Result<Object> updateById(@RequestBody Role role) {
-        if (roleService.updateById(role)) {
-            return ResultUtils.ok(ResultEnum.UPDATE_SUCCESS);
+    @ApiOperation("修改角色")
+    @PutMapping(value = {"/update/{list}", "/update"})
+    public Result<Object> updateById(@PathVariable(required = false) List<Integer> list, @RequestBody Role role) {
+        try {
+            roleService.updateById(list, role);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtils.fail(ResultEnum.UPDATE_FAIL);
         }
-        return ResultUtils.fail(ResultEnum.UPDATE_FAIL);
-    }
-
-    @ApiOperation("删除权限")
-    @DeleteMapping("/removeAuth/{id}")
-    public Result<Object> removeAuth(@PathVariable Integer id) {
-        if (menuRoleService.removeById(id)) {
-            return ResultUtils.ok(ResultEnum.DELETE_SUCCESS);
-        }
-        return ResultUtils.fail(ResultEnum.DELETE_FAIL);
+        return ResultUtils.ok(ResultEnum.UPDATE_SUCCESS);
     }
 
     @ApiOperation("删除角色")
-    @DeleteMapping("/remove/{id}")
-    public Result<Object> remove(@PathVariable Integer id) throws Exception {
-        if (roleService.removeById(id)) {
-            return ResultUtils.ok(ResultEnum.DELETE_SUCCESS);
+    @DeleteMapping("/remove/{list}")
+    @ApiImplicitParam(name = "list", value = "用户id", dataType = "list<Integer>", example = "1, 2, 3")
+    public Result<Object> remove(@PathVariable List<Integer> list) {
+        try {
+            roleService.removeByIds(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtils.fail(ResultEnum.DELETE_FAIL);
         }
-        return ResultUtils.fail(ResultEnum.DELETE_FAIL);
+        return ResultUtils.ok(ResultEnum.DELETE_SUCCESS);
     }
 }
 

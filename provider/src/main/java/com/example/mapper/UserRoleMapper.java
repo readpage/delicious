@@ -1,7 +1,9 @@
 package com.example.mapper;
 
-import com.example.entity.UserRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.entity.UserRole;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +14,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2021-07-29
  */
 public interface UserRoleMapper extends BaseMapper<UserRole> {
-
+    int deleteBatchByRid(List<Integer> list);
 }

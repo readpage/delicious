@@ -6,17 +6,17 @@
           <el-button size="mini" icon="el-icon-refresh" @click="reload">刷新</el-button>
           <Add />
         </el-space>
-        <el-table :data="menu" ref="table" row-key="id" stripe
+        <el-table :data="treeList" ref="tableRef" row-key="id" stripe
           max-height="500"
           @expand-change="expandChange"
           v-loading="state.user.loading"
           element-loading-text="拼命加载中"
           element-loading-spinner="el-icon-loading"
         >
-          <el-table-column prop="meta.title" label="名称" show-overflow-tooltip min-width="180"></el-table-column>
+          <el-table-column prop="title" label="名称" show-overflow-tooltip min-width="180"></el-table-column>
           <el-table-column label="图标" width="80">
             <template #default="scope">
-              <i :class="scope.row.meta.icon"></i>
+              <i :class="scope.row.icon"></i>
             </template>
           </el-table-column>
           <el-table-column prop="orderNum" label="排序" min-width="50"></el-table-column>
@@ -30,10 +30,12 @@
           <el-table-column prop="updateTime" label="修改时间" width="180"></el-table-column>
           <el-table-column prop="version" label="版本" min-width="50"></el-table-column>
           <el-table-column label="操作" fixed="right" width="130">
-            <el-space>
-              <el-button type="primary" size="mini" icon="el-icon-edit"></el-button>
-              <el-button type="danger" size="mini" icon="el-icon-delete"></el-button>
-            </el-space>
+            <template #default="scope">
+              <el-space>
+                <Edit @onUpdate="onUpdate(scope.row)" />
+                <el-button type="danger" size="mini" :loading="state.user.btnLoading" icon="el-icon-delete" @click="onDelete(scope.row)"></el-button>
+              </el-space>
+            </template>
           </el-table-column>
         </el-table>
       </div>
@@ -43,27 +45,36 @@
 
 <script setup lang="ts">
 import { Amenu } from "@/api";
-import { translateToTree } from "@/hooks/useMenu";
 import { useStore } from "@/store";
-import { computed, onMounted, ref } from "vue";
+import { ImenuKey } from "@/symbols";
+import { menuFormKey } from "@/symbols/menu";
+import { deepTree } from "@/utils";
+import { ElMessageBox } from "element-plus";
+import { computed, onMounted, provide, reactive, ref } from "vue";
 import Add from "./components/Add.vue";
+import Edit from "./components/Edit.vue";
 
 const { state, commit } = useStore()
-const menu = ref<Imenu[]>([]);
+
+const table = reactive({
+  editDisabled: true,
+  deleteDisabled: true,
+  multipleSelection: [],
+})
+const menu = ref<Imenu[]>([])
+const treeList = ref<Imenu[]>([])
+
+provide(ImenuKey, menu)
 function reload() {
   commit("user/showLoading")
   Amenu.list().then(res => {
-    menu.value = translateToTree(
-      res.data.map((item: any) => {
-        item.meta = { title: item.title, icon: item.icon }
-        delete item.title
-        delete item.icon
-        return item
-      })
-    );
+    treeList.value = deepTree(res.data);
+    menu.value = res.data
   });
 }
 reload()
+provide("reload", reload)
+
 function setType(row: Imenu): string {
   switch(row.type) {
     case 0:
@@ -78,7 +89,7 @@ function setType(row: Imenu): string {
   }
 }
 
-const table = ref()
+const tableRef = ref()
 function expandChange(row: Imenu, expanded: boolean) {
   if (expanded) {
     function tree(menu: Imenu[]) {
@@ -89,12 +100,29 @@ function expandChange(row: Imenu, expanded: boolean) {
         }
         if (row.id != item.id && row.parentId == item.parentId) {
           const child = item.children
-          table.value.toggleRowExpansion(item, false)
+          tableRef.value.toggleRowExpansion(item, false)
         }
       });
     }
     tree(menu.value)
   }
+}
+
+function onDelete(val: Imenu) {
+  ElMessageBox.confirm("确定删除")
+  .then(() => {
+    commit("user/btnLoading")
+    Amenu.del({urlParam: `/${val.id}`}).then(res => {
+      reload()
+    })
+  })
+}
+
+
+const form = ref()
+provide(menuFormKey, form)
+function onUpdate(val: any) {
+  form.value = JSON.parse(JSON.stringify(val))
 }
 </script>
 

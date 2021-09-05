@@ -2,16 +2,6 @@ import storage from "@/hooks/storage";
 import { createRouter, createWebHistory } from "vue-router"
 
 
-
-// const modules = import.meta.glob("../views/**")
-// for (const path in modules) {
-//   modules[path]().then(mod => {
-//     if (path.indexOf("components") == -1) {
-//       console.log(path, mod)
-//     }
-//   })
-// }
-
 const router = createRouter({
   history: createWebHistory(),
   routes: [],
@@ -57,9 +47,9 @@ export function setRoutes(val: Imenu[]) {
   routes.forEach(res => {
     router.addRoute(res)
   })
-  const modules = import.meta.glob("../views/**")
+  const modules = import.meta.glob("/src/views/**/index.vue")
   val.forEach((item: any) => {
-    item.component = modules[`../views/${item.component}/index.vue`]
+    item.component = modules[item.component]
     router.addRoute("index", item)
   });
   router.replace(router.currentRoute.value.fullPath)

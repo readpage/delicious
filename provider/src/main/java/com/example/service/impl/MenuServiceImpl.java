@@ -39,11 +39,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean removeById(Integer id) throws Exception {
-        if (!menuRoleService.removeByMId(id)) {
-            throw new Exception(ResultEnum.DELETE_FAIL.getMsg());
-        }
-        return menuMapper.deleteById(id) > 0;
+    public void removeById(Integer id) {
+        menuRoleService.removeByMId(id);
+        menuMapper.deleteById(id);
     }
 
     @Override
