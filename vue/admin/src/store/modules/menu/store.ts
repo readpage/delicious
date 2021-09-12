@@ -1,4 +1,4 @@
-import storage from "@/hooks/storage";
+import storage from '@/utils';
 
 export const createState = () => ({
   menu: storage.get("menu") as Imenu[] || [],

@@ -1,6 +1,10 @@
 <template>
   <el-config-provider :locale="locale">
-    <router-view></router-view>
+    <router-view v-slot="{ Component }">
+      <keep-alive max="10">
+        <component :is="Component" />
+      </keep-alive>
+    </router-view>
   </el-config-provider>
 </template>
 

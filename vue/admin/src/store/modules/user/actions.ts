@@ -1,7 +1,7 @@
 import { Alogout, ArefToken, Auser } from '@/api';
-import storage from '@/hooks/storage';
 import { closeLoad } from '@/hooks/useUser';
 import { store } from '@/store';
+import storage from '@/utils';
 
 const actions = {
   async appLoad({ dispatch }: any) {

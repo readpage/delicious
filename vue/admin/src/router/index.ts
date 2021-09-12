@@ -1,4 +1,4 @@
-import storage from "@/hooks/storage";
+import storage from "@/utils";
 import { createRouter, createWebHistory } from "vue-router"
 
 
@@ -55,7 +55,7 @@ export function setRoutes(val: Imenu[]) {
   router.replace(router.currentRoute.value.fullPath)
 }
 
-router.beforeEach( async (to, form, next) => {
+router.beforeEach((to, form, next) => {
   if (!(storage.get("token") || to.path == "/sign") ) {
     next("/sign")
   }

@@ -1,6 +1,10 @@
 <template>
   <div class="app-slider">
-    <div class="app-slider__logo"></div>
+    <div class="app-slider__logo">
+      <router-link :to="{path: '/'}">
+        <lottie-player class="lottie-player" src="/static/food.json" background="#304156" speed="2.2" loop autoplay></lottie-player>
+      </router-link>
+    </div>
     <div class="app-slider__menu">
       <el-scrollbar>
         <el-menu

@@ -1,10 +1,10 @@
-import storage from "@/hooks/storage";
 import axios from "axios"
 import { ElMessage, ElMessageBox } from "element-plus"
 import { store } from "@/store";
 import router from "@/router";
 import Nprogress from "nprogress";
 import "nprogress/nprogress.css";
+import storage from "@/utils";
 
 const service = axios.create({
   baseURL: "/api"

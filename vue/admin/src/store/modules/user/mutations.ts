@@ -1,9 +1,8 @@
-import { getBrowser } from '@/utils';
+import storage, { getBrowser } from '@/utils';
 import { userState } from "./store";
 import Nprogress from "nprogress";
 import "nprogress/nprogress.css";
 import { closeLoad } from "@/hooks/useUser";
-import storage from "@/hooks/storage";
 import { ElLoading } from "element-plus";
 
 const mutations = {

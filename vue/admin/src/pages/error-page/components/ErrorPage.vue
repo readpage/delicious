@@ -34,8 +34,8 @@
 </template>
 
 <script setup lang="ts">
-import storage from "@/hooks/storage";
 import { useStore } from "@/store";
+import storage from "@/utils";
 import { ref, toRefs } from "vue"
 import { useRoute, useRouter } from "vue-router";
 

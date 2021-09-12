@@ -45,7 +45,10 @@ function onChange(val: string) {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.el-button {
+  margin-bottom: 10px !important;
+}
 .poper-menu-icon {
   max-width: 90%;
   box-sizing: border-box;

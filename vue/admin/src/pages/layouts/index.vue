@@ -18,7 +18,7 @@
       <div class="page-layout__container">
         <router-view v-slot="{ Component }">
           <transition :name="transitionName" mode="out-in">
-            <keep-alive>
+            <keep-alive max="10">
               <component :is="Component" />
             </keep-alive>
           </transition>

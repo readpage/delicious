@@ -1,0 +1,82 @@
+.logo {
+  width: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .lottie-player {
+    height: 55px;
+    width: 130px;
+  }
+
+  span {
+    font-size: 17px;
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    background: -webkit-linear-gradient(left,#fff,#000 25%,#fff 50%,#000 75%,#fff);
+    background-size:200% 100%;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: animation 1s infinite linear;
+  }
+
+  @keyframes animation {
+    0% {
+      background-position:0 0;
+    }
+    100% {
+      background-position:-100% 0;
+    }
+  }
+}
+
+.container {
+  .layer {
+    width: calc(100% - 330px);
+  }
+
+  @media (max-width: 1200px) {
+    .layer {
+     width: 100%;
+    }
+ }
+
+}
+
+
+.card-box {
+  grid-template-columns: repeat(5, 1fr);
+
+  .card-img {
+    height: 200px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1400px) {
+  .card-box {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .card-box {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+@media (max-width: 768px) {
+  .card-box {
+    grid-template-columns: repeat(2, 1fr);
+
+    .card-img {
+      height: 170px;
+    }
+  }
+}
+
+
+
+
+
