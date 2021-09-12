@@ -13,6 +13,7 @@ import { onMounted } from "vue";
 import { ElConfigProvider } from "element-plus";
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
 import { useStore } from "./store";
+import { closeLoad } from "./hooks/useUser";
 
 const locale = zhCn;
 const { commit } = useStore()
@@ -20,6 +21,10 @@ const { commit } = useStore()
 window.onresize = () => {
   commit("user/setBrowser")
 }
+
+onMounted(() => {
+  closeLoad()
+})
 
 </script>
 

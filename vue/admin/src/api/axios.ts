@@ -48,8 +48,6 @@ service.interceptors.response.use(response  => {
       case 504:
       case 508:
         return doRequest(response)
-      // 账户未登录
-      case 501:
       // 账户已过期
       case 507:
         open(res.msg)
