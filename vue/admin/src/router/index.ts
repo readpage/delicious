@@ -1,12 +1,6 @@
 import storage from "@/utils";
 import { createRouter, createWebHistory } from "vue-router"
 
-
-const router = createRouter({
-  history: createWebHistory(),
-  routes: [],
-});
-
 const routes = [
   {
     path: "/",
@@ -42,6 +36,13 @@ const routes = [
     meta: { title: "404" }
   }
 ]
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+});
+
+
 
 export function setRoutes(val: Imenu[]) {
   routes.forEach(res => {

@@ -2,7 +2,7 @@ package com.example.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.entity.User;
-import com.example.utils.PageInfo;
+import com.example.util.PageInfo;
 
 import java.util.List;
 

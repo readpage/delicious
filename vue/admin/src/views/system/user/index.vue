@@ -44,7 +44,11 @@
             </template>
           </el-table-column>
           <el-table-column label="用户名" prop="username" show-overflow-tooltip min-width="150"></el-table-column>
-          <el-table-column label="头像" prop="headImg" width="80"></el-table-column>
+          <el-table-column label="头像" prop="headImg" width="120">
+            <template #default="scope">
+              <el-image :src="scope.row.img" style="height: 58px" :preview-src-list="[scope.row.img]" fit="cover"></el-image>
+            </template>
+          </el-table-column>
           <el-table-column label="昵称" prop="nickname" show-overflow-tooltip min-width="180"></el-table-column>
           <el-table-column label="角色" width="150">
             <template #default="scope">

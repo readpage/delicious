@@ -23,9 +23,9 @@
     </div>
     <div class="info__other">
       <el-card>
-        <div>我的优惠卷</div>
-        <div>在线客服</div>
-        <div>收获地址</div>
+        <div>*****</div>
+        <div>****</div>
+        <div>****</div>
       </el-card>
     </div>
     <div class="info__exit">
@@ -42,10 +42,8 @@ import { reactive } from "vue"
 const data = reactive({
   order: [
     { icon: "el-icon-wallet", title: "待付款"},
-    { icon: "el-icon-s-goods", title: "待发货"},
-    { icon: "el-icon-s-shop", title: "待收货"},
     { icon: "el-icon-s-claim", title: "评价"},
-    { icon: "el-icon-s-comment", title: "退款/售后"},
+    { icon: "el-icon-s-comment", title: "退款"},
   ]
 })
 

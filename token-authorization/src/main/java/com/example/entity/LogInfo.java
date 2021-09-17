@@ -1,7 +1,7 @@
 package com.example.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.example.utils.log.BrowserInfo;
+import com.example.util.log.BrowserInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 

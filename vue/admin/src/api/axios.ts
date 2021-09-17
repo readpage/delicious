@@ -15,7 +15,7 @@ service.interceptors.request.use(config => {
   if (num++ == 0) {
     Nprogress.start()
   }
-  const token = storage.get("token")
+  const token = store.getters["user/token"]
   if (token) {
     config.headers.Authorization = token["token_type"] + " " +token["access_token"]
   }
@@ -74,9 +74,9 @@ service.interceptors.response.use(response  => {
 })
 
 async function doRequest(error: any) {
-  const token: Itoken = storage.get("token")
+  const token: Itoken = store.getters["user/token"]
   const refreshToken = token.refresh_token
-  storage.remove("token")
+  store.commit("user/remToken")
 
   await store.dispatch("user/refreshToken", refreshToken)
 

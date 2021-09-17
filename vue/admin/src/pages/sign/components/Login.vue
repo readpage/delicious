@@ -11,8 +11,8 @@
       <el-form-item label="用户名:" prop="username">
         <el-input size="small" v-model="user.username" prefix-icon="el-icon-user-solid" placeholder="请输入用户名"></el-input>
       </el-form-item>
-      <el-form-item label="密码:" prop="password" placeholder="请输入密码">
-        <el-input show-password v-model="user.password" size="small" prefix-icon="el-icon-lock"></el-input>
+      <el-form-item label="密码:" prop="password">
+        <el-input show-password v-model="user.password" size="small" prefix-icon="el-icon-lock" placeholder="请输入密码"></el-input>
       </el-form-item>
       <el-form-item>
         <el-space :size="20">
@@ -63,7 +63,7 @@ function login() {
       })
       commit("user/elLoading")
       Alogin(form).then(async res => {
-        storage.set("token", res.data)
+      commit("user/setToken", res.data)
         // 权限菜单
       await dispatch("menu/permMenu")
       router.push("/")

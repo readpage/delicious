@@ -2,10 +2,10 @@ package com.example.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.service.AuthService;
-import com.example.utils.JsonUtils;
-import com.example.utils.result.Result;
-import com.example.utils.result.ResultEnum;
-import com.example.utils.result.ResultUtils;
+import com.example.util.JsonUtils;
+import com.example.util.result.Result;
+import com.example.util.result.ResultEnum;
+import com.example.util.result.ResultUtils;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;

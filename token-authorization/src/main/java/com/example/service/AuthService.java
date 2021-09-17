@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.utils.result.Result;
+import com.example.util.result.Result;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 
 import javax.servlet.http.HttpServletRequest;

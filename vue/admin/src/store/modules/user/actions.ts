@@ -9,14 +9,16 @@ const actions = {
     closeLoad()
   },
 
+
   refreshToken({ commit, dispatch }: any, refreshToken: string) {
     const param = new FormData()
     param.append("refreshToken", refreshToken)
     return ArefToken(param).then(res => {
-      storage.set("token", res.data)
+      commit("setToken", res.data)
       return res.data
     })
   },
+
 
   userInfo({ commit }: any) {
     return Auser.info().then(res => {
@@ -35,7 +37,7 @@ const actions = {
   
   userRemove({ commit }: any) {
     commit("remUser")
-    storage.remove("token")
+    commit("remToken")
     store.commit("menu/setMenu", [])
     store.commit("menu/setRoutes", [])
   }

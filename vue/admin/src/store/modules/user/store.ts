@@ -10,6 +10,7 @@ export const createState = () => ({
   btnLoading: false,
   elLoading: undefined as unknown as ILoadingInstance,
   info: storage.get("userInfo") as Iuser,
+  token: storage.get("token") || null,
 })
 
 

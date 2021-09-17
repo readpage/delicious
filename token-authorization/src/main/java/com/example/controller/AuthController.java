@@ -3,9 +3,9 @@ package com.example.controller;
 
 import com.example.service.AuthService;
 import com.example.service.UserService;
-import com.example.utils.result.Result;
-import com.example.utils.result.ResultEnum;
-import com.example.utils.result.ResultUtils;
+import com.example.util.result.Result;
+import com.example.util.result.ResultEnum;
+import com.example.util.result.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;

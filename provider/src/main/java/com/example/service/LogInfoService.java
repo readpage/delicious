@@ -2,7 +2,7 @@ package com.example.service;
 
 import com.example.entity.LogInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.utils.PageInfo;
+import com.example.util.PageInfo;
 
 /**
  * <p>
@@ -15,4 +15,5 @@ import com.example.utils.PageInfo;
 public interface LogInfoService extends IService<LogInfo> {
 
     PageInfo<LogInfo> selectPage(int pageNum, int pageSize);
+
 }

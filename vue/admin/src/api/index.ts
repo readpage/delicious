@@ -1,3 +1,4 @@
+import { Afood } from './modules/food';
 import { Alog } from './modules/log';
 import { Amenu } from './modules/menu';
 import { Arole } from './modules/role';
@@ -19,4 +20,5 @@ export {
   Arole,
   Amenu,
   Alog,
+  Afood,
 }

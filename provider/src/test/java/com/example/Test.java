@@ -1,5 +1,7 @@
 package com.example;
 
+import com.example.util.system.SysUtil;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,5 +13,6 @@ public class Test {
         if (m.find()) {
             System.out.println(m.group(1));
         }
+        System.out.println(SysUtil.getSysInfo());
     }
 }

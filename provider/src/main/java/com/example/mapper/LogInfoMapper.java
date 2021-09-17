@@ -1,7 +1,7 @@
 package com.example.mapper;
 
-import com.example.entity.LogInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.entity.LogInfo;
 
 /**
  * <p>
@@ -13,4 +13,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface LogInfoMapper extends BaseMapper<LogInfo> {
    int clearAll();
+
+   // 日访问量
+   int selectUv();
 }

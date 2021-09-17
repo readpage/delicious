@@ -1,8 +1,8 @@
 package com.example.controller;
 
 import com.example.service.AuthService;
-import com.example.utils.result.Result;
-import com.example.utils.result.ResultUtils;
+import com.example.util.result.Result;
+import com.example.util.result.ResultUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

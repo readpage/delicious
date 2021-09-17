@@ -4,17 +4,18 @@ package com.example;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-import com.baomidou.mybatisplus.generator.config.PackageConfig;
-import com.baomidou.mybatisplus.generator.config.StrategyConfig;
+import com.baomidou.mybatisplus.generator.InjectionConfig;
+import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableFill;
+import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import org.junit.platform.commons.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class CodeGenerator {
@@ -23,6 +24,7 @@ public class CodeGenerator {
         Scanner sc = new Scanner(System.in);
         System.out.print("是否要输入" +tip+ ":(y/n)");
         if ("y".equals(sc.next())) {
+            System.out.print("请输入" +tip+ ":");
             String ipt = sc.next();
             if (StringUtils.isNotBlank(ipt)) {
                 return ipt;
@@ -59,7 +61,8 @@ public class CodeGenerator {
 
         //3.包的配置
         PackageConfig pc = new PackageConfig();
-        pc.setModuleName(scanner("模板名"));
+        String moduleName = scanner("请输入模块名");
+        pc.setModuleName(moduleName);
 
         pc.setParent("com.example");
         mpg.setPackageInfo(pc);
@@ -84,6 +87,39 @@ public class CodeGenerator {
         strategy.setControllerMappingHyphenStyle(true);  //localhost:8080/hello_id_2 //url中驼峰转连字符
         mpg.setStrategy(strategy);
 
+
+        // 自定义配置
+        InjectionConfig cfg = new InjectionConfig() {
+            @Override
+            public void initMap() {
+                // to do nothing
+            }
+        };
+        // 如果模板引擎是 velocity
+        String templatePath = "/templates/mapper.xml.vm";
+        // 自定义输出配置
+        List<FileOutConfig> focList = new ArrayList<>();
+        // 自定义配置会被优先输出
+        focList.add(new FileOutConfig(templatePath) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
+                System.out.println(projectPath +"/"+ moduleName + "/src/main/resources/mapper/"
+                        + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML);
+                return projectPath +"/"+ moduleName + "/src/main/resources/mapper/"
+                        + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+            }
+        });
+        cfg.setFileOutConfigList(focList);
+        mpg.setCfg(cfg);
+
+
+        // 配置模板
+        TemplateConfig templateConfig = new TemplateConfig();
+        templateConfig.setXml(null);
+        mpg.setTemplate(templateConfig);
+
         mpg.execute();   //执行
+
     }
 }

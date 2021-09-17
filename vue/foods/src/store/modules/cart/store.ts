@@ -1,7 +1,12 @@
 import storage from "@/utils"
 
+interface carts {
+  id: number
+  count: number
+}
+
 export const createState = () => ({
-  carts: storage.get("carts") as Ifood[] || [],
+  carts: storage.get("carts") as carts[] || [],
   foods: [] as Ifood[]
 })
 

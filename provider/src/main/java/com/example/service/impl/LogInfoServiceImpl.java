@@ -4,7 +4,7 @@ import com.example.entity.LogInfo;
 import com.example.mapper.LogInfoMapper;
 import com.example.service.LogInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.utils.PageInfo;
+import com.example.util.PageInfo;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

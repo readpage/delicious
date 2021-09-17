@@ -42,9 +42,11 @@ const collapse = computed(() => getters["user/collapse"])
 
 
 function resize() {
-  window.onresize = () => {
+  window.addEventListener("resize", () => {
     commit("user/setBrowser")
     if (browser.value.isMini) {
+      
+      
       if (lock.collapse == null) {
         lock.collapse = collapse.value
         commit("user/updCollapse", true)
@@ -55,7 +57,7 @@ function resize() {
         lock.collapse = null
       }
     }
-  }
+  })
 }
 onMounted(() => {
   resize()

@@ -6,13 +6,15 @@ import { closeLoad } from "@/hooks/useUser";
 import { ElLoading } from "element-plus";
 
 const mutations = {
-  updCollapse (state: userState, val: boolean) {
+  updCollapse(state: userState, val: boolean) {
     state.collapse = val
   },
+  
 
   setBrowser(state: userState) {
     state.browser = getBrowser()
   },
+
 
   showLoading(state: userState) {
     state.loading = true
@@ -42,6 +44,7 @@ const mutations = {
     }
   },
 
+
   setUserInfo(state: userState, val: Iuser) {
     state.info = val
     storage.set("userInfo", val)
@@ -50,6 +53,17 @@ const mutations = {
   remUser(state: userState) {
     state.info = {} as Iuser
     storage.remove("userInfo")
+  },
+
+
+  setToken(state: userState, val: string) {
+    state.token = val
+    storage.set("token", val)
+  },
+
+  remToken(state: userState) {
+    state.token = null
+    storage.remove("token")
   }
 }
 

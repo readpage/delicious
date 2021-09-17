@@ -9,12 +9,13 @@
   "dependencies": {
     "axios": "^0.21.1",
     "dayjs": "^1.10.6",
+    "echarts": "^5.2.0",
     "element-plus": "^1.0.2-beta.65",
     "lodash": "^4.17.21",
     "nprogress": "^0.2.0",
     "sass": "^1.36.0",
     "store": "^2.0.12",
-    "vue": "^3.0.5",
+    "vue": "^3.1.5",
     "vue-router": "^4.0.10",
     "vuex": "^4.0.2"
   },

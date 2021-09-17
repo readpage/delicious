@@ -106,7 +106,6 @@ function onUpdate(val: any) {
       })
     }
     fn(tree)
-    console.log(tree, ids);
     
     menuIds.value = ids
   })

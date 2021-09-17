@@ -85,7 +85,7 @@ const transitionName = ref("slide-fade")
     flex: 1;
     overflow: hidden;
     box-sizing: border-box;
-    margin: 0 10px;
+    margin: 0 10px 10px 10px;
 	}
 
   @media (max-width: 768px) {

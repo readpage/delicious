@@ -9,7 +9,7 @@ import com.example.service.MenuRoleService;
 import com.example.service.MenuService;
 import com.example.service.RoleService;
 import com.example.service.UserRoleService;
-import com.example.utils.PageInfo;
+import com.example.util.PageInfo;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

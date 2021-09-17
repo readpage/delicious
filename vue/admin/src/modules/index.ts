@@ -7,7 +7,7 @@ export default {
     Object.keys(modules).forEach(item => {
       const component = modules[item].default
       item.match("/([^/]+?)/index.vue")
-      app.component(RegExp.$1, component)
+      app.component("v-" +RegExp.$1, component)
     })
   }
 }

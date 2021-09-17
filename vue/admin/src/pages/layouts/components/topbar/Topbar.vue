@@ -20,7 +20,7 @@
         <span class="el-dropdown-link">
           <span class="name">{{ info.nickname || "未登录" }}</span>
           <!-- <img class="avatar" :src="userInfo.headImg | default_avatar" alt /> -->
-          <el-avatar src="/api/avatar/avatar.gif"></el-avatar>
+          <el-avatar src="/api/upload/root/avatar.jpg"></el-avatar>
         </span>
 
         <template #dropdown>

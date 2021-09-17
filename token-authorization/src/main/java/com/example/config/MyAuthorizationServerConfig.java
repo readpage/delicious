@@ -39,9 +39,7 @@ public class MyAuthorizationServerConfig extends AuthorizationServerConfigurerAd
                 //支持 授权码、密码,客户端,授权模式，支持刷新token功能
                 .authorizedGrantTypes("authorization_code", "password", "client_credentials", "refresh_token")
                 .scopes("all")  // 授权的范围
-                .autoApprove(false)   // false 跳转到授权的页面
-                // 加上验证回调地址
-                .redirectUris("http://www.baidu.com");
+                .autoApprove(false);  // false 跳转到授权的页面
     }
 
     // 注入Redis连接
