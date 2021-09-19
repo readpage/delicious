@@ -34,16 +34,17 @@ public class TimingTask {
     }
 
 //    @Scheduled(cron = "0 0 0 * * ?")
-    public void day() {
-        statisService.save(getStatis());
+    public void day(Statis statis) {
+        statisService.save(statis);
     }
 
     @Scheduled(cron = "0 0 0/1 * * ?")
     public void hour() {
         UpdateWrapper<Statis> wrapper = new UpdateWrapper<>();
         wrapper.last("WHERE TO_DAYS(create_time) = TO_DAYS(NOW())");
+        Statis statis = getStatis();
         if (!statisService.update(getStatis(), wrapper)) {
-            day();
+            day(statis);
         }
     }
 }

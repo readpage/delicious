@@ -8,7 +8,7 @@
           <div class="header">
             <div class="logo">
               <router-link :to="{path: '/'}">
-                <lottie-player class="lottie-player" src="/static/fast-food.json" background="#fff" speed="2.2" loop autoplay></lottie-player>
+                <lottie-player class="lottie-player" src="/static/lottie/fast-food.json" background="#fff" speed="2.2" loop autoplay></lottie-player>
               </router-link>
               <span>食为天</span>
             </div>

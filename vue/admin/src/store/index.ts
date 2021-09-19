@@ -1,3 +1,4 @@
+import { appState } from './modules/app/store';
 import { menuState } from './modules/menu/store';
 import { InjectionKey } from 'vue';
 import { createStore,  useStore as baseUseStore, Store } from 'vuex';
@@ -6,7 +7,8 @@ import { userState } from './modules/user/store';
 
 type State = {
   user: userState,
-  menu: menuState
+  menu: menuState,
+  app: appState,
 }
 
 export const key: InjectionKey<Store<State>> = Symbol()

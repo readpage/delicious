@@ -2,7 +2,7 @@
   <div class="app-slider">
     <div class="app-slider__logo">
       <router-link :to="{path: '/'}">
-        <lottie-player class="lottie-player" src="/static/food.json" background="#304156" speed="2.2" loop autoplay></lottie-player>
+        <v-lottie src="/static/lottie/food.json" background="#304156"></v-lottie>
       </router-link>
     </div>
     <div class="app-slider__menu">
@@ -26,8 +26,8 @@
 
 <script setup lang="ts">
 import { useStore } from "@/store";
-import { getBrowser } from "@/utils";
-import type { browserType } from "@/utils";
+import { getBrowser } from "@/util";
+import type { browserType } from "@/util";
 import { computed, onMounted, reactive, ref, toRefs, watchEffect } from "vue"
 import MenuTree from "./components/MenuTree.vue";
 

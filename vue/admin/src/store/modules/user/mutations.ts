@@ -1,9 +1,7 @@
-import storage, { getBrowser } from '@/utils';
+import storage, { getBrowser } from '@/util';
 import { userState } from "./store";
 import Nprogress from "nprogress";
 import "nprogress/nprogress.css";
-import { closeLoad } from "@/hooks/useUser";
-import { ElLoading } from "element-plus";
 
 const mutations = {
   updCollapse(state: userState, val: boolean) {
@@ -20,32 +18,22 @@ const mutations = {
     state.loading = true
   },
   
+  btnLoading(state: userState) {
+    state.btnLoading = true
+  },
+  
   hideLoading(state: userState) {
     state.loading = false
     state.btnLoading = false
     Nprogress.done()
-    closeLoad()
   },
 
-  btnLoading(state: userState) {
-    state.btnLoading = true
-  },
-
-  elLoading(state: userState) {
-    state.elLoading = ElLoading.service({
-      text: "拼命加载中...",
-      spinner: "el-icon-loading"
-    })
-  },
   
-  closeElLoading(state: userState) {
-    if (state.elLoading) {
-      state.elLoading.close()
-    }
-  },
+
+  
 
 
-  setUserInfo(state: userState, val: Iuser) {
+  setUser(state: userState, val: Iuser) {
     state.info = val
     storage.set("userInfo", val)
   },
@@ -56,13 +44,13 @@ const mutations = {
   },
 
 
-  setToken(state: userState, val: string) {
+  setToken(state: userState, val: Itoken) {
     state.token = val
     storage.set("token", val)
   },
 
   remToken(state: userState) {
-    state.token = null
+    state.token = null as any
     storage.remove("token")
   }
 }

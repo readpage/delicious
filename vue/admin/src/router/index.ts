@@ -1,4 +1,4 @@
-import storage from "@/utils";
+import storage from "@/util";
 import { createRouter, createWebHistory } from "vue-router"
 
 const routes = [
@@ -39,12 +39,13 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
+  // routes: []
   routes
 });
 
 
 
-export function setRoutes(val: Imenu[]) {
+export async function setRoutes(val: Imenu[]) {
   routes.forEach(res => {
     router.addRoute(res)
   })
@@ -53,7 +54,6 @@ export function setRoutes(val: Imenu[]) {
     item.component = modules[item.component]
     router.addRoute("index", item)
   });
-  router.replace(router.currentRoute.value.fullPath)
 }
 
 router.beforeEach((to, form, next) => {

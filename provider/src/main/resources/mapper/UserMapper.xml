@@ -23,16 +23,20 @@
     <!--extends: 可以实现存在继承关系的两个类实体的映射。extends填父类的resultMap。-->
 
     <resultMap id="userMap" type="User" extends="baseMap">
-        <!-- column="id" 对应selectRole parameterType对应的参数查询
-        id 的值对应 user的id-->
+        <!-- column="id"和collection的id对应
+         column="id" 的值对应查询的id-->
         <collection property="roles" column="id" ofType="Role" select="selectRole">
             <id property="id" column="id"/>
+            <result property="name" column="r_name"/>
             <result property="nickname" column="nickname"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="version" column="version"/>
         </collection>
     </resultMap>
 
     <select id="selectRole" resultType="Role">
-        SELECT r.id, r.nickname, u.id as uid
+        SELECT r.*, r.name r_name, u.id as uid
         FROM user u, role r, user_role ur
         WHERE u.id=ur.uid AND r.id=ur.rid
         AND u.id = #{id}
@@ -41,7 +45,7 @@
         SELECT * FROM user
     </select>
 
-    <select id="selectByUsername"  resultMap="userMap">
+    <select id="selectByUsername" resultMap="userMap">
         SELECT * FROM user WHERE username=#{username}
     </select>
 

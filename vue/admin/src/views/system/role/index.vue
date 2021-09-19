@@ -47,7 +47,7 @@
 import { Amenu, Arole } from "@/api";
 import { useStore } from "@/store";
 import { ImenuKey, IroleFormKey, roleForm }from "@/symbols";
-import { deepTree } from "@/utils";
+import { deepTree } from "@/util";
 import { ElMessageBox } from "element-plus";
 import { onMounted, provide, reactive, ref } from "vue"
 import Add from "./components/Add.vue";

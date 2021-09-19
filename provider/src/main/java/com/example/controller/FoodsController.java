@@ -40,6 +40,12 @@ public class FoodsController {
         return ResultUtils.query(foodsService.selectPage(pageNum, pageSize));
     }
 
+    @ApiOperation("id获取餐品信息")
+    @GetMapping("/getById/{id}")
+    public Result<Foods> getById(@PathVariable int id) {
+        return ResultUtils.query(foodsService.getById(id));
+    }
+
     @ApiOperation("添加餐品")
     @PostMapping("/save")
     public Result<Object> save(@RequestBody Foods foods) {

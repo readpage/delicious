@@ -7,16 +7,16 @@
       <div class="content">
         <div class="main">
           <div class="img">
-            <el-image src="https://i8.meishichina.com/attachment/recipe/2021/09/09/20210909163116442224666411321699.JPG?x-oss-process=style/p800" fit="fill"></el-image>
+            <el-image :src="food.img" fit="fill"></el-image>
           </div>
           <div class="info">
             <el-card>
               <div class="name">
-                香酥鱼条
+                {{food.name}}
               </div>
               <div class="attr">
-                <span>￥10.2</span>
-                <span>20件已售</span>
+                <span>￥{{food.price}}</span>
+                <span>{{food.count}}件已售</span>
               </div>
             </el-card>
           </div>
@@ -60,15 +60,16 @@
             <div class="header">推荐</div>
             <el-divider content-position="left"><i class="el-icon-chicken"></i></el-divider>
             <div class="cards">
-              <el-card :body-style="{ padding: '0px'}" v-for="item in data">
+              <el-card :body-style="{ padding: '0px'}" v-for="item in state.cart.foods">
                 <div class="card-container">
-                  <router-link :to="{path: `/foods/detail/${item.id}`}" @click.native="active">
+                  <!--  <router-link target="_blank" :to="{path: `/foods/detail/${item.id}`}" @click.native="active"> -->
+                  <router-link target="_blank" :to="{path: `/foods/detail/${item.id}`}">
                     <div class="card-img">
                       <el-image :src="item.img" fit="fill"></el-image>
                       <span class="overlay"></span>
                     </div>
                   </router-link>
-                  <div class="label ellipsis">{{ item.label }}</div>
+                  <div class="label ellipsis">{{ item.name }}</div>
                   <div class="desc">
                     <span>￥{{item.price}}</span>
                     <span>{{item.count}}件已售</span>
@@ -97,10 +98,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
-import { useRouter } from "vue-router";
+import { Afood } from "@/api";
+import { useStore } from "@/store";
+import { computed, reactive, ref, toRefs, watch } from "vue"
+import { useRoute, useRouter } from "vue-router";
 
+const { state } = useStore()
 const router = useRouter()
+const route = useRoute()
+
+const data = reactive({
+  food: {} as Ifood
+})
+
+watch(() => route.params.id, val => {
+  if (val) {
+    Afood.getById({urlParam: `/${val}`}).then(res => {
+      data.food = res.data
+    })
+  }
+}, {immediate: true})
+
+
 
 const label = ref([
   "酱牛肉",
@@ -135,59 +154,19 @@ const label = ref([
   "蒜蓉黄瓜"
 ])
 
-const data = ref([
-  {
-    id: 1,
-    img: "https://i8.meishichina.com/attachment/recipe/2021/09/09/20210909163116442224666411321699.JPG?x-oss-process=style/p800",
-    label: "香酥鱼条",
-    price: "10.2",
-    count: "20"
-  },
-  {
-    id: 2,
-    img: "https://i3.meishichina.com/attachment/recipe/2021/09/09/2021090916311585919298197577.jpg?x-oss-process=style/c320",
-    label: "时蔬烧五花肉",
-    price: "13.2",
-    count: "10"
-  },
-  {
-    id: 3,
-    img: "https://i3.meishichina.com/attachment/recipe/2021/09/11/2021091116313690648841958079.jpg?x-oss-process=style/c320",
-    label: "糯米粉红薯丸子",
-    price: "10.3",
-    count: "23"
-  },
-  {
-    id: 4,
-    img: "https://i3.meishichina.com/attachment/recipe/2021/09/11/2021091116313517169521958079.jpg?x-oss-process=style/c320",
-    label: "青瓜胡萝卜炒牛肉",
-    price: "25.3",
-    count: "23"
-  },
-  {
-    id: 5,
-    img: "https://i3.meishichina.com/attachment/recipe/2021/09/11/2021091116313687379571958079.jpg?x-oss-process=style/c320",
-    label: "蒜香豆腐",
-    price: "10.3",
-    count: "11"
-  },
-  {
-    id: 6,
-    img: "https://i3.meishichina.com/attachment/recipe/2021/09/11/2021091116313683606001958079.jpg?x-oss-process=style/c320",
-    label: "韭菜炒豆腐",
-    price: "12.3",
-    count: "21"
-  }
-])
+
+
 
 function goBack() {
   router.push("/")
 }
 
 const scrollbar = ref()
-function active() {
-  scrollbar.value.setScrollTop(0)
-}
+// function active() {
+//   scrollbar.value.setScrollTop(0)
+// }
+
+const { food } = toRefs(data)
 </script>
 
 <style lang="scss">
@@ -222,9 +201,9 @@ function active() {
       }
 
       .img {
-        height: 380px;
-        display: flex;
-        justify-content: center;
+        width: 80%;
+        height: 300px;
+        margin: 0 auto;
       }
 
       .el-card__body {
@@ -314,8 +293,6 @@ function active() {
               height: 130px;
 
               .el-image {
-                width: 100%;
-                height: 100%;
                 transition: all .5s ease-out;
               }
 
@@ -373,6 +350,9 @@ function active() {
       flex-direction: column;
       .main {
         padding: 0px;
+        .img {
+          width: 100%;
+        }
       }
       .main, .more {
         width: 100%;

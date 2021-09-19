@@ -51,7 +51,7 @@ const { state, commit } = useStore()
 const table = reactive({
   total: 0,
   pageNum: 1,
-  pageSize: 5,
+  pageSize: 10,
   logInfo: [] as IlogInfo[],
 })
 const data = ref<IlogInfo>()

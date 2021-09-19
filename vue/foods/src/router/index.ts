@@ -47,6 +47,22 @@ const routes =[
     name: "confirm-orders",
     component: () => import("@/views/confirm-orders/index.vue")
   },
+  {
+    path: "/sign",
+    name: "sign",
+    component: () => import("@/pages/sign/index.vue")
+  },
+  {
+    path: "/500",
+    name: "500",
+    component: () => import("@/pages/error-page/500.vue"),
+    meta: { title: "500" },
+  }, {
+    path: "/:pathMatch(.*)*",
+    name: "404",
+    component: () => import(/* webpackChunkName: "about" */ "@/pages/error-page/404.vue"),
+    meta: { title: "404" }
+  }
 ]
 
 const router = createRouter({

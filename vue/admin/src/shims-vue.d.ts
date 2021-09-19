@@ -12,3 +12,5 @@ declare module "store" {
 	export function clearAll(): void;
 	export function each(callback: Function): void;
 }
+
+

@@ -1,4 +1,4 @@
-import storage from "@/utils"
+import storage from "@/util"
 
 interface carts {
   id: number

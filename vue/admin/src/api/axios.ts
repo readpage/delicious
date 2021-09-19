@@ -4,18 +4,21 @@ import { store } from "@/store";
 import router from "@/router";
 import Nprogress from "nprogress";
 import "nprogress/nprogress.css";
-import storage from "@/utils";
 
 const service = axios.create({
   baseURL: "/api"
 })
 let num = 0
+// 重试队列，每一项将是一个待执行的函数形式
+let retryRequests: any[] = []
+// 是否正在刷新的标记
+let isRefreshing = false
 
 service.interceptors.request.use(config => {
   if (num++ == 0) {
     Nprogress.start()
   }
-  const token = store.getters["user/token"]
+  const token = store.state.user.token
   if (token) {
     config.headers.Authorization = token["token_type"] + " " +token["access_token"]
   }
@@ -60,29 +63,39 @@ service.interceptors.response.use(response  => {
       default:
         ElMessage.warning(res.msg)
     }
-    store.commit("user/closeElLoading")
     store.commit("user/hideLoading")
     throw response
   }
 },error => {
   num--
-  store.commit("user/closeElLoading")
   store.commit("user/hideLoading")
-  
+  store.commit("app/hideAppLoading")
   router.push("/500")
   return Promise.reject(error)
 })
 
-async function doRequest(error: any) {
-  const token: Itoken = store.getters["user/token"]
-  const refreshToken = token.refresh_token
-  store.commit("user/remToken")
 
-  await store.dispatch("user/refreshToken", refreshToken)
 
-  return await service.request(error.config).then(res => {
-    return res
-  })
+function doRequest(res: any):Promise<any> {
+  const config = res.config
+  if (!isRefreshing) {
+    isRefreshing = true
+    return store.dispatch("user/refreshToken", store.state.user.token).then(res => {
+      retryRequests.forEach(item => item(res.data))
+      retryRequests = []
+      return service(config)
+    }).catch(err => {
+      store.commit("app/hideAppLoading")
+    }).finally(() => {
+      isRefreshing = false
+    })
+  } else {
+    return new Promise(resolve => {
+      retryRequests.push(() => {
+        resolve(service(config))
+      })
+    })
+  }
 }
 
 function open(msg: string) {

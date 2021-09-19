@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import { ImenuKey, menu } from "@/symbols";
-import { deepTree } from "@/utils";
+import { deepTree } from "@/util";
 import { computed, defineEmit, inject, ref, watch, watchEffect } from "vue"
 
 const props = defineProps({

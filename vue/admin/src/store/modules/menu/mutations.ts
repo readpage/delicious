@@ -1,5 +1,5 @@
 import { setRoutes } from "@/router";
-import storage from "@/utils";
+import storage from "@/util";
 import { menuState } from "./store";
 
 const mutations = {

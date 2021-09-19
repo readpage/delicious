@@ -3,10 +3,12 @@ import { InjectionKey } from 'vue';
 import { createStore,  useStore as baseUseStore, Store } from 'vuex';
 import { modules } from './modules';
 import { userState } from './modules/user/store';
+import { appState } from './modules/app/store';
 
 type State = {
   user: userState,
-  cart: cartState
+  cart: cartState,
+  app: appState
 }
 
 export const key: InjectionKey<Store<State>> = Symbol()

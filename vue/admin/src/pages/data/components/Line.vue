@@ -1,25 +1,49 @@
 <template>
   <div class="line">
-    <v-chart :option="option"></v-chart>
+    <v-chart :option="option" :loading="loading"></v-chart>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
+import { reactive, watch } from "vue"
 
-const option = ref({
+interface Props {
+  data: {
+    uv: number[]
+    date: string[]
+  }
+  loading: boolean
+}
+
+const props = defineProps<Props>()
+
+const option = reactive({
+  color: ["#2e4783"],
   xAxis: {
-        type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    },
-    yAxis: {
-        type: 'value'
-    },
-    series: [{
-        data: [150, 230, 224, 218, 135, 147, 260],
-        type: 'line'
-    }]
+    type: 'category',
+    data: ['0']
+  },
+  yAxis: {
+    type: 'value'
+  },
+  series: {
+      data: [0],
+      type: 'line'
+  }
 })
+
+watch(() => props.data.date, val => {
+  option.xAxis.data = val
+})
+watch(() => props.data.uv, val => {
+  option.series.data = val
+})
+
+setTimeout(() => {
+  console.log(props.data.date );
+  console.log(option.xAxis.data);
+  console.log(option.series.data);
+}, 6000);
 </script>
 
 <style lang="scss" scoped>

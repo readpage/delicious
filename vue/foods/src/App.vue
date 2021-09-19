@@ -13,18 +13,15 @@ import { onMounted } from "vue";
 import { ElConfigProvider } from "element-plus";
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
 import { useStore } from "./store";
-import { closeLoad } from "./hooks/useUser";
 
 const locale = zhCn;
-const { commit } = useStore()
+const { commit, state, dispatch} = useStore()
+
 
 window.onresize = () => {
   commit("user/setBrowser")
 }
-
-onMounted(() => {
-  closeLoad()
-})
+dispatch("app/appLoad")
 
 </script>
 
@@ -55,7 +52,28 @@ onMounted(() => {
   -webkit-line-clamp: 2;
 }
 
+.el-image {
+  width: 100% !important;
+  height: 100% !important;
+}
+
 .el-image__placeholder {
-  background: no-repeat top/cover url("/static/min-loading.gif") !important;
+  background: no-repeat top/cover url("@/assets/min-loading.gif") !important;
+}
+
+#loading {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 3000;
+  background-color: #ffffff;
+}
+#loading .lottie-player {
+  position: relative;
 }
 </style>

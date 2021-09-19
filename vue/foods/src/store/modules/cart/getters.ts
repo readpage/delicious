@@ -17,15 +17,14 @@ const getters = {
   // 计算总价格
   totalPrice: (state: cartState, getters: any) => {
     let totalPrice = 0
-    const foods: Ifood[] = getters["cart/carts"]
+    const foods: Ifood[] = getters["carts"]
     foods.map(item => {
       let cart = state.carts.find(({id}) => item.id == id)
       if (cart) {
         totalPrice += cart.count*item.price
       }
     })
-  }
-
+  },
 }
 
 export default getters

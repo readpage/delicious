@@ -4,6 +4,7 @@ import modules from './modules'
 import plugins from './plugins'
 import router from './router'
 import { store, key } from './store'
+import "@lottiefiles/lottie-player"
 
 createApp(App)
   .use(plugins)
@@ -12,4 +13,4 @@ createApp(App)
   .use(modules)
   .mount('#app')
 
-store.dispatch("user/appLoad")
+store.dispatch("app/appLoad")

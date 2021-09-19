@@ -1,7 +1,9 @@
 package com.example.service;
 
-import com.example.entity.Statis;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.entity.Statis;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2021-09-15
  */
 public interface StatisService extends IService<Statis> {
-
+    List<Statis> recent();
 }

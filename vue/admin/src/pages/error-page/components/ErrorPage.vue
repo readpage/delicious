@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import { useStore } from "@/store";
-import storage from "@/utils";
+import storage from "@/util";
 import { ref, toRefs } from "vue"
 import { useRoute, useRouter } from "vue-router";
 

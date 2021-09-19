@@ -12,6 +12,7 @@ const option = {
   title: {
     text: "柱状图",
   },
+  color: ["#e01f54"],
   tooltip: {},
   legend: {
     data: ["销量"],

@@ -13,7 +13,10 @@ interface Props {
   loading?: boolean,
   height?: string
 }
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  loading: false,
+  height: "300px",
+})
 
 
 const chartRef = ref()
@@ -26,16 +29,15 @@ watchEffect(() => {
     if (props.loading) {
       newChart.showLoading()
     } else {
+      newChart.setOption(props.option)
       newChart.hideLoading()
     }
   }
 })
 
-
 onMounted(() => {
   const myChart = echarts.init(chartRef.value);
   chart.value = myChart
-  myChart.setOption(props.option)
 
   window.addEventListener("resize", () => {
     myChart.resize()
@@ -45,9 +47,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-
-.v-chart {
-  height: 300px
-}
 
 </style>

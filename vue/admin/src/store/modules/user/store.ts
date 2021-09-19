@@ -1,5 +1,4 @@
-import storage, { browserType, getBrowser } from "@/utils"
-import { ILoadingInstance } from "element-plus/lib/el-loading/src/loading.type"
+import storage, { browserType, getBrowser } from "@/util"
 
 const browser: browserType = getBrowser()
 
@@ -8,9 +7,8 @@ export const createState = () => ({
   collapse: browser.isMini,
   loading: false,
   btnLoading: false,
-  elLoading: undefined as unknown as ILoadingInstance,
-  info: storage.get("userInfo") as Iuser,
-  token: storage.get("token") || null,
+  info: storage.get("userInfo") as Iuser|| {},
+  token: storage.get("token") as Itoken || null,
 })
 
 

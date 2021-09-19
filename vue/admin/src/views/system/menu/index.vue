@@ -48,7 +48,7 @@ import { Amenu } from "@/api";
 import { useStore } from "@/store";
 import { ImenuKey } from "@/symbols";
 import { menuFormKey } from "@/symbols/menu";
-import { deepTree } from "@/utils";
+import { deepTree } from "@/util";
 import { ElMessageBox } from "element-plus";
 import { computed, onMounted, provide, reactive, ref } from "vue";
 import Add from "./components/Add.vue";

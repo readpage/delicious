@@ -2,7 +2,7 @@
   <div class="header">
     <div class="logo">
       <router-link :to="{path: '/'}">
-        <lottie-player class="lottie-player" src="/static/fast-food.json" background="#fff" speed="2.2" loop autoplay></lottie-player>
+        <lottie-player class="lottie-player" src="/static/lottie/fast-food.json" background="#fff" speed="2.2" loop autoplay></lottie-player>
       </router-link>
       <span>食为天</span>
     </div>
@@ -31,7 +31,7 @@
     <div class="info">
       <el-dropdown trigger="click" @command="onCommand">
         <span class="el-dropdown-link">
-          <span class="name">{{ "未登录" }}</span>
+          <span class="name">{{ userInfo.nickname || "未登录" }}</span>
           <!-- <img class="avatar" :src="userInfo.headImg | default_avatar" alt /> -->
           <el-avatar src="https://cdn.luogu.com.cn/upload/usericon/1.png"></el-avatar>
         </span>
@@ -51,12 +51,15 @@
 
 <script setup lang="ts">
 import { useStore } from "@/store";
-import { ref } from "vue"
+import { ref, toRefs } from "vue"
 import { useRoute, useRouter } from "vue-router";
 
+const { state, dispatch } = useStore()
+const { userInfo } = toRefs(state.user)
 const router = useRouter()
 
-function onCommand(name: string) {
+
+async function onCommand(name: string) {
   switch (name) {
     case "my":
       router.push("/info")
@@ -65,6 +68,7 @@ function onCommand(name: string) {
       router.push("/sign")
       break
     case "exit":
+      await dispatch("user/userLogout", state.user.token)
       router.push("/sign")
       break
   }

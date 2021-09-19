@@ -51,7 +51,7 @@ async function onCommand(name: string) {
       router.push("/sign")
       break
     case "exit":
-      await dispatch("user/userLogout")
+      await dispatch("user/userLogout", state.user.token)
       router.push("/sign")
       break
       
