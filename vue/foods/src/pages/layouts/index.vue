@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import { useStore } from "@/store";
-import { ref } from "vue"
+import { computed, ref } from "vue"
 import { onBeforeRouteUpdate, useRoute } from "vue-router";
 import Footer from "./components/Footer.vue";
 import Header from "./components/Header.vue";
@@ -46,8 +46,7 @@ const route = useRoute()
 <style lang="scss" scoped>
 .container {
   display: flex;
-  height: 100vh;
-  overflow: hidden;
+  height: 100%;
   flex-direction: column;
   background-color: #f7f7f7;
 
@@ -61,7 +60,7 @@ const route = useRoute()
     margin: 0 auto;
     margin-top: 20px;
     padding: 0 10px;
-    min-height: 800px;
+    flex: 1;
   }
 
   .layer2 {

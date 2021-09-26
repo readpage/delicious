@@ -10,7 +10,8 @@ const Alogout = apiAxios("/oauth/logout", "delete")
 const ArefToken = apiAxios("/oauth/refresh", "put")
 const Aregister = apiAxios("/user/save", "post")
 const Astatis = {
-  recent: apiAxios("/statis/recent")
+  recent: apiAxios("/statis/recent"),
+  server: apiAxios<IsysInfo>("/statis/server")
 }
 
 

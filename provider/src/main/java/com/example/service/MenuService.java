@@ -20,4 +20,5 @@ public interface MenuService extends IService<Menu> {
 
     List<Menu> selectByName(List<String> names);
 
+    List<Menu> selectAll();
 }

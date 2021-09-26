@@ -16,7 +16,7 @@
           </el-card>
         </div>
         <div class="statis2">
-          <el-card><Bar /></el-card>
+          <el-card><Bar :data="line" :loading="loading"/></el-card>
           <el-card><Line :data="line" :loading="loading" /></el-card>
         </div>
         <div class="statis2">
@@ -32,10 +32,14 @@
 import { Astatis } from "@/api";
 import dayjs from "@/plugins/day";
 import { create } from "lodash";
-import { reactive, ref } from "vue"
+import { defineComponent, reactive, ref } from "vue"
 import Bar from "./components/Bar.vue";
 import Line from "./components/Line.vue";
 import Pie from "./components/Pie.vue";
+
+defineComponent({
+  name: "data1"
+})
 
 const line = ref({
   uv: [0],
@@ -73,8 +77,6 @@ Astatis.recent().then(res => {
   line.value.uv = statis.map(item => item.uv)
   line.value.date = statis.map(item => item.createTime)
   loading.value = false
-  console.log(line.value.uv);
-  
   
   if (today) {
     list.value[1].value = today.userCount

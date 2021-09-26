@@ -4,4 +4,6 @@ interface Ifood {
   img: string
   price: number
   count: number
+  buyCount: number
+  btn?: boolean
 }

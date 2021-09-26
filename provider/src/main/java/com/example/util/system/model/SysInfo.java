@@ -1,5 +1,7 @@
 package com.example.util.system.model;
 
+import com.example.util.system.SysUtil;
+
 import java.util.List;
 
 public class SysInfo {
@@ -116,5 +118,9 @@ public class SysInfo {
                 ", memInfo=" + memInfo +
                 ", jvmInfo=" + jvmInfo +
                 '}';
+    }
+
+    public static void main(String[] args) {
+        System.out.println(SysUtil.getSysInfo());
     }
 }

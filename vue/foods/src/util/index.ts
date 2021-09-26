@@ -1,5 +1,21 @@
 import storage from "store"
 
+export function preLoad(val: string[]):Promise<any> {
+	const imageAll = val.map((imgUrl) => {
+		return new Promise((resolve, reject) => {
+			const img = new Image()
+			img.src = imgUrl
+			img.onload = () => resolve(imgUrl)
+			img.onerror = () => reject(new Error(imgUrl+ "load error"))
+		})
+	})
+	return Promise.all(imageAll).then(() => {
+		console.log('load all success');
+	}).catch((e) => {
+		console.log(e);
+	})
+}
+
 export default storage
 export function isArray(value: any) {
 	if (typeof Array.isArray === "function") {
@@ -142,6 +158,8 @@ export function getBrowser() {
 	// 是否移动端 + 屏幕宽过小
 	const isMini = screen === "xs" || isMobile;
 
+	const innerHeight = window.innerHeight + "px";
+
 	return {
 		height: clientHeight,
 		width: clientWidth,
@@ -154,7 +172,8 @@ export function getBrowser() {
 		isIOS,
 		isPC,
 		isMini,
-		screen
+		screen,
+		innerHeight
 	};
 }
 

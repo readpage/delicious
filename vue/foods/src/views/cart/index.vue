@@ -1,103 +1,156 @@
 <template>
   <div class="cart">
-    <div class="cart__header">
-      <div class="manage" @click="data.finish=!data.finish">
+    <div class="cart__header" style="position: relative">
+      <div class="manage" style="position: absolute; z-index: 200;" @click="data.finish=!data.finish">
         {{data.finish?"管理":"完成"}}
       </div>
-      <div class="title">
+      <div class="title" style="position: absolute; left: 22px;">
         购物车
+        <span></span>
       </div>
     </div>
-    <div class="cart__content">
-      <el-checkbox-group v-model="data.checked"
-        @change="handleCheckedCitiesChange">
-        <el-card v-for="item in data.cards" :body-style="{padding: '10px'}">
-          <div class="item-buy">
-            <div class="item-buy__check">
-              <el-checkbox :label="item.id"></el-checkbox>
+    <el-empty description="暂无餐品" v-if="carts.length==0">
+      <router-link :to="{path: '/'}">去逛逛</router-link>
+    </el-empty>
+    <template v-else>
+     <el-scrollbar>
+      <div class="cart__content">
+        <el-checkbox-group v-model="data.checked"
+          @change="handleCheckedCitiesChange">
+          <el-card v-for="item in foods.value" :body-style="{padding: '10px'}">
+            <div class="item-buy">
+              <div class="item-buy__check">
+                <el-checkbox :label="item.id"></el-checkbox>
+              </div>
+              <el-image fit="fill" :src="item.img"></el-image>
+              <div class="item-buy__detail">
+                <div class="title">
+                  {{item.name}}
+                </div>
+                <div class="buy__func">
+                  <span class="is-price">{{item.price}}</span>
+                  <div class="count" v-if="!item.btn" @click="item.btn=!item.btn">x{{item.buyCount}}</div>
+                  <template v-else>
+                    <el-space>
+                      <el-input-number size="mini" @change="onCount(item)" v-model="item.buyCount" :min="1"></el-input-number>
+                      <el-button type="danger" icon="el-icon-close" size="mini" circle @click="item.btn=!item.btn"></el-button>
+                    </el-space>
+                  </template>
+                </div>
+              </div>
             </div>
-            <el-image fit="fill" src="https://i8.meishichina.com/attachment/recipe/2021/09/09/20210909163116442224666411321699.JPG?x-oss-process=style/p800"></el-image>
-            <div class="item-buy__detail">
-              <div class="title">
-                香酥鱼条
-              </div>
-              <div class="buy__func">
-                <span class="price">￥12</span>
-                <div class="count" v-if="data.numVisible" @click="data.numVisible=!data.numVisible">x{{data.num}}</div>
-                <template v-else>
-                  <el-space>
-                    <el-input-number size="mini" v-model="data.num"></el-input-number>
-                    <el-button type="danger" icon="el-icon-close" size="mini" circle @click="data.numVisible=!data.numVisible"></el-button>
-                  </el-space>
-                </template>
-              </div>
+          </el-card>
+        </el-checkbox-group>
+      </div>
+     </el-scrollbar>
+      <el-card>
+          <div class="cart__footer">
+            <el-checkbox
+              :indeterminate="data.isIndeterminate"
+              v-model="data.checkAll"
+              @change="handleCheckAllChange"
+              >全选</el-checkbox
+            >
+            <div class="func">
+              <template v-if="data.finish">
+                <span>合计: <span class="is-price">{{totalPrice}}</span></span>
+                <el-button size="mini" type="info" @click="buy">去结算</el-button>
+              </template>
+              <template v-else>
+                <el-button size="mini" type="danger" plain @click="remove">删除</el-button>
+              </template>
             </div>
           </div>
         </el-card>
-      </el-checkbox-group>
-    </div>
-    <el-affix position="bottom" :offset="0">
-      <el-card>
-        <div class="cart__footer">
-          <el-checkbox
-            :indeterminate="data.isIndeterminate"
-            v-model="data.checkAll"
-            @change="handleCheckAllChange"
-            >全选</el-checkbox
-          >
-          <div class="func">
-            <template v-if="data.finish">
-              <span>合计: <span style="color: red">￥200</span></span>
-              <el-button size="mini" type="info" @click="router.push('/confirm-orders')">去结算</el-button>
-            </template>
-            <template v-else>
-              <el-button size="mini" type="danger" plain>删除</el-button>
-            </template>
-          </div>
-        </div>
-      </el-card>
-    </el-affix>
+    </template>
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from "vue"
-import { useRouter } from "vue-router"
+import { useStore } from "@/store"
+import cart from "@/store/modules/cart"
+import { computed, reactive, ref, watch, toRefs, watchEffect } from "vue"
+import { onBeforeRouteLeave, useRouter } from "vue-router"
 
 const router = useRouter()
+const { state, commit } = useStore()
+const { carts } = toRefs(state.cart)
+
 
 const data = reactive({
-  checkAll: false,
-  isIndeterminate: true,
-  cards: [
-    {id: 1},
-    {id: 2},
-    {id: 3}
-  ],
-  checked: [1, 2],
+  checkAll: true,
+  isIndeterminate: false,
+  checked: [] as number[],
   finish: true,
-  num: 0,
-  numVisible: true
+  numVisible: true,
+  totalPrice: 0,
 })
 
-function handleCheckAllChange(val: any) {
-  let ids = data.cards.map(item => {
-    return item.id
-  })
+
+const foods = computed(() => {
+  carts.value.forEach(item => item.btn = false)
+  return carts
+})
+const innerHeight = computed(() => state.user.browser.innerHeight)
+
+watch(() => carts.value.length, val => {
+  data.checked = carts.value.map(item => item.id)
+}, {immediate: true, deep: true})
+
+watchEffect(() => {
+  cTotalPrice(data.checked)
+})
+
+function handleCheckAllChange(val: boolean) {
+  let ids = carts.value.map(item => item.id)
   data.checked = val ? ids : []
   data.isIndeterminate = false
 }
-function handleCheckedCitiesChange(val: any)  {
+function handleCheckedCitiesChange(val: number[])  {
+  data.checked = val
   const checkedCount = val.length;
-  data.checkAll = checkedCount === data.cards.length;
-  data.isIndeterminate = checkedCount > 0 && checkedCount < data.cards.length;
-};
+  data.checkAll = checkedCount === carts.value.length;
+  data.isIndeterminate = checkedCount > 0 && checkedCount < carts.value.length;
+}
+function buy() {
+  let foods = data.checked.map(id => {
+    return carts.value.find(item => item.id == id)
+  })
+  
+  commit("cart/setFoods", foods)
+  router.push("/confirm-orders")
+}
+function remove() {
+  commit("cart/remCart", data.checked)
+}
+function onCount(val: Ifood) {
+  commit("cart/updCart", val)
+}
+function cTotalPrice(ids: number[]) {
+  let total = 0;
+  ids.forEach(id => {
+    let food = carts.value.find(item => item.id == id)
+    if (food) {
+      total += food.buyCount * food.price
+    }
+  })
+  data.totalPrice = Number(total.toFixed(2))
+}
 
+onBeforeRouteLeave(() => {
+  let ids = carts.value.map(item => item.id)
+  handleCheckedCitiesChange(ids)
+})
+
+const { totalPrice } = toRefs(data)
 
 </script>
 
 <style lang="scss">
 .cart {
+  display: flex;
+  flex-direction: column;
+  height: calc(v-bind(innerHeight) - 80px);
   &__header {
     color: rgb(255, 255, 255);
     background-color: rgb(43, 46, 61);
@@ -189,5 +242,10 @@ function handleCheckedCitiesChange(val: any)  {
   }
 }
 
+@media (max-width: 768px) {
+  .cart {
+    height: calc(v-bind(innerHeight) - 50px);
+  }
+}
 
 </style>

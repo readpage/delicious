@@ -53,7 +53,7 @@ service.interceptors.response.use(response  => {
         return doRequest(response)
       // 账户已过期
       case 507:
-        open(res.msg)
+        expire(res.msg)
         break
       // 权限不足
       case 403:
@@ -72,6 +72,7 @@ service.interceptors.response.use(response  => {
 },error => {
   num--
   store.commit("app/hideLoading")
+  store.commit("app/hideOtherLoading")
   router.push("/500")
   return Promise.reject(error)
 })
@@ -100,7 +101,7 @@ function doRequest(res: any):Promise<any> {
   }
 }
 
-function open(msg: string) {
+function expire(msg: string) {
   ElMessageBox.confirm(msg, "提示", {
     confirmButtonText: "确定",
     cancelButtonText: "取消",
@@ -109,6 +110,7 @@ function open(msg: string) {
     store.dispatch("user/userRemove")
     router.push("/sign")
   }).catch(() => {
+    store.dispatch("user/userRemove")
     ElMessage.info("已取消登录!")
   })
 }

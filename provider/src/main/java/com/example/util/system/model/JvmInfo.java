@@ -4,12 +4,12 @@ import java.util.Date;
 
 public class JvmInfo {
 
+    // JVM最大可用内存总数(M)
+    private double jvmMax;
+
     // jvmInfo
     // 当前JVM占用的内存总数(M)
     private double jvmTotal;
-
-    // JVM最大可用内存总数(M)
-    private double jvmMax;
 
     // JVM空闲内存(M)
     private double jvmFree;
@@ -29,20 +29,20 @@ public class JvmInfo {
     // JDK启动时间
     private Date jvmStartTime;
 
-    public double getJvmTotal() {
-        return jvmTotal;
-    }
-
-    public void setJvmTotal(double jvmTotal) {
-        this.jvmTotal = jvmTotal;
-    }
-
     public double getJvmMax() {
         return jvmMax;
     }
 
     public void setJvmMax(double jvmMax) {
         this.jvmMax = jvmMax;
+    }
+
+    public double getJvmTotal() {
+        return jvmTotal;
+    }
+
+    public void setJvmTotal(double jvmTotal) {
+        this.jvmTotal = jvmTotal;
     }
 
     public double getJvmFree() {
@@ -95,9 +95,9 @@ public class JvmInfo {
 
     @Override
     public String toString() {
-        return "Jvm{" +
-                "jvmTotal=" + jvmTotal +
-                ", jvmMax=" + jvmMax +
+        return "JvmInfo{" +
+                "jvmMax=" + jvmMax +
+                ", jvmTotal=" + jvmTotal +
                 ", jvmFree=" + jvmFree +
                 ", JvmUsage=" + JvmUsage +
                 ", jvmVersion='" + jvmVersion + '\'' +

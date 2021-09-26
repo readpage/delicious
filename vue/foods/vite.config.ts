@@ -16,7 +16,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: '@import "./src/assets/scss/response.scss";',
+        additionalData: '@import "./src/assets/scss/index.scss";',
       }
     }
   },
@@ -30,5 +30,11 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
+  },
+  // 打包
+  build: {
+    // 指定输出路径 (相对于 项目根目录).
+    outDir: "foods",
+    assetsDir: "assets",
   },
 })

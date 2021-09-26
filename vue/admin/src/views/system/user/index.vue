@@ -185,6 +185,7 @@ function onDelete(val: Iuser[]) {
     background: #fff;
     .user {
       padding: 10px;
+      
       .el-space {
         margin-bottom: 10px;
       }

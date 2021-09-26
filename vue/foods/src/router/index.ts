@@ -31,10 +31,6 @@ const routes =[
         name: "ranking",
         component: () => import("@/views/ranking/index.vue")
       },
-      { 
-        path: '/test/:id', 
-        component: () => import("@/views/test/index.vue")
-      }
     ]
   },
   {
@@ -66,7 +62,7 @@ const routes =[
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory("/foods"),
   routes,
 })
 

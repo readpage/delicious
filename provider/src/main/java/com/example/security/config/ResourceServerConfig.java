@@ -5,15 +5,16 @@ import com.example.security.handler.MyAuthenticationEntryPoint;
 import com.example.security.handler.UrlAccessDecisionManager;
 import com.example.security.handler.UrlFilterInvocationSecurityMetadataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
-import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
 @Configuration
@@ -30,10 +31,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private MyAuthenticationEntryPoint myAuthenticationEntryPoint;
 
+
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources.resourceId(RESOURCE_ID) //资源 id
-                .tokenServices(tokenService()) //验证令牌的服务
+//                .tokenServices(tokenService()) //验证令牌的服务  远程调用
+                .tokenStore(tokenStore())
                 .stateless(true)
                 .accessDeniedHandler(myAccessDeniedHandler)
                 .authenticationEntryPoint(myAuthenticationEntryPoint);
@@ -59,12 +62,23 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
-    public ResourceServerTokenServices tokenService() {
-        //使用远程服务器请求授权服务器校验token,必须指定校验token的url、client_id,client_secret
-        RemoteTokenServices service = new RemoteTokenServices();
-        service.setCheckTokenEndpointUrl("http://localhost:8080/oauth/check_token");
-        service.setClientId("c1");
-        service.setClientSecret("secret");
-        return service;
+//    public ResourceServerTokenServices tokenService() {
+//        //使用远程服务器请求授权服务器校验token,必须指定校验token的url、client_id,client_secret
+//        RemoteTokenServices service = new RemoteTokenServices();
+//        service.setCheckTokenEndpointUrl("http://localhost:8080/oauth/check_token");
+//        service.setClientId("c1");
+//        service.setClientSecret("secret");
+//        return service;
+//    }
+
+    // 注入Redis连接
+    @Autowired
+    public RedisConnectionFactory redisConnectionFactory;
+    // 注册Redis TokenStore
+    @Bean
+    public RedisTokenStore tokenStore() {
+        RedisTokenStore redisTokenStore = new RedisTokenStore(redisConnectionFactory);;
+        return redisTokenStore;
     }
+
 }

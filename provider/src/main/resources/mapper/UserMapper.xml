@@ -45,7 +45,7 @@
         SELECT * FROM user
     </select>
 
-    <select id="selectByUsername" resultMap="userMap">
+    <select id="selectByUsername" parameterType="String" resultMap="userMap">
         SELECT * FROM user WHERE username=#{username}
     </select>
 

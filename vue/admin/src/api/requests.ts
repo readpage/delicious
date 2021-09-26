@@ -1,6 +1,6 @@
 import axios from "./axios"
 
-export function apiAxios( url: string, method?: any) {
+export function apiAxios<T = any>( url: string, method?: any) {
   return (data?: any) => {
     const param: any = {}
 
@@ -18,9 +18,13 @@ export function apiAxios( url: string, method?: any) {
       param.data = data
     }
 
-    
+    interface resApi {
+      code: number
+      data: T
+      msg: string
+    }
     return axios(url+ urlParam, param).then(res => {
-      return res.data
+      return res.data as resApi
     })
   }
 }

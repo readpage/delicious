@@ -1,43 +1,48 @@
-import { store } from '@/store';
 import storage from '@/util';
 import { ElMessage } from 'element-plus';
 import { cartState } from './store';
 
 const mutations = {
-  // 餐品列表
-  addFoods(state: cartState, foods: Ifood[]) {
+  // 提交订单
+  setFoods(state: cartState, foods: Ifood[]) {
     state.foods = foods
+    storage.set("buy-list", state.foods)
   },
 
 
   //加入购物车
-  addCart(state: cartState, { id }: Ifood) {
-    let record = state.carts.find(item => item.id == id)
+  addCart(state: cartState, food: Ifood) {
+    let record = state.carts.find(item => item.id == food.id)
+    
     if (record) {
-      record.count++
+      record.buyCount += food.buyCount
     } else {
-      state.carts.unshift({id, count:1})
+      state.carts.unshift(food)
     }
     storage.set("carts", state.carts)
   },
 
-  // 删除单个物品
-  remCart(state: cartState, food: Ifood) {
-    state.carts.forEach((item, index) => {
-      if (item.id == food.id) {
-        state.carts.splice(index, 1)
-        ElMessage.success(`${food.name}删除成功!`)
-        storage.set("carts", state.carts)
-      }
+  // 修改购物车数量
+  updCart(state: cartState, {id, buyCount}: Ifood) {
+    
+    let cart = state.carts.find(item => item.id == id)
+    if (cart) {
+      cart.buyCount = buyCount
+      storage.set("carts", state.carts)
+    }
+  },
+
+  // 删除
+  remCart(state: cartState, ids: number[]) {
+    ids.forEach(id => {
+      state.carts.forEach((item, index) => {
+        if (item.id == id) {
+          state.carts.splice(index, 1)
+          storage.set("carts", state.carts)
+        }
+      })
     })
   },
-
-  // 清空购物车
-  clearCart(state: cartState) {
-    state.carts = []
-    storage.remove("carts")
-  },
-
 }
 
 export default mutations

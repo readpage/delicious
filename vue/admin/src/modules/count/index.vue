@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<Props>(), {
   prefix: "",
   suffix: "",
   decimals: 0,
-  duration: 3,
+  duration: 2,
   separator: "",
   decimalSeparator: "."
 })

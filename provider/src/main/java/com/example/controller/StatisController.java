@@ -5,6 +5,8 @@ import com.example.entity.Statis;
 import com.example.service.StatisService;
 import com.example.util.result.Result;
 import com.example.util.result.ResultUtils;
+import com.example.util.system.SysUtil;
+import com.example.util.system.model.SysInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +37,10 @@ public class StatisController {
         return ResultUtils.query(statisService.recent());
     }
 
+    @ApiOperation("服务监控")
+    @GetMapping("/server")
+    public Result<SysInfo> server() {
+        return ResultUtils.query(SysUtil.getSysInfo());
+    }
 }
 

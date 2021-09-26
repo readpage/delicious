@@ -1,6 +1,7 @@
 export const createState = () => ({
   loading: false,
   btnLoading: false,
+  otherLoading: false,
 })
 
 

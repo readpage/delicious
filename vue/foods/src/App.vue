@@ -18,9 +18,9 @@ const locale = zhCn;
 const { commit, state, dispatch} = useStore()
 
 
-window.onresize = () => {
+window.addEventListener("resize", () => {
   commit("user/setBrowser")
-}
+})
 dispatch("app/appLoad")
 
 </script>
@@ -29,6 +29,9 @@ dispatch("app/appLoad")
 * {
   padding: 0;
   margin: 0;
+}
+html, body, #app {
+  height: 100%;
 }
 
 /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
@@ -50,15 +53,6 @@ dispatch("app/appLoad")
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-}
-
-.el-image {
-  width: 100% !important;
-  height: 100% !important;
-}
-
-.el-image__placeholder {
-  background: no-repeat top/cover url("@/assets/min-loading.gif") !important;
 }
 
 #loading {

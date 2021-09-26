@@ -1,0 +1,126 @@
+<template>
+  <el-drawer v-model="drawer" :with-header="false" direction="btt" size="370px">
+    <div class="buy">
+      <div class="buy__header">
+        <div class="img">
+          <el-image fit="fill" :src="food.img"></el-image>
+        </div>
+        <div class="detail">
+          <span class="is-price">{{food.price}}</span>
+          <!-- <span class="ml size-12">库存：{{food.count}}件</span> -->
+          <div class="selected">
+            <span>已选</span>
+            <span class="ml">微辣</span>
+          </div>
+        </div>
+      </div>
+      <div class="buy__container">
+        <el-scrollbar>
+          <div class="label mb">规格</div>
+          <div class="item">
+            <el-space>
+              <el-button size="mini" type="info">微辣</el-button>
+              <el-button size="mini">超辣</el-button>
+            </el-space>
+          </div>
+          <div class="item">
+            <div class="label">购买数量</div>
+            <el-input-number v-model="food.buyCount" size="mini" :min="1"></el-input-number>
+          </div>
+        </el-scrollbar>
+      </div>
+      <div class="buy__footer">
+        <el-button v-if="type == 0" size="small" type="info" style="width: 90%" @click="cart">确定</el-button>
+        <el-button v-else size="small" type="info" style="width: 90%" @click="buy">立即购买</el-button>
+      </div>
+    </div>
+  </el-drawer>
+</template>
+
+<script setup lang="ts">
+import { useStore } from "@/store";
+import { ElMessage } from "element-plus";
+import { ref } from "vue"
+import { onBeforeRouteLeave, useRouter } from "vue-router";
+
+interface Props {
+  food: Ifood
+  type: number
+}
+const props = withDefaults(defineProps<Props>(), {})
+
+const router = useRouter()
+const { commit } = useStore()
+
+const drawer = ref(false)
+
+
+onBeforeRouteLeave(() => {
+  drawer.value = false
+})
+
+function cart() {
+  commit("cart/addCart", props.food)
+  ElMessage.success("添加购物车成功!")
+  drawer.value = false
+}
+
+function buy() {
+  commit("cart/setFoods", [props.food])
+  router.push("/confirm-orders")
+}
+
+
+
+
+export interface DrawerApi {
+  drawer: boolean
+}
+defineExpose({
+  drawer
+})
+
+</script>
+
+<style lang="scss" scoped>
+  .buy {
+    padding: 10px;
+    height: 100vh;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    &__header {
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      .img {
+        height: 80px;
+        width: 80px;
+      }
+      .detail {
+        flex: 1;
+        margin-left: 10px;
+        padding-top: 5px;
+
+        .selected {
+          margin-top: 5px;
+          font-size: 12px;
+        }
+      }
+    }
+    &__container {
+      height: 220px;
+      .item {
+        padding: 10px 0;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+    &__footer {
+      height: 40px;
+      margin: auto;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+  }
+</style>

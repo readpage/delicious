@@ -28,11 +28,6 @@ const mutations = {
     Nprogress.done()
   },
 
-  
-
-  
-
-
   setUser(state: userState, val: Iuser) {
     state.info = val
     storage.set("userInfo", val)

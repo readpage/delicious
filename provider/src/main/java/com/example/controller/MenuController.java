@@ -81,7 +81,7 @@ public class MenuController {
     @ApiOperation("删除菜单")
     @DeleteMapping("/remove/{id}")
     @ApiImplicitParam(name = "id", value = "菜单ID", dataType = "Integer", required = true)
-    public Result<Object> removeById(@PathVariable Integer id) throws Exception {
+    public Result<Object> removeById(@PathVariable Integer id) {
         try {
             menuService.removeById(id);
         } catch (Exception e) {

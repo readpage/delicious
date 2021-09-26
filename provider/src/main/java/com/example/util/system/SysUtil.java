@@ -69,14 +69,8 @@ public class SysUtil {
         cpuInfo.setCpuNum(processor.getLogicalProcessorCount());
         cpuInfo.setSys(Double.parseDouble(format.format(cSys <= 0L ? 0.0D : 100.0D * (double)cSys / (double)totalCpu)));
         cpuInfo.setUsed(Double.parseDouble(format.format(user <= 0L ? 0.0D : 100.0D * (double)user / (double)totalCpu)));
-        if (totalCpu == 0L) {
-            cpuInfo.setWait(0.0D);
-        } else {
-            cpuInfo.setWait(Double.parseDouble(format.format(100.0D * (double)ioWait / (double)totalCpu)));
-        }
 
         cpuInfo.setFree(Double.parseDouble(format.format(idle <= 0L ? 0.0D : 100.0D * (double)idle / (double)totalCpu)));
-        cpuInfo.setCpuUsage(Double.parseDouble(format.format(100.0D - cpuInfo.getFree())));
         cpuInfo.setCpuModel(processor.toString());
         return cpuInfo;
     }

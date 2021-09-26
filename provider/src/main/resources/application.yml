@@ -1,11 +1,16 @@
 server:
   port: 80
+
 knife4j:
   # 开启增强配置
   enable: true
   # 开启生产环境屏蔽
   production: false
+
 spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -16,18 +21,30 @@ spring:
     druid:
       # 初始连接数
       initial-size: 5
-      # 最小连接池数量
+      # 连接池的最小空闲数量
       min-idle: 10
-      # 最大连接池数量
+      # 连接池最大连接数量
       max-active: 20
-      # 配置获取连接等待超时的时间
-      max-wait: 30000
+      # 获取连接时最大等待时间，单位毫秒
+      max-wait: 60000
+      # 申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，
+      # 执行validationQuery检测连接是否有效。
+      test-while-idle: true
       # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
       time-between-eviction-runs-millis: 60000
       # 配置一个连接在池中最小生存的时间，单位是毫秒
       min-evictable-idle-time-millis: 300000
       # 配置一个连接在池中最大生存的时间，单位是毫秒
       max-evictable-idle-time-millis: 900000
+      # 检测连接是否有效
+      validation-query: SELECT 'x'
+      # 申请连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
+      test-on-borrow: false
+      # 归还连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
+      test-on-return: false
+      # 是否缓存preparedStatement, 也就是PSCache,PSCache对支持游标的数据库性能提升巨大，比如说oracle,在mysql下建议关闭。
+      pool-prepared-statements: false
+
 
   resources:
     static-locations: classpath:static/,file:static/

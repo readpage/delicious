@@ -15,6 +15,14 @@ const mutations = {
     state.btnLoading = false
     nProgress.done()
   },
+
+  otherLoading(state: appState) {
+    state.otherLoading = true
+  },
+
+  hideOtherLoading(state: appState) {
+    state.otherLoading = false
+  }
 }
 
 export default mutations

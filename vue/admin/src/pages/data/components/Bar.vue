@@ -6,9 +6,18 @@
 
 <script setup lang="ts">
 import * as echarts from "echarts";
-import { ref } from "vue";
+import { reactive, ref, watch } from "vue";
 
-const option = {
+interface Props {
+  data: {
+    uv: number[]
+    date: string[]
+  }
+  loading: boolean
+}
+const props = defineProps<Props>()
+
+const option =reactive({
   title: {
     text: "柱状图",
   },
@@ -18,24 +27,20 @@ const option = {
     data: ["销量"],
   },
   xAxis: {
-    data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"],
+    data: ["0"],
   },
   yAxis: {},
-  series: [
-    {
-      name: "销量",
-      type: "bar",
-      data: [5, 20, 36, 10, 10, 20],
-    },
-  ],
-};
+  series: {
+    name: "销量",
+    type: "bar",
+    data: [0],
+  },
+})
 
-const loading = ref(true) 
-
-setTimeout(() => {
-  loading.value = false
-}, 2000);
-
+watch(() => props.data, val => {
+  option.series.data = val.uv
+  option.xAxis.data = val.date
+}, {deep: true})
 
 </script>
 

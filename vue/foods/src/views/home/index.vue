@@ -2,7 +2,7 @@
   <el-skeleton :loading="state.app.loading" animated :count="10" class="card-box">
     <template #template>
       <div>
-        <el-skeleton-item variant="image" class="card-img" />
+        <el-skeleton-item variant="image" class="el-image" />
         <el-skeleton-item variant="text" style="margin: 5px 0; width: 50%;"></el-skeleton-item>
         <div style="display: flex; justify-items: space-between;">
           <el-skeleton-item variant="text" style="margin-right: 16px; width: 30%" />
@@ -14,7 +14,7 @@
       <div class="card-box">
         <el-card :body-style="{ padding: '0px' }" shadow="hover" v-for="item in foods">
           <div class="card-container">
-            <router-link target="_blank" :to="{path: `/foods/detail/${item.id}`}">
+            <router-link :to="{path: `/foods/detail/${item.id}`}">
               <div class="card-img">
                 <el-image :src="item.img" fit="fill"></el-image>
                 <span class="overlay"></span>
@@ -22,7 +22,7 @@
             </router-link>
             <div class="label ellipsis">{{ item.name }}</div>
             <div class="desc">
-              <span>￥{{item.price}}</span>
+              <span class="is-price">{{item.price}}</span>
               <span>{{item.count}}件已售</span>
             </div>
           </div>
@@ -35,6 +35,7 @@
 <script setup lang="ts">
 import { Afood } from "@/api"
 import { useStore } from "@/store"
+import { preLoad } from "@/util"
 import { onMounted, reactive, ref } from "vue"
 
 const { state, commit } = useStore()
@@ -65,8 +66,6 @@ Afood.page({urlParam: `/${data.pageNum}/${data.pageSize}`}).then(res => {
       position: relative;
 
       .el-image {
-        width: 100%;
-        height: 100%;
         transition: all .5s ease-out;
       }
 

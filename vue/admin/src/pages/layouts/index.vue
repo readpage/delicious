@@ -16,13 +16,13 @@
       </div>
       <!-- 页面视图 -->
       <div class="page-layout__container">
-        <router-view v-slot="{ Component }">
-          <transition :name="transitionName" mode="out-in">
-            <keep-alive max="10">
-              <component :is="Component" />
-            </keep-alive>
-          </transition>
-        </router-view>
+          <router-view v-slot="{ Component }">
+            <transition :name="transitionName" mode="out-in">
+              <keep-alive max="10">
+                <component :is="Component" />
+              </keep-alive>
+            </transition>
+          </router-view>
       </div>
     </div>
   </div>
@@ -38,6 +38,7 @@ import Topbar from "./components/topbar/Topbar.vue";
 
 const { state, commit, getters } = useStore();
 const route = useRoute()
+
 const collapse = computed(() => getters["user/collapse"])
 const transitionName = ref("slide-fade")
 
@@ -46,8 +47,7 @@ const transitionName = ref("slide-fade")
 <style lang="scss" scoped>
 .page-layout {
   display: flex;
-  height: 100vh;
-  overflow: hidden;
+  height: 100%;
   background-color: #f7f7f7;
 
   &__mask {
@@ -66,6 +66,7 @@ const transitionName = ref("slide-fade")
   }
 
   &__right {
+    height: 100%;
     display: flex;
     flex-direction: column;
     width: calc(100% - 250px);
@@ -82,10 +83,9 @@ const transitionName = ref("slide-fade")
 	}
 
   &__container {
+    margin: 10px;
     flex: 1;
     overflow: hidden;
-    box-sizing: border-box;
-    margin: 0 10px 10px 10px;
 	}
 
   @media (max-width: 768px) {

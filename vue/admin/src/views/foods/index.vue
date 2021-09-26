@@ -54,7 +54,6 @@ function remove(val: any) {
 .foods {
   height: 100%;
   background: #fff;
-
 }
 
 </style>

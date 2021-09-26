@@ -6,40 +6,63 @@
     <el-scrollbar ref="scrollbar">
       <div class="content">
         <div class="main">
-          <div class="img">
-            <el-image :src="food.img" fit="fill"></el-image>
-          </div>
+          <el-skeleton :loading="loading">
+            <template #template>
+              <el-skeleton-item variant="image" class="img" />
+            </template>
+            <template #default>
+              <div class="img">
+                <el-image :src="food.img" fit="fill"></el-image>
+              </div>
+            </template>
+          </el-skeleton>
           <div class="info">
             <el-card>
-              <div class="name">
-                {{food.name}}
-              </div>
-              <div class="attr">
-                <span>￥{{food.price}}</span>
-                <span>{{food.count}}件已售</span>
-              </div>
+              <el-skeleton :loading="loading">
+                <template #template> 
+                </template>
+                <template #default>
+                  <div class="name">
+                    {{ food.name }}
+                  </div>
+                  <div class="attr">
+                    <span class="is-price">{{ food.price }}</span>
+                    <span>{{ food.count }}件已售</span>
+                  </div>
+                </template>
+              </el-skeleton>
             </el-card>
           </div>
           <div class="comment">
             <el-card>
-              <div class="header">
-                <span>商品评论(0)</span>
-                <span>好评率100%</span>
-              </div>
-              <div class="comment__content">
-                <div class="empty">暂无评论</div>
-              </div>
+              <el-skeleton :loading="loading">
+                <template #template></template>
+                <template #default>
+                  <div class="header">
+                    <span>商品评论(0)</span>
+                    <span>好评率100%</span>
+                  </div>
+                  <div class="comment__content">
+                    <div class="empty">暂无评论</div>
+                  </div>
+                </template>
+              </el-skeleton>
             </el-card>
           </div>
           <div class="detail">
             <el-card>
-              <div class="detail__header">商品详情</div>
-              <!-- <div class="empty">暂无详情</div> -->
-              <div class="detail__content">
-                随着开学季的到来，妈妈们有开始为孩子的午餐便当而犯愁了，孩子课业压力大，吃饱吃好才能精力充沛的面对一天的学习，今天分享的香酥鱼条就超级适合做学生便当。
-今天的鱼条用到的鱼是拥有MSC小蓝鱼标识的比目鱼，山姆的袋装比目鱼抽真空分装，特别方便，经过处理后的鱼肉无刺，放心做给孩子吃，制作过程也免去了处理鱼刺的困扰。
-比目鱼含有丰富的不饱和脂肪酸Omega-3，以及丰富的蛋白质，维生素等等，比目鱼含有大脑组成需要的DHA，经常食用可增强智力，特别适合正在发育的孩子和学习压力大的学生，开学季的餐桌怎能少了它！
-              </div>
+              <el-skeleton :loading="loading">
+                <template #template></template>
+                <template #default>
+                  <div class="detail__header">商品详情</div>
+                  <!-- <div class="empty">暂无详情</div> -->
+                  <div class="detail__content">
+                    随着开学季的到来，妈妈们有开始为孩子的午餐便当而犯愁了，孩子课业压力大，吃饱吃好才能精力充沛的面对一天的学习，今天分享的香酥鱼条就超级适合做学生便当。
+                    今天的鱼条用到的鱼是拥有MSC小蓝鱼标识的比目鱼，山姆的袋装比目鱼抽真空分装，特别方便，经过处理后的鱼肉无刺，放心做给孩子吃，制作过程也免去了处理鱼刺的困扰。
+                    比目鱼含有丰富的不饱和脂肪酸Omega-3，以及丰富的蛋白质，维生素等等，比目鱼含有大脑组成需要的DHA，经常食用可增强智力，特别适合正在发育的孩子和学习压力大的学生，开学季的餐桌怎能少了它！
+                  </div>
+                </template>
+              </el-skeleton>
             </el-card>
           </div>
         </div>
@@ -49,21 +72,27 @@
               <span>热门专题</span>
               <span>更多</span>
             </div>
-            <el-divider content-position="left"><i class="el-icon-food"></i></el-divider>
+            <el-divider content-position="left"
+              ><i class="el-icon-food"></i
+            ></el-divider>
             <div class="tags">
               <div v-for="(item, index) in label" class="tag">
-                <el-tag  :key="index" effect="plain">{{item}}</el-tag>
+                <el-tag :key="index" effect="plain">{{ item }}</el-tag>
               </div>
             </div>
           </div>
           <div class="more__recommend">
             <div class="header">推荐</div>
-            <el-divider content-position="left"><i class="el-icon-chicken"></i></el-divider>
+            <el-divider content-position="left"
+              ><i class="el-icon-chicken"></i
+            ></el-divider>
             <div class="cards">
-              <el-card :body-style="{ padding: '0px'}" v-for="item in state.cart.foods">
+              <el-card :body-style="{ padding: '0px' }" v-for="item in foods">
                 <div class="card-container">
-                  <!--  <router-link target="_blank" :to="{path: `/foods/detail/${item.id}`}" @click.native="active"> -->
-                  <router-link target="_blank" :to="{path: `/foods/detail/${item.id}`}">
+                  <router-link
+                    :to="{ path: `/foods/detail/${item.id}` }"
+                    @click.native="active"
+                  >
                     <div class="card-img">
                       <el-image :src="item.img" fit="fill"></el-image>
                       <span class="overlay"></span>
@@ -71,8 +100,8 @@
                   </router-link>
                   <div class="label ellipsis">{{ item.name }}</div>
                   <div class="desc">
-                    <span>￥{{item.price}}</span>
-                    <span>{{item.count}}件已售</span>
+                    <span>￥{{ item.price }}</span>
+                    <span>{{ item.count }}件已售</span>
                   </div>
                 </div>
               </el-card>
@@ -86,40 +115,60 @@
       <div class="tools" @click="router.push('/cart')">
         <el-space direction="vertical" :size="0">
           <i class="el-icon-shopping-cart-full"></i>
-          <span style="font-size: 12px;">购物车</span>
+          <span style="font-size: 12px">购物车</span>
         </el-space>
       </div>
       <div class="btn">
-        <el-button size="mini">加入购物车</el-button>
-        <el-button size="mini" type="info" @click="router.push('/confirm-orders')">立即购买</el-button>
+        <el-button size="mini" @click="openDrawer(0)">加入购物车</el-button>
+        <el-button size="mini" type="info" @click="openDrawer(1)"
+          >立即购买</el-button
+        >
       </div>
     </div>
+    <Drawer :type="type" :food="food" ref="drawerRef" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { Afood } from "@/api";
 import { useStore } from "@/store";
-import { computed, reactive, ref, toRefs, watch } from "vue"
+import { computed, reactive, ref, toRefs, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import Drawer from "../components/Drawer.vue";
+import type { DrawerApi } from "../components/Drawer.vue";
 
-const { state } = useStore()
-const router = useRouter()
-const route = useRoute()
+const { state, commit } = useStore();
+const { loading } = toRefs(state.app)
+const router = useRouter();
+const route = useRoute();
 
 const data = reactive({
-  food: {} as Ifood
-})
+  food: {} as Ifood,
+  foods: [] as Ifood[],
+  type: 0,
+});
 
-watch(() => route.params.id, val => {
-  if (val) {
-    Afood.getById({urlParam: `/${val}`}).then(res => {
-      data.food = res.data
-    })
-  }
-}, {immediate: true})
+const drawerRef = ref({} as DrawerApi);
 
+watch(
+  () => route.params.id,
+  (val) => {
+    if (val) {
+      commit("app/showLoading");
+      Afood.getById({ urlParam: `/${val}` }).then((res) => {
+        data.food = res.data;
+        data.food.buyCount = 1
+      });
+    }
+  },
+  { immediate: true }
+);
 
+commit("app/otherLoading");
+Afood.page({ urlParam: "/1/10" }).then((res) => {
+  data.foods = res.data.list;
+  commit("app/hideOtherLoading");
+});
 
 const label = ref([
   "酱牛肉",
@@ -151,29 +200,30 @@ const label = ref([
   "酥香小麻花",
   "秋葵炒肉丝",
   "南瓜蒸百合",
-  "蒜蓉黄瓜"
-])
-
-
-
+  "蒜蓉黄瓜",
+]);
 
 function goBack() {
-  router.push("/")
+  router.push("/");
 }
 
-const scrollbar = ref()
-// function active() {
-//   scrollbar.value.setScrollTop(0)
-// }
+const scrollbar = ref();
+function active() {
+  scrollbar.value.setScrollTop(0);
+}
+function openDrawer(val: number) {
+  data.type = val
+  drawerRef.value.drawer = true
+}
 
-const { food } = toRefs(data)
+const { food, foods, type } = toRefs(data);
 </script>
 
 <style lang="scss">
 .foods-detail {
   margin: 0 auto;
   box-sizing: border-box;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   background-color: #f7f7f7;
@@ -220,7 +270,7 @@ const { food } = toRefs(data)
             color: #fff;
             margin-left: 10px;
             border-radius: 15px;
-            background-color: rgba(0,0,0,.3);
+            background-color: rgba(0, 0, 0, 0.3);
             padding: 0 5px;
           }
         }
@@ -232,11 +282,10 @@ const { food } = toRefs(data)
           display: flex;
           justify-content: space-between;
         }
-      
       }
 
       .detail {
-        margin:10px 0;
+        margin: 10px 0;
 
         &__header {
           margin-bottom: 20px;
@@ -293,7 +342,7 @@ const { food } = toRefs(data)
               height: 130px;
 
               .el-image {
-                transition: all .5s ease-out;
+                transition: all 0.5s ease-out;
               }
 
               .overlay {
@@ -304,7 +353,7 @@ const { food } = toRefs(data)
                 height: 100%;
                 background-color: #000;
                 opacity: 0;
-                transition: all .5s ease-out;
+                transition: all 0.5s ease-out;
               }
             }
 
@@ -336,11 +385,10 @@ const { food } = toRefs(data)
             }
 
             .overlay {
-              opacity: .2;
+              opacity: 0.2;
             }
           }
         }
-      
       }
     }
   }
@@ -354,7 +402,8 @@ const { food } = toRefs(data)
           width: 100%;
         }
       }
-      .main, .more {
+      .main,
+      .more {
         width: 100%;
       }
     }

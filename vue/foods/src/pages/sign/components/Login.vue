@@ -16,7 +16,7 @@
       </el-form-item>
       <el-form-item>
         <el-space :size="20">
-          <el-button size="mini" :loading="state.app.btnLoading" type="primary" @click="login">登录</el-button>
+          <el-button size="mini" :loading="state.app.otherLoading" type="primary" @click="login">登录</el-button>
           <el-button size="mini" @click="reset">重置</el-button>
         </el-space>
       </el-form-item>
@@ -61,14 +61,14 @@ function login() {
       Object.keys(user).forEach(key => {
         form.append(key, user[key as userType])
       })
-      commit("app/btnLoading")
+      commit("app/otherLoading")
       Alogin(form).then(async res => {
         commit("user/setToken", res.data)
-        ElMessage.success(res.msg)
-        await dispatch("app/appLoad")
-        router.replace("/")
+        dispatch("user/userInfo")
+        router.push("/")
         reset()
-        return res
+        ElMessage.success(res.msg)
+        commit("app/hideOtherLoading")
       })
     }
   })

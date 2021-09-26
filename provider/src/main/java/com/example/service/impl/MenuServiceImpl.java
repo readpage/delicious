@@ -48,4 +48,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         return menuMapper.selectByName(names);
     }
 
+    @Override
+    public List<Menu> selectAll() {
+        return menuMapper.selectAll();
+    }
+
 }

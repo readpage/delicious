@@ -7,6 +7,13 @@ const mutations = {
 
   hideAppLoading(state: appState) {
     state.appLoading = false
+  },
+  otherLoading(state: appState) {
+    state.otherLoading = true
+  },
+
+  hideOtherLoading(state: appState) {
+    state.otherLoading = false
   }
 }
 

@@ -6,6 +6,7 @@ import router from './router'
 import { store, key } from './store'
 import "@lottiefiles/lottie-player"
 
+
 createApp(App)
   .use(plugins)
   .use(store, key)

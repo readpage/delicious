@@ -2,18 +2,26 @@
   <div class="tabbar">
     <template v-for="(item, index) in tab" :key="item.id">
       <router-link :to="{path: item.path}">
-        <img :src="num==item.id?item.imgUrl2:item.imgUrl" alt="">
+        <el-badge :value="totalCount" :max="99" type="danger" v-if="item.id == 3">
+          <img :src="num==item.id?item.imgUrl2:item.imgUrl" alt="">
+        </el-badge>
+        <template v-else>
+          <img :src="num==item.id?item.imgUrl2:item.imgUrl" alt="">
+        </template>
       </router-link>
     </template>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue"
+import { useStore } from "@/store"
+import { computed, ref, watch } from "vue"
 import { useRoute } from "vue-router"
 
 const route = useRoute()
+const { getters } = useStore()
 
+const totalCount = computed(() => getters["cart/cTotalCount"])
 const num = ref(1)
 const tab = ref([
   {
@@ -62,7 +70,7 @@ watch(route, val => {
     width: 100%;
     height: 100%;
     display: grid;
-    img {
+    img, .el-badge {
       place-self: center;
       width: 27px;
       height: 27px;

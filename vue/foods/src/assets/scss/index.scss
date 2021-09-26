@@ -48,7 +48,7 @@
 .card-box {
   grid-template-columns: repeat(5, 1fr);
 
-  .card-img {
+  .el-image {
     height: 200px;
   }
 }
@@ -70,12 +70,57 @@
   .card-box {
     grid-template-columns: repeat(2, 1fr);
 
-    .card-img {
+    .el-image {
       height: 170px;
     }
   }
 }
 
+// .el-image__placeholder {
+//   background: no-repeat top/cover url("@/assets/min-loading.gif") !important;
+// }
+.el-input-number--mini {
+  width: 100px;
+}
+.el-image {
+  width: 100%;
+  height: 100%;
+}
+
+.si-bold {
+  font-weight: bold;
+}
+.is-text {
+  display: inline-block;
+}
+.mt {
+  margin-top: 10px;
+}
+.mr {
+  margin-right: 10px;
+}
+.ml {
+  margin-left: 10px;
+}
+.mb {
+  margin-bottom: 10px;
+}
+.is-color-red {
+  color: red;
+}
+.size-12 {
+  font-size: 12px;
+}
+.is-price {
+  color: red;
+  font-size: 18px;
+}
+.is-price::before {
+  content: "￥";
+}
+.is-gray {
+  color: #f7f7f7;
+}
 
 
 

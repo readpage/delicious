@@ -32,18 +32,12 @@ const option = reactive({
   }
 })
 
-watch(() => props.data.date, val => {
-  option.xAxis.data = val
-})
-watch(() => props.data.uv, val => {
-  option.series.data = val
-})
+watch(() => props.data, val => {
+  option.series.data = val.uv
+  
+  option.xAxis.data = val.date
+}, {deep: true})
 
-setTimeout(() => {
-  console.log(props.data.date );
-  console.log(option.xAxis.data);
-  console.log(option.series.data);
-}, 6000);
 </script>
 
 <style lang="scss" scoped>

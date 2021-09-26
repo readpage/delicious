@@ -23,7 +23,7 @@
     </div>
     <ul class="header__tools">
       <li @click="router.push('cart')">
-        <el-badge value="20" type="danger">
+        <el-badge :value="totalCount" type="danger">
           <i style="color: red; font-size: 20px" class="el-icon-shopping-cart-full"></i>
         </el-badge>
       </li>
@@ -51,13 +51,14 @@
 
 <script setup lang="ts">
 import { useStore } from "@/store";
-import { ref, toRefs } from "vue"
+import { computed, ref, toRefs } from "vue"
 import { useRoute, useRouter } from "vue-router";
 
-const { state, dispatch } = useStore()
+const { state, dispatch, getters } = useStore()
 const { userInfo } = toRefs(state.user)
 const router = useRouter()
 
+const totalCount = computed(() => getters["cart/cTotalCount"])
 
 async function onCommand(name: string) {
   switch (name) {

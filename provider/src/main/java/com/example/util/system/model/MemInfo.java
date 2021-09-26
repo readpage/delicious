@@ -1,24 +1,22 @@
 package com.example.util.system.model;
 
-import cn.hutool.core.util.NumberUtil;
-
 //內存相关信息,单位GB
 
 public class MemInfo {
     // 内存总量
     private double total;
 
-    //已用内存
+    // 已用内存
     private double used;
 
-    //剩余内存
+    // 剩余内存
     private double free;
 
-    //内存使用率
+    // 内存使用率
     private double usage;
 
     public double getTotal() {
-        return NumberUtil.div(total, (1024 * 1024 * 1024), 2);
+        return total;
     }
 
     public void setTotal(double total) {
@@ -26,7 +24,7 @@ public class MemInfo {
     }
 
     public double getUsed() {
-        return NumberUtil.div(used, (1024 * 1024 * 1024), 2);
+        return used;
     }
 
     public void setUsed(double used) {

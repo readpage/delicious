@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { } from "vue";
-import { ElConfigProvider } from "element-plus";
+import { ElConfigProvider, ElMessageBox } from "element-plus";
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
 import { useStore } from "./store";
 
@@ -27,6 +27,9 @@ const { state } = useStore()
 * {
   padding: 0;
   margin: 0;
+}
+html, body, #app {
+  height: 100%;
 }
 
 /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
