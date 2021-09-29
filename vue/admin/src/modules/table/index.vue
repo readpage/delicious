@@ -1,54 +1,90 @@
 <template>
-  <div class="cl-table">
-    <el-space :size="10">
-      <el-button size="mini" icon="el-icon-refresh" @click="reload">刷新</el-button>
-    </el-space>
-    <el-table :data="table" stripe
-      ref="tableRef"
-      :header-cell-style="{ background: '#f5f7fa', color: '#606266' }"
-      max-height="500"
-      v-loading="loading"
-      element-loading-text="拼命加载中"
-      element-loading-spinner="el-icon-loading">
-      <template v-for="(item, index) in columns" :key="index">
-        <el-table-column v-if="item.prop == 'img'" :label="item.label" :prop="item.prop" :width="item.width">
-          <template #default="scope">
-            <el-image :src="scope.row.img" style="height: 58px" :preview-src-list="[scope.row.img]" fit="cover"></el-image>
-          </template>
-        </el-table-column>
-        <el-table-column v-else :label="item.label" :prop="item.prop" :width="item.width"></el-table-column>
-      </template>
-    </el-table>
-  </div>
+  <el-table :data="data" stripe
+    ref="tableRef"
+    :header-cell-style="{ background: '#f5f7fa', color: '#606266' }"
+    max-height="500"
+    v-loading="loading"
+    @selection-change="handleSelectionChange"
+    element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading">
+    <template v-for="(item, index) in columns" :key="index">
+      <el-table-column v-if="item.type == 'selection'" type="selection" width="50"></el-table-column>
+      <el-table-column v-else-if="item.type == 'img'" :label="item.label" :prop="item.prop" :width="item.width">
+        <template #default="scope">
+          <el-image :src="scope.row.img" style="height: 58px" :preview-src-list="[scope.row.img]" fit="cover"></el-image>
+        </template>
+      </el-table-column>
+      <el-table-column v-else :label="item.label" :prop="item.prop" :width="item.width"></el-table-column>
+    </template>
+    <slot></slot>
+  </el-table>
+  <el-pagination layout="total, sizes, pre, pager, next, jumper"
+    small :total="total" :page-sizes="[5, 10, 20, 40]"
+    :page-size="pageSize"
+    background
+    @current-change="handleCurrentChange"
+    @size-change="handleSizeChange"
+  ></el-pagination>
 </template>
 
 <script setup lang="ts">
-import { reactive, toRefs } from "vue"
+import { computed, defineEmit, reactive, toRefs } from "vue"
 
 export interface Itable {
   loading?: boolean,
   columns: {
-    label: string,
-    prop: string,
-    width?: string
-  }[]
+    label?: string,
+    prop?: string,
+    width?: string,
+    type?: string
+  }[],
+  data: {}[],
+  total: number
 }
 const props = withDefaults(defineProps<Itable>(), {
   loading: false,
 })
 
-const data = reactive({
-  table: []
+const obj = reactive({
+  table: [],
+  pageNum: 1,
+  pageSize: 5,
 })
 
-
-function reload() {
-
+const emit = defineEmit(["page", "onSelection"])
+function handleSizeChange(val: number) {
+  obj.pageSize = val
+  emit("page", obj.pageNum, obj.pageSize)
 }
 
-const { table } = toRefs(data)
+function handleCurrentChange(val: number) {
+  obj.pageNum = val
+  emit("page", obj.pageNum, obj.pageSize)
+}
+
+function handleSelectionChange(val: any) {
+  emit("onSelection", JSON.parse(JSON.stringify(val)))
+}
+
+function reload() {
+  emit("page", obj.pageNum, obj.pageSize)
+}
+reload()
+
+const { table, pageNum, pageSize } = toRefs(obj)
+
+export interface tableApi {
+  reload: Function
+}
+defineExpose({
+  reload,
+})
 </script>
 
 <style lang="scss" scoped>
+
+.el-table {
+  margin-bottom: 10px;
+}
 
 </style>

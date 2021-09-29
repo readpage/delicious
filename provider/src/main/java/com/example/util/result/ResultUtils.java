@@ -35,11 +35,6 @@ public class ResultUtils<T> {
         return ok(ResultEnum.SUCCESS.getMsg());
     }
 
-    public static<T> Result<T> query(T data) {
-        return ok(ResultEnum.RETRIEVE_SUCCESS, data);
-    }
-
-
     public static<T> Result<T> fail(Integer code, String msg) {
         return new Result<>(code, msg, null);
     }
@@ -56,7 +51,10 @@ public class ResultUtils<T> {
         return fail(ResultEnum.ERROR);
     }
 
-
+    // 查询
+    public static<T> Result<T> query(T data) {
+        return ok(ResultEnum.RETRIEVE_SUCCESS, data);
+    }
 
     // 添加
     public static<T> Result<T> save(boolean b) {

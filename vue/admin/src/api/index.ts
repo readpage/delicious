@@ -14,6 +14,15 @@ const Astatis = {
   server: apiAxios<IsysInfo>("/statis/server")
 }
 
+const Aorders = {
+  page: apiAxios("/orders/page")
+}
+
+const Adesk = {
+  save: apiAxios("/desk/save", "post"),
+  page: apiAxios("/desk/page")
+}
+
 
 export {
   Alogin,
@@ -26,4 +35,6 @@ export {
   Alog,
   Afood,
   Astatis,
+  Aorders,
+  Adesk,
 }

@@ -23,7 +23,8 @@ public enum ResultEnum {
     UPDATE_FAIL(511, "更新失败!😨"),
     DELETE_SUCCESS(207, "删除成功!😉"),
     DELETE_FAIL(512, "删除失败!😡"),
-    ACCOUNT_DISABLE(513, "账户已禁用!😱")
+    ACCOUNT_DISABLE(513, "账户已禁用!😱"),
+    VALUE_EXIST(514, "该值已存在")
     ;
 
     private Integer code;

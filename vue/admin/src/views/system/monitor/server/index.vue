@@ -42,40 +42,45 @@
 
 <script setup lang="ts">
 import { Astatis } from "@/api";
-import { reactive, ref, toRefs } from "vue"
+import { useStore } from "@/store";
+import { isEmpty } from "lodash";
+import { computed, reactive, ref, toRefs, watchEffect } from "vue"
+
+const { state } = useStore()
 
 const data = reactive({
   cpu: [{}],
   mem: [{}],
 })
 
-Astatis.server().then(res => {
-  let sys: IsysInfo = res.data
-  let cpuName = ["核心数", "系统使用率", "用户使用率", "当前空闲率", "CPU信号信息"]
-  let cpuValue = Object.values(sys.cpuInfo)
-  data.cpu = cpuValue.map((v, i) => {
-    return {name: cpuName[i], value: v}
-  })
-  console.log(sys);
-  
-  let memName = ["总内存", "已用内存", "剩余内存", "使用率"]
-  let memValue = Object.values(sys.memInfo)
+const sysInfo = computed(() => state.user.sys)  
 
-
-  function delKey(obj: any, ...args: string[]) {
-    args.forEach(v => {
-      delete obj[v]
+watchEffect(() => {
+  let sys = sysInfo.value
+  if (!isEmpty(sys)) {
+    let cpuName = ["核心数", "系统使用率", "用户使用率", "当前空闲率", "CPU信号信息"]
+    let cpuValue = Object.values(sys.cpuInfo)
+    data.cpu = cpuValue.map((v, i) => {
+      return {name: cpuName[i], value: v}
     })
-    return obj
+    
+    let memName = ["总内存", "已用内存", "剩余内存", "使用率"]
+    let memValue = Object.values(sys.memInfo)
+
+
+    function delKey(obj: any, ...args: string[]) {
+      args.forEach(v => {
+        delete obj[v]
+      })
+      return obj
+    }
+    delKey(sys.jvmInfo, 'jvmVersion','jvmHome',"jvmName","jvmStartTime")
+    let jvmValue = Object.values(sys.jvmInfo)
+    data.mem = memValue.map((v, i) => {
+      return {name: memName[i], value: v, value2: jvmValue[i]}
+    })
   }
-  delKey(sys.jvmInfo, 'jvmVersion','jvmHome',"jvmName","jvmStartTime")
-  let jvmValue = Object.values(sys.jvmInfo)
-  data.mem = memValue.map((v, i) => {
-    return {name: memName[i], value: v, value2: jvmValue[i]}
-  })
-
 })
-
 
 const { cpu, mem } = toRefs(data)
 </script>

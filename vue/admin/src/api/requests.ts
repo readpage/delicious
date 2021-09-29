@@ -15,7 +15,11 @@ export function apiAxios<T = any>( url: string, method?: any) {
       param.params = data
     } else {
       param.method = method
-      param.data = data
+      if (urlParam) {
+        param.data = data.data
+      } else {
+        param.data = data
+      }
     }
 
     interface resApi {

@@ -3,8 +3,7 @@ import toast from "./index.vue"
 
 interface toastApi {
   message: string
-  delay: number
-  resize?: Function
+  delay?: number
 }
 
 // 函数式调用

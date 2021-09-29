@@ -16,6 +16,10 @@ const Auser = {
   isUser: apiAxios("/user/selectIsUser"),
 }
 
+const Aorders = {
+  save: apiAxios("/orders/save", "post")
+}
+
 export {
   Alogin,
   Alogout,
@@ -23,4 +27,5 @@ export {
   Aregister,
   Auser,
   Afood,
+  Aorders,
 }

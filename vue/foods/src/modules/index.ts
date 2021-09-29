@@ -1,6 +1,6 @@
 import { App } from "vue"
 
-const modules = import.meta.globEager("./components/**/index.vue")
+const modules = import.meta.globEager("./**/index.vue")
 export default {
   install: (app: App<Element>) => {
     Object.keys(modules).forEach(item => {

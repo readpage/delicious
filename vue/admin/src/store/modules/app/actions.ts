@@ -4,6 +4,7 @@ const actions = {
   async appLoad({ dispatch, commit }: any) {
     commit("appLoading")
     store.dispatch("user/userInfo")
+    store.dispatch("user/sysInfo")
     await store.dispatch("menu/permMenu")
     commit("hideAppLoading")
   },

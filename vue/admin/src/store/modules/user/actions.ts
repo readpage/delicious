@@ -1,4 +1,4 @@
-import { Alogout, ArefToken, Auser } from '@/api';
+import { Alogout, ArefToken, Astatis, Auser } from '@/api';
 import { store } from '@/store';
 
 const actions = {
@@ -33,6 +33,12 @@ const actions = {
     commit("remToken")
     store.commit("menu/setMenu", [])
     store.commit("menu/setRoutes", [])
+  },
+
+  sysInfo({ commit }: any) {
+    Astatis.server().then(res => {
+      commit("setSys", res.data)
+    })
   }
 }
 

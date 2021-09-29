@@ -38,6 +38,7 @@
 </template>
 
 <script setup lang="ts">
+import { Vtoast } from "@/modules/toast";
 import { useStore } from "@/store";
 import { ElMessage } from "element-plus";
 import { ref } from "vue"
@@ -61,7 +62,7 @@ onBeforeRouteLeave(() => {
 
 function cart() {
   commit("cart/addCart", props.food)
-  ElMessage.success("添加购物车成功!")
+  Vtoast({message: "添加购物车成功"})
   drawer.value = false
 }
 

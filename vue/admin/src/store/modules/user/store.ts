@@ -9,6 +9,7 @@ export const createState = () => ({
   btnLoading: false,
   info: storage.get("userInfo") as Iuser|| {},
   token: storage.get("token") as Itoken || null,
+  sys: {} as IsysInfo,
 })
 
 

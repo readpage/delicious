@@ -1,5 +1,6 @@
 package com.example.entity;
 
+import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
@@ -7,6 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -14,28 +16,22 @@ import java.util.Date;
  * </p>
  *
  * @author f1dao😂
- * @since 2021-09-13
+ * @since 2021-09-27
  */
-@ApiModel(value="Foods对象", description="")
-public class Foods implements Serializable {
+@ApiModel(value="Orders对象", description="")
+public class Orders implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "美食ID")
+    @ApiModelProperty(value = "订单ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty(value = "餐品名称")
-    private String name;
+    @ApiModelProperty(value = "订单编号")
+    private String number = IdUtil.simpleUUID();
 
-    @ApiModelProperty(value = "餐品图片")
-    private String img;
-
-    @ApiModelProperty(value = "餐品价格")
-    private Double price;
-
-    @ApiModelProperty(value = "餐品类型")
-    private String type;
+    @ApiModelProperty(value = "用户ID")
+    private Integer uid;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
@@ -49,10 +45,10 @@ public class Foods implements Serializable {
     @Version
     private Integer version;
 
-    @ApiModelProperty(value = "购买数量")
+    @ApiModelProperty(value = "餐品")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @TableField(exist = false)
-    private Integer count;
+    private List<Foods> foods;
 
 
     public Integer getId() {
@@ -63,36 +59,20 @@ public class Foods implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNumber() {
+        return number;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public String getImg() {
-        return img;
+    public Integer getUid() {
+        return uid;
     }
 
-    public void setImg(String img) {
-        this.img = img;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public void setUid(Integer uid) {
+        this.uid = uid;
     }
 
     public Date getCreateTime() {
@@ -119,26 +99,24 @@ public class Foods implements Serializable {
         this.version = version;
     }
 
-    public Integer getCount() {
-        return count;
+    public List<Foods> getFoods() {
+        return foods;
     }
 
-    public void setCount(Integer count) {
-        this.count = count;
+    public void setFoods(List<Foods> foods) {
+        this.foods = foods;
     }
 
     @Override
     public String toString() {
-        return "Foods{" +
+        return "Orders{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", img='" + img + '\'' +
-                ", price=" + price +
-                ", type='" + type + '\'' +
+                ", number='" + number + '\'' +
+                ", uid=" + uid +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 ", version=" + version +
-                ", count=" + count +
+                ", foods=" + foods +
                 '}';
     }
 }

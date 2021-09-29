@@ -23,7 +23,8 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-resources/**",
             "/webjars/**",
             "/oauth/**",
-            "/upload/**"
+            "/img/**",
+            "/upload/**",
     };
 
 

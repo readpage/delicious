@@ -24,7 +24,7 @@
         <mybatis.plus.version>3.4.2</mybatis.plus.version>
         <mybatis.plus.generator.version>3.4.1</mybatis.plus.generator.version>
         <velocity.engine.core.version>2.3</velocity.engine.core.version>
-        <hutool.version>5.6.3</hutool.version>
+        <hutool.version>5.7.13</hutool.version>
         <fastjson.version>1.2.73</fastjson.version>
         <knife4j.version>2.0.9</knife4j.version>
     </properties>
@@ -71,6 +71,7 @@
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis.plus.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-generator</artifactId>
@@ -81,6 +82,7 @@
                 <artifactId>velocity-engine-core</artifactId>
                 <version>${velocity.engine.core.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-log</artifactId>
@@ -91,6 +93,18 @@
                 <artifactId>hutool-core</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-extra</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>core</artifactId>
+                <version>3.3.3</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
@@ -106,6 +120,7 @@
                 <artifactId>UserAgentUtils</artifactId>
                 <version>1.21</version>
             </dependency>
+
             <dependency>
                 <groupId>com.github.oshi</groupId>
                 <artifactId>oshi-core</artifactId>

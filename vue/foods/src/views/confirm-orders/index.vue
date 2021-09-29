@@ -32,19 +32,36 @@
         <span class="is-price ml">{{totalPrice}}</span>
       </div>
       <div>
-        <el-button type="info" size="mini">提交订单</el-button>
+        <el-button type="info" size="mini" @click="submit">提交订单</el-button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { Aorders } from "@/api";
 import { useStore } from "@/store";
 import { computed } from "vue"
+import { useRouter } from "vue-router";
 
 const { state, getters } = useStore()
+const router = useRouter()
 
 const totalPrice = computed(() => getters["cart/fTotalPrice"])
+
+function submit() {
+  let uid = state.user.userInfo.id
+  if (uid) {
+    let orders = state.cart.foods.map(v => {
+      return {"fid": v.id, "count": v.buyCount}
+    })
+    console.log(orders);
+    
+    Aorders.save({urlParam: `/${uid}`, data: orders})
+  } else {
+    router.push("/sign")
+  } 
+}
 
 </script>
 

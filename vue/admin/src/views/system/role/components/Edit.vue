@@ -28,7 +28,7 @@ function onUpdate() {
 
 function submit(val: IroleForm) {
   commit("user/btnLoading")
-  Arole.update({urlParam: `/${val.menuIdList}`, ...val.role}).then(res => {
+  Arole.update({urlParam: `/${val.menuIdList}`, data: val.role}).then(res => {
     form.value.visible = false
     reload()
   })

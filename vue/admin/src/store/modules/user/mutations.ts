@@ -47,6 +47,10 @@ const mutations = {
   remToken(state: userState) {
     state.token = null as any
     storage.remove("token")
+  },
+
+  setSys(state: userState, val: IsysInfo) {
+    state.sys = val
   }
 }
 
