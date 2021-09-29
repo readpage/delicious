@@ -11,7 +11,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 29/09/2021 18:09:44
+ Date: 29/09/2021 23:01:28
 */
 
 SET NAMES utf8mb4;
@@ -474,6 +474,12 @@ CREATE TABLE `orders`  (
 -- ----------------------------
 INSERT INTO `orders` VALUES (1, 'dbb6be3eaf9b42e089a46fec8969c3e8', 1, '2021-09-27 17:41:57', '2021-09-27 17:41:57', 1);
 INSERT INTO `orders` VALUES (2, '7b3b9c45bf424c14a334aa8b1019f544', 1, '2021-09-27 17:48:33', '2021-09-27 17:48:33', 1);
+INSERT INTO `orders` VALUES (3, '1ce2bae7e5f24d1a8fde2d1404346475', 1, '2021-09-29 22:45:46', '2021-09-29 22:45:46', 1);
+INSERT INTO `orders` VALUES (4, '27ab7735b5414168a36e77436f7bc27f', 1, '2021-09-29 22:45:47', '2021-09-29 22:45:47', 1);
+INSERT INTO `orders` VALUES (5, '9d116cb67c4647ef93d3147398611f93', 1, '2021-09-29 22:45:48', '2021-09-29 22:45:48', 1);
+INSERT INTO `orders` VALUES (6, 'd64f0c20c5b84045aa41020933d2f7c2', 1, '2021-09-29 22:45:48', '2021-09-29 22:45:48', 1);
+INSERT INTO `orders` VALUES (7, '00746b26f3ab48d48ad157086f71a516', 1, '2021-09-29 22:46:10', '2021-09-29 22:46:10', 1);
+INSERT INTO `orders` VALUES (8, '9d937018b8f34ea9a04d0007a4a9a750', 1, '2021-09-29 22:46:59', '2021-09-29 22:46:59', 1);
 
 -- ----------------------------
 -- Table structure for orders_foods
@@ -497,6 +503,12 @@ CREATE TABLE `orders_foods`  (
 INSERT INTO `orders_foods` VALUES (1, 1, 4, 2);
 INSERT INTO `orders_foods` VALUES (2, 2, 4, 7);
 INSERT INTO `orders_foods` VALUES (3, 2, 5, 3);
+INSERT INTO `orders_foods` VALUES (4, 3, 5, 2);
+INSERT INTO `orders_foods` VALUES (5, 4, 5, 2);
+INSERT INTO `orders_foods` VALUES (6, 5, 5, 2);
+INSERT INTO `orders_foods` VALUES (7, 6, 5, 2);
+INSERT INTO `orders_foods` VALUES (8, 7, 5, 2);
+INSERT INTO `orders_foods` VALUES (9, 8, 5, 2);
 
 -- ----------------------------
 -- Table structure for role
@@ -578,9 +590,9 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'user', '木灵鱼儿', '$2a$10$UfzfgbVxCAXoiyaCw7IXiuHiFqMMVbhbb3ox6nkxbAJLGTWjJ7Ciq', 'd16485d9-1f65-4f28-ae94-c98304705617', NULL, '15885326305', 'user@qq.com', 1, '2021-07-29 02:14:10', '2021-09-28 23:02:31', 8);
+INSERT INTO `user` VALUES (1, 'user', '木灵鱼儿', '$2a$10$UfzfgbVxCAXoiyaCw7IXiuHiFqMMVbhbb3ox6nkxbAJLGTWjJ7Ciq', '06ddd9af-33e6-4c64-b69c-34eab5c20024', NULL, '15885326305', 'user@qq.com', 1, '2021-07-29 02:14:10', '2021-09-29 22:42:15', 8);
 INSERT INTO `user` VALUES (2, 'admin', '初之音', '$2a$10$vnvYyOdeQr9EUAc..Zjh4ed73t3JQf74tFgwg/XpQYTQHL3cfEtn2', 'ee6ad42c-9137-4f24-982b-ac965915835f', NULL, '113', 'root', 1, '2021-07-29 13:11:51', '2021-09-22 12:49:12', 13);
-INSERT INTO `user` VALUES (3, 'root', '保罗的小宇宙', '$2a$10$eFWwgadiCeSOQnSH3FaJT.EJhCE77x8yIQk3/JlgQAmX39qejXBrm', 'c64925f9-1e14-449c-a05c-848900f28876', NULL, '15885326300', 'root@qq.com', 1, '2021-07-29 13:12:04', '2021-09-29 12:04:25', 5);
+INSERT INTO `user` VALUES (3, 'root', '保罗的小宇宙', '$2a$10$eFWwgadiCeSOQnSH3FaJT.EJhCE77x8yIQk3/JlgQAmX39qejXBrm', 'c64925f9-1e14-449c-a05c-848900f28876', NULL, '15885326300', 'root@qq.com', 1, '2021-07-29 13:12:04', '2021-09-29 22:41:16', 5);
 INSERT INTO `user` VALUES (4, 'jack', '梦回少年', '$2a$10$FSJNe2Ezpyu6piw/VnfMru1S.DlCifpwwdzsklDrwEDEHzrKD0Z0i', NULL, NULL, '12121', NULL, 1, '2021-07-29 13:12:13', '2021-09-27 16:53:06', 4);
 INSERT INTO `user` VALUES (5, 'july', '夏和帆', '$2a$10$eOmN/XhXFxok4L0z06EWD.M/C2KdgUHaz5PsjCcCpP/l1NXHI73E.', NULL, NULL, '324', NULL, 0, '2021-07-29 23:44:20', '2021-09-27 16:52:53', 9);
 INSERT INTO `user` VALUES (6, 'hello', '樱花庄的白猫', '$2a$10$p0HMOn4c9W4VHESI1kbmp.MySrgM84bkw/actZ.4SlI83mQjDkccG', NULL, NULL, NULL, NULL, 0, '2021-07-30 00:33:03', '2021-09-21 02:13:28', 2);

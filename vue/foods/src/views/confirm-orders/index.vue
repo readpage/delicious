@@ -55,7 +55,6 @@ function submit() {
     let orders = state.cart.foods.map(v => {
       return {"fid": v.id, "count": v.buyCount}
     })
-    console.log(orders);
     
     Aorders.save({urlParam: `/${uid}`, data: orders})
   } else {
