@@ -64,7 +64,7 @@ function login() {
       commit("app/otherLoading")
       Alogin(form).then(async res => {
         commit("user/setToken", res.data)
-        dispatch("app/appLoad")
+        await dispatch("app/appLoad")
         router.push("/")
         reset()
         ElMessage.success(res.msg)

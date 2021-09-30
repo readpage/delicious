@@ -1,12 +1,15 @@
 import { store } from '@/store';
 
 const actions = {
-  async appLoad({ dispatch, commit }: any) {
-    commit("appLoading")
-    store.dispatch("user/userInfo")
-    store.dispatch("user/sysInfo")
-    await store.dispatch("menu/permMenu")
-    commit("hideAppLoading")
+  appLoad({ dispatch, commit }: any): Promise<any> {
+    return new Promise(async resolve => {
+      commit("appLoading")
+      store.dispatch("user/userInfo")
+      store.dispatch("user/sysInfo")
+      await store.dispatch("menu/permMenu")
+      commit("hideAppLoading")
+      resolve(null)
+    })
   },
 }
 
