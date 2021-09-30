@@ -64,12 +64,15 @@ service.interceptors.response.use(response  => {
         ElMessage.warning(res.msg)
     }
     store.commit("user/hideLoading")
+    store.commit("app/hideOtherLoading")
+    
     throw response
   }
 },error => {
   num--
   store.commit("user/hideLoading")
   store.commit("app/hideAppLoading")
+  store.commit("app/hideOtherLoading")
   router.push("/500")
   return Promise.reject(error)
 })
