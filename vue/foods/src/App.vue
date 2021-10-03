@@ -13,11 +13,18 @@ import { onMounted } from "vue";
 import { ElConfigProvider } from "element-plus";
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
 import { useStore } from "./store";
+import { isEmpty } from "./util";
 
 const locale = zhCn;
 const { commit, state, dispatch} = useStore()
 
-
+function init() {
+  let token = state.user.token
+  if (isEmpty(token)) {
+    dispatch("user/userRemove")
+  }
+}
+init()
 window.addEventListener("resize", () => {
   commit("user/setBrowser")
 })

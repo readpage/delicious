@@ -1,4 +1,4 @@
-import storage, { browserType, getBrowser } from "@/util"
+import {storage, browserType, getBrowser, cookie } from "@/util"
 
 const browser: browserType = getBrowser()
 
@@ -8,7 +8,7 @@ export const createState = () => ({
   loading: false,
   btnLoading: false,
   info: storage.get("userInfo") as Iuser|| {},
-  token: storage.get("token") as Itoken || null,
+  token: cookie.get("f1dao-token") as Itoken || null,
   sys: {} as IsysInfo,
 })
 

@@ -13,6 +13,13 @@ export default defineConfig({
       }
     ]
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: '@import "./src/assets/scss/index.scss";',
+      }
+    }
+  },
   server: {
     host: '0.0.0.0',
     port: 3000,

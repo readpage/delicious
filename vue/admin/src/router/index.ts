@@ -1,4 +1,4 @@
-import storage from "@/util";
+import { cookie } from "@/util";
 import { createRouter, createWebHistory } from "vue-router"
 
 const routes = [
@@ -56,7 +56,7 @@ export async function setRoutes(val: Imenu[]) {
 }
 
 router.beforeEach((to, form, next) => {
-  if (!(storage.get("token") || to.path == "/sign") ) {
+  if (!(cookie.get("f1dao-token") || to.path == "/sign") ) {
     next("/sign")
   }
   let overlay = document.getElementById("overlay");

@@ -27,7 +27,6 @@
 <script setup lang="ts">
 import { Alogin } from "@/api"
 import { useStore } from "@/store"
-import storage from "@/util"
 import { ElLoading, ElMessage } from "element-plus"
 import { reactive, ref } from "vue"
 import { useRoute, useRouter } from "vue-router"

@@ -1,4 +1,4 @@
-import storage from '@/util';
+import {storage} from '@/util';
 import { ElMessage } from 'element-plus';
 import { cartState } from './store';
 

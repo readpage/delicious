@@ -1,6 +1,5 @@
 <template>
   <el-table :data="data" stripe
-    ref="tableRef"
     :header-cell-style="{ background: '#f5f7fa', color: '#606266' }"
     max-height="500"
     v-loading="loading"

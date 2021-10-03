@@ -1,4 +1,4 @@
-import storage, { getBrowser } from '@/util';
+import { storage, getBrowser, cookie } from '@/util';
 import { userState } from "./store";
 import Nprogress from "nprogress";
 import "nprogress/nprogress.css";
@@ -41,12 +41,12 @@ const mutations = {
 
   setToken(state: userState, val: Itoken) {
     state.token = val
-    storage.set("token", val)
+    cookie.set("f1dao-token", val)
   },
 
   remToken(state: userState) {
     state.token = null as any
-    storage.remove("token")
+    cookie.remove("f1dao-token")
   },
 
   setSys(state: userState, val: IsysInfo) {

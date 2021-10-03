@@ -1,4 +1,29 @@
-import storage from "store"
+import store from "store"
+import jsCookie from 'js-cookie'
+
+interface cookieApi {
+	expires?: number | Date;
+	path?: string
+}
+function set(key: string, value: any, options: cookieApi = {expires: 7}): void {
+	jsCookie.set(key, JSON.stringify(value), options)
+}
+
+function get(key: string): any {
+	let value = jsCookie.get(key)
+	return value ? JSON.parse(value) : value
+}
+
+function remove(key: string): void {
+	jsCookie.remove(key)
+}
+
+export const cookie = {
+	set,
+	get,
+	remove
+}
+export const storage = store
 
 export function preLoad(val: string[]):Promise<any> {
 	const imageAll = val.map((imgUrl) => {
@@ -16,7 +41,6 @@ export function preLoad(val: string[]):Promise<any> {
 	})
 }
 
-export default storage
 export function isArray(value: any) {
 	if (typeof Array.isArray === "function") {
 		return Array.isArray(value);

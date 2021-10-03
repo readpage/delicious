@@ -1,4 +1,4 @@
-import storage from "@/util"
+import {storage} from "@/util"
 
 export const createState = () => ({
   carts: storage.get("carts") as Ifood[] || [],

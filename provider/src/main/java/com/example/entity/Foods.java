@@ -37,6 +37,12 @@ public class Foods implements Serializable {
     @ApiModelProperty(value = "餐品类型")
     private String type;
 
+    @ApiModelProperty(value = "材料")
+    private String material;
+
+    @ApiModelProperty(value = "内容")
+    private String content;
+
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;
@@ -127,6 +133,22 @@ public class Foods implements Serializable {
         this.count = count;
     }
 
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     @Override
     public String toString() {
         return "Foods{" +
@@ -135,6 +157,8 @@ public class Foods implements Serializable {
                 ", img='" + img + '\'' +
                 ", price=" + price +
                 ", type='" + type + '\'' +
+                ", material='" + material + '\'' +
+                ", content='" + content + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 ", version=" + version +

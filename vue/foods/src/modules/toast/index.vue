@@ -11,35 +11,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
+import { onMounted, onUnmounted, ref } from "vue"
 
-interface Props {
+export interface toastApi {
   message?: string
   delay?: number
 }
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<toastApi>(), {
   message: "",
   delay: 2000
 })
 
 const visible = ref(false)
-
-// 关闭
-function close() {
-  visible.value = false
-}
-// toast 打开
-function open() {
+onMounted(() => {
   visible.value = true
   setTimeout(() => {
-    close()
+    visible.value = false
   }, props.delay)
-}
-
-
-defineExpose({
-  open,
 })
+
 </script>
 
 <style lang="scss" scoped>

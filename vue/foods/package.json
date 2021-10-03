@@ -11,6 +11,7 @@
     "axios": "^0.21.1",
     "dayjs": "^1.10.6",
     "element-plus": "^1.0.2-beta.65",
+    "js-cookie": "^3.0.1",
     "nprogress": "^0.2.0",
     "sass": "^1.36.0",
     "store": "^2.0.12",

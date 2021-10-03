@@ -31,7 +31,7 @@
     <div class="info">
       <el-dropdown trigger="click" @command="onCommand">
         <span class="el-dropdown-link">
-          <span class="name">{{ userInfo.nickname || "未登录" }}</span>
+          <span class="name">{{ username || "未登录" }}</span>
           <!-- <img class="avatar" :src="userInfo.headImg | default_avatar" alt /> -->
           <el-avatar src="https://cdn.luogu.com.cn/upload/usericon/1.png"></el-avatar>
         </span>
@@ -39,6 +39,7 @@
         <template #dropdown>
           <el-dropdown-menu slot="dropdown" class="popper-dropdown-menu-user">
             <el-dropdown-item command="my">个人中心</el-dropdown-item>
+            <el-dropdown-item command="admin">后台管理</el-dropdown-item>
             <el-dropdown-item command="sign">登录/注册</el-dropdown-item>
             <el-dropdown-item command="exit">退出</el-dropdown-item>
           </el-dropdown-menu>
@@ -51,12 +52,17 @@
 
 <script setup lang="ts">
 import { useStore } from "@/store";
-import { computed, ref, toRefs } from "vue"
+import { computed, ref, toRefs, watch } from "vue"
 import { useRoute, useRouter } from "vue-router";
 
 const { state, dispatch, getters } = useStore()
-const { userInfo } = toRefs(state.user)
 const router = useRouter()
+
+const username = computed(() => {
+  let nickname = state.user.userInfo.nickname
+  if (!nickname) dispatch("user/userInfo")
+  return nickname
+})
 
 const totalCount = computed(() => getters["cart/cTotalCount"])
 
@@ -64,6 +70,9 @@ async function onCommand(name: string) {
   switch (name) {
     case "my":
       router.push("/info")
+      break
+    case "admin":
+      window.open("http://localhost:3000/")
       break
     case "sign":
       router.push("/sign")

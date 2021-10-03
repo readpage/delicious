@@ -1,4 +1,4 @@
-import storage, { getBrowser } from "@/util"
+import {storage, getBrowser, cookie } from "@/util"
 import { userState } from "./store"
 
 
@@ -21,7 +21,7 @@ const mutations = {
 
   setToken(state: userState, val: Itoken) {
     state.token = val
-    storage.set("token", val)
+    cookie.set("f1dao-token", val)
   },
 
   remToken(state: userState) {

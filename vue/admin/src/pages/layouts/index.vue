@@ -99,6 +99,8 @@ const transitionName = ref("slide-fade")
     }
     .page-layout__right {
       width: 100%;
+      transition: transform 0.3s cubic-bezier(0.7, 0.3, 0.1, 1),
+			box-shadow 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
     }
     &.collapse {
       .page-layout__left {

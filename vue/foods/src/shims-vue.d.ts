@@ -12,3 +12,13 @@ declare module "store" {
 	export function clearAll(): void;
 	export function each(callback: Function): void;
 }
+
+interface cookieApi {
+	expires?: number | Date;
+	path?: string
+}
+declare module "js-cookie" {
+	export function set(key: string, value: any, { expires, path}?: cookieApi): void;
+	export function get(key: string): any;
+	export function remove(key: string): void;
+}

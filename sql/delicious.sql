@@ -11,7 +11,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 29/09/2021 23:01:28
+ Date: 03/10/2021 23:40:31
 */
 
 SET NAMES utf8mb4;
@@ -30,7 +30,7 @@ CREATE TABLE `desk`  (
   `version` int(0) NULL DEFAULT 1 COMMENT '版本',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `number`(`number`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of desk
@@ -50,22 +50,24 @@ CREATE TABLE `foods`  (
   `img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '餐品图片',
   `price` double(10, 2) NULL DEFAULT NULL COMMENT '餐品价格',
   `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '餐品类型',
+  `material` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '材料',
+  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '内容',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   `version` int(0) NULL DEFAULT 1 COMMENT '版本',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of foods
 -- ----------------------------
-INSERT INTO `foods` VALUES (1, '香酥鱼条', '/api/upload/root/20210909163116442224666411321699.jpg', 10.40, NULL, NULL, '2021-09-21 19:00:45', 11);
-INSERT INTO `foods` VALUES (2, '时蔬烧五花肉', '/api/upload/root/2021090916311585919298197577.jpg', 22.20, NULL, NULL, '2021-09-22 12:50:02', 20);
-INSERT INTO `foods` VALUES (3, '糯米粉红薯丸子', '/api/upload/root/2021091116313690648841958079.jpg', 15.44, NULL, NULL, '2021-09-21 19:00:19', 5);
-INSERT INTO `foods` VALUES (4, '青瓜胡萝卜炒牛肉', '/api/upload/root/2021091116313517169521958079.jpg', 16.44, NULL, NULL, '2021-09-21 19:02:15', 8);
-INSERT INTO `foods` VALUES (5, '蒜香豆腐', '/api/upload/root/2021091116313687379571958079.jpg', 22.10, NULL, NULL, '2021-09-21 22:20:49', 9);
-INSERT INTO `foods` VALUES (6, '韭菜炒豆腐', '/api/upload/root/2021091116313683606001958079.jpg', 19.55, NULL, NULL, '2021-09-22 12:45:59', 4);
-INSERT INTO `foods` VALUES (12, 'a', '/api/upload/user/easter_egg_60.png', 2.00, NULL, '2021-09-21 22:22:19', '2021-09-22 12:45:52', 3);
+INSERT INTO `foods` VALUES (1, '香酥鱼条', '/api/upload/root/20210909163116442224666411321699.jpg', 10.40, NULL, NULL, NULL, NULL, '2021-09-21 19:00:45', 11);
+INSERT INTO `foods` VALUES (2, '时蔬烧五花肉', '/api/upload/root/2021090916311585919298197577.jpg', 22.20, NULL, NULL, NULL, NULL, '2021-09-22 12:50:02', 20);
+INSERT INTO `foods` VALUES (3, '糯米粉红薯丸子', '/api/upload/root/2021091116313690648841958079.jpg', 15.44, NULL, NULL, NULL, NULL, '2021-09-21 19:00:19', 5);
+INSERT INTO `foods` VALUES (4, '青瓜胡萝卜炒牛肉', '/api/upload/root/2021091116313517169521958079.jpg', 16.44, NULL, NULL, NULL, NULL, '2021-09-21 19:02:15', 8);
+INSERT INTO `foods` VALUES (5, '蒜香豆腐', '/api/upload/root/2021091116313687379571958079.jpg', 22.10, NULL, NULL, NULL, NULL, '2021-09-21 22:20:49', 9);
+INSERT INTO `foods` VALUES (6, '韭菜炒豆腐', '/api/upload/root/2021091116313683606001958079.jpg', 19.55, NULL, NULL, NULL, NULL, '2021-09-22 12:45:59', 4);
+INSERT INTO `foods` VALUES (12, 'a', '/api/upload/user/easter_egg_60.png', 2.00, NULL, NULL, NULL, '2021-09-21 22:22:19', '2021-09-22 12:45:52', 3);
 
 -- ----------------------------
 -- Table structure for log_info
@@ -86,171 +88,7 @@ CREATE TABLE `log_info`  (
   `error` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '异常信息',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2451 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of log_info
--- ----------------------------
-INSERT INTO `log_info` VALUES (2291, 'root', 'POST', 'com.example.controller.DeskController.save', '/desk/save', 'Chrome 9', 'Windows 10', 'Computer', '0:0:0:0:0:0:0:1', NULL, '添加成功!😎', NULL, '2021-09-29 00:39:41');
-INSERT INTO `log_info` VALUES (2292, 'root', 'POST', 'com.example.controller.DeskController.save', '/desk/save', 'Chrome 9', 'Windows 10', 'Computer', '0:0:0:0:0:0:0:1', NULL, '添加成功!😎', NULL, '2021-09-29 00:40:02');
-INSERT INTO `log_info` VALUES (2293, 'root', 'GET', 'com.example.controller.UserController.info', '/user/info', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 00:41:33');
-INSERT INTO `log_info` VALUES (2294, 'root', 'GET', 'com.example.controller.UserController.info', '/user/info', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 00:41:33');
-INSERT INTO `log_info` VALUES (2295, 'root', 'GET', 'com.example.controller.StatisController.recent', '/statis/recent', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 00:41:35');
-INSERT INTO `log_info` VALUES (2296, 'root', 'GET', 'com.example.controller.MenuController.selectAll', '/menu/list', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 00:41:52');
-INSERT INTO `log_info` VALUES (2297, 'root', 'PUT', 'com.example.controller.MenuController.updateById', '/menu/update', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '更新成功!😏', NULL, '2021-09-29 00:42:24');
-INSERT INTO `log_info` VALUES (2298, 'root', 'GET', 'com.example.controller.MenuController.selectAll', '/menu/list', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 00:42:25');
-INSERT INTO `log_info` VALUES (2299, 'root', 'GET', 'com.example.controller.FoodsController.selectPage', '/foods/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 00:42:44');
-INSERT INTO `log_info` VALUES (2300, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 00:42:54');
-INSERT INTO `log_info` VALUES (2301, 'root', 'GET', 'com.example.controller.UserController.info', '/user/info', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 00:44:46');
-INSERT INTO `log_info` VALUES (2302, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 00:44:46');
-INSERT INTO `log_info` VALUES (2303, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 00:44:59');
-INSERT INTO `log_info` VALUES (2304, 'root', 'GET', 'com.example.controller.FoodsController.selectPage', '/foods/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 00:45:04');
-INSERT INTO `log_info` VALUES (2305, 'root', 'GET', 'com.example.controller.StatisController.recent', '/statis/recent', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 00:45:13');
-INSERT INTO `log_info` VALUES (2306, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 00:51:31');
-INSERT INTO `log_info` VALUES (2307, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 00:51:31');
-INSERT INTO `log_info` VALUES (2308, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 00:51:40');
-INSERT INTO `log_info` VALUES (2309, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 00:51:40');
-INSERT INTO `log_info` VALUES (2310, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:04:26');
-INSERT INTO `log_info` VALUES (2311, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:04:26');
-INSERT INTO `log_info` VALUES (2312, 'root', 'GET', 'com.example.controller.StatisController.recent', '/statis/recent', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:04:29');
-INSERT INTO `log_info` VALUES (2313, 'root', 'GET', 'com.example.controller.MenuController.selectAll', '/menu/list', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:04:38');
-INSERT INTO `log_info` VALUES (2314, 'root', 'POST', 'com.example.controller.MenuController.save', '/menu/save', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '添加成功!😎', NULL, '2021-09-29 12:05:04');
-INSERT INTO `log_info` VALUES (2315, 'root', 'GET', 'com.example.controller.MenuController.selectAll', '/menu/list', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:05:04');
-INSERT INTO `log_info` VALUES (2316, 'root', 'GET', 'com.example.controller.RoleController.selectPage', '/role/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:05:08');
-INSERT INTO `log_info` VALUES (2317, 'root', 'GET', 'com.example.controller.RoleController.selectPage', '/role/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:05:08');
-INSERT INTO `log_info` VALUES (2318, 'root', 'GET', 'com.example.controller.RoleController.selectById', '/role/selectByRid/1', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:05:11');
-INSERT INTO `log_info` VALUES (2319, 'root', 'PUT', 'com.example.controller.RoleController.updateById', '/role/update/72,73,24,25,26,2,3,4,5,6,28,33,30,50,12,54,13,16,17,18,19,29,7,8,9,10,21,31,75,76,36,58,49,34,71,69,68,67,64,35,70,77,79,78,80,81,63,62,65,66', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '更新成功!😏', NULL, '2021-09-29 12:05:16');
-INSERT INTO `log_info` VALUES (2320, 'root', 'GET', 'com.example.controller.RoleController.selectPage', '/role/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:05:17');
-INSERT INTO `log_info` VALUES (2321, 'root', 'GET', 'com.example.controller.MenuController.selectAll', '/menu/list', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:05:17');
-INSERT INTO `log_info` VALUES (2322, 'root', 'GET', 'com.example.controller.DeskController.page', '/desk/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '0:0:0:0:0:0:0:1', NULL, '查询成功!😍', NULL, '2021-09-29 12:05:21');
-INSERT INTO `log_info` VALUES (2323, 'root', 'GET', 'com.example.controller.DeskController.page', '/desk/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '0:0:0:0:0:0:0:1', NULL, '查询成功!😍', NULL, '2021-09-29 12:05:28');
-INSERT INTO `log_info` VALUES (2324, 'root', 'GET', 'com.example.controller.UserController.selectPage', '/user/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:07:34');
-INSERT INTO `log_info` VALUES (2325, 'root', 'GET', 'com.example.controller.UserController.selectPage', '/user/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:07:34');
-INSERT INTO `log_info` VALUES (2326, 'root', 'GET', 'com.example.controller.FoodsController.selectPage', '/foods/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:07:38');
-INSERT INTO `log_info` VALUES (2327, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:07:40');
-INSERT INTO `log_info` VALUES (2328, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:12:45');
-INSERT INTO `log_info` VALUES (2329, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/10', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:12:50');
-INSERT INTO `log_info` VALUES (2330, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:12:52');
-INSERT INTO `log_info` VALUES (2331, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:19:45');
-INSERT INTO `log_info` VALUES (2332, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:22:23');
-INSERT INTO `log_info` VALUES (2333, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:22:23');
-INSERT INTO `log_info` VALUES (2334, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:24:00');
-INSERT INTO `log_info` VALUES (2335, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:24:00');
-INSERT INTO `log_info` VALUES (2336, 'root', 'GET', 'com.example.controller.UserController.info', '/user/info', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:25:36');
-INSERT INTO `log_info` VALUES (2337, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:25:36');
-INSERT INTO `log_info` VALUES (2338, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:25:39');
-INSERT INTO `log_info` VALUES (2339, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:25:40');
-INSERT INTO `log_info` VALUES (2340, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/10', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:25:43');
-INSERT INTO `log_info` VALUES (2341, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:25:44');
-INSERT INTO `log_info` VALUES (2342, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:25:48');
-INSERT INTO `log_info` VALUES (2343, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:25:51');
-INSERT INTO `log_info` VALUES (2344, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:25:52');
-INSERT INTO `log_info` VALUES (2345, 'root', 'GET', 'com.example.controller.UserController.info', '/user/info', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:26:04');
-INSERT INTO `log_info` VALUES (2346, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:26:04');
-INSERT INTO `log_info` VALUES (2347, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:26:06');
-INSERT INTO `log_info` VALUES (2348, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/10', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:26:16');
-INSERT INTO `log_info` VALUES (2349, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:26:18');
-INSERT INTO `log_info` VALUES (2350, 'root', 'GET', 'com.example.controller.FoodsController.selectPage', '/foods/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:26:29');
-INSERT INTO `log_info` VALUES (2351, 'root', 'GET', 'com.example.controller.FoodsController.selectPage', '/foods/page/1/10', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:26:33');
-INSERT INTO `log_info` VALUES (2352, 'root', 'GET', 'com.example.controller.FoodsController.selectPage', '/foods/page/1/10', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:26:36');
-INSERT INTO `log_info` VALUES (2353, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:26:51');
-INSERT INTO `log_info` VALUES (2354, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:28:57');
-INSERT INTO `log_info` VALUES (2355, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/10', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:28:59');
-INSERT INTO `log_info` VALUES (2356, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:29:02');
-INSERT INTO `log_info` VALUES (2357, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:29:04');
-INSERT INTO `log_info` VALUES (2358, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:29:05');
-INSERT INTO `log_info` VALUES (2359, 'root', 'GET', 'com.example.controller.RoleController.selectAll', '/role/list', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:29:28');
-INSERT INTO `log_info` VALUES (2360, 'root', 'GET', 'com.example.controller.RoleController.selectAll', '/role/list', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:29:28');
-INSERT INTO `log_info` VALUES (2361, 'root', 'GET', 'com.example.controller.RoleController.selectPage', '/role/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:29:32');
-INSERT INTO `log_info` VALUES (2362, 'root', 'GET', 'com.example.controller.RoleController.selectPage', '/role/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:29:32');
-INSERT INTO `log_info` VALUES (2363, 'root', 'GET', 'com.example.controller.RoleController.selectPage', '/role/page/1/10', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:29:37');
-INSERT INTO `log_info` VALUES (2364, 'root', 'GET', 'com.example.controller.RoleController.selectPage', '/role/page/1/10', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:29:40');
-INSERT INTO `log_info` VALUES (2365, 'root', 'GET', 'com.example.controller.RoleController.selectPage', '/role/page/1/10', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:29:40');
-INSERT INTO `log_info` VALUES (2366, 'root', 'GET', 'com.example.controller.UserController.info', '/user/info', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:30:24');
-INSERT INTO `log_info` VALUES (2367, 'root', 'GET', 'com.example.controller.UserController.info', '/user/info', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:30:24');
-INSERT INTO `log_info` VALUES (2368, 'root', 'GET', 'com.example.controller.RoleController.selectPage', '/role/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:30:27');
-INSERT INTO `log_info` VALUES (2369, 'root', 'GET', 'com.example.controller.RoleController.selectPage', '/role/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:30:27');
-INSERT INTO `log_info` VALUES (2370, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:30:30');
-INSERT INTO `log_info` VALUES (2371, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/10', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:30:35');
-INSERT INTO `log_info` VALUES (2372, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:30:43');
-INSERT INTO `log_info` VALUES (2373, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:30:59');
-INSERT INTO `log_info` VALUES (2374, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:31:00');
-INSERT INTO `log_info` VALUES (2375, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:31:06');
-INSERT INTO `log_info` VALUES (2376, 'root', 'GET', 'com.example.controller.UserController.info', '/user/info', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:31:06');
-INSERT INTO `log_info` VALUES (2377, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:31:09');
-INSERT INTO `log_info` VALUES (2378, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/10', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:31:13');
-INSERT INTO `log_info` VALUES (2379, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:31:15');
-INSERT INTO `log_info` VALUES (2380, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:31:18');
-INSERT INTO `log_info` VALUES (2381, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:31:22');
-INSERT INTO `log_info` VALUES (2382, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:31:24');
-INSERT INTO `log_info` VALUES (2383, 'root', 'GET', 'com.example.controller.UserController.info', '/user/info', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:35:35');
-INSERT INTO `log_info` VALUES (2384, 'root', 'GET', 'com.example.controller.UserController.info', '/user/info', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:35:35');
-INSERT INTO `log_info` VALUES (2385, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:35:38');
-INSERT INTO `log_info` VALUES (2386, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/10', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:35:41');
-INSERT INTO `log_info` VALUES (2387, 'root', 'GET', 'com.example.controller.UserController.info', '/user/info', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:36:23');
-INSERT INTO `log_info` VALUES (2388, 'root', 'GET', 'com.example.controller.UserController.info', '/user/info', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:36:23');
-INSERT INTO `log_info` VALUES (2389, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:36:27');
-INSERT INTO `log_info` VALUES (2390, 'root', 'GET', 'com.example.controller.UserController.info', '/user/info', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:37:29');
-INSERT INTO `log_info` VALUES (2391, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:37:29');
-INSERT INTO `log_info` VALUES (2392, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:37:33');
-INSERT INTO `log_info` VALUES (2393, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/10', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:37:48');
-INSERT INTO `log_info` VALUES (2394, 'root', 'GET', 'com.example.controller.UserController.info', '/user/info', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:38:42');
-INSERT INTO `log_info` VALUES (2395, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:38:42');
-INSERT INTO `log_info` VALUES (2396, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:39:02');
-INSERT INTO `log_info` VALUES (2397, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:39:07');
-INSERT INTO `log_info` VALUES (2398, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:39:12');
-INSERT INTO `log_info` VALUES (2399, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:39:51');
-INSERT INTO `log_info` VALUES (2400, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:40:10');
-INSERT INTO `log_info` VALUES (2401, 'root', 'GET', 'com.example.controller.UserController.info', '/user/info', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:40:19');
-INSERT INTO `log_info` VALUES (2402, 'root', 'GET', 'com.example.controller.UserController.info', '/user/info', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:40:19');
-INSERT INTO `log_info` VALUES (2403, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:40:22');
-INSERT INTO `log_info` VALUES (2404, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/10', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:40:26');
-INSERT INTO `log_info` VALUES (2405, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/10', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:40:27');
-INSERT INTO `log_info` VALUES (2406, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/10', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:40:39');
-INSERT INTO `log_info` VALUES (2407, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:40:43');
-INSERT INTO `log_info` VALUES (2408, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/10', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:40:46');
-INSERT INTO `log_info` VALUES (2409, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/10', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:40:48');
-INSERT INTO `log_info` VALUES (2410, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/10', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:40:51');
-INSERT INTO `log_info` VALUES (2411, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/10', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:40:52');
-INSERT INTO `log_info` VALUES (2412, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/10', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:40:54');
-INSERT INTO `log_info` VALUES (2413, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/10', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:40:55');
-INSERT INTO `log_info` VALUES (2414, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:40:59');
-INSERT INTO `log_info` VALUES (2415, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:41:01');
-INSERT INTO `log_info` VALUES (2416, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:41:54');
-INSERT INTO `log_info` VALUES (2417, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 12:41:55');
-INSERT INTO `log_info` VALUES (2418, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:07:00');
-INSERT INTO `log_info` VALUES (2419, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:07:00');
-INSERT INTO `log_info` VALUES (2420, 'root', 'GET', 'com.example.controller.StatisController.recent', '/statis/recent', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:07:03');
-INSERT INTO `log_info` VALUES (2421, 'root', 'GET', 'com.example.controller.DeskController.page', '/desk/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:07:16');
-INSERT INTO `log_info` VALUES (2422, 'root', 'GET', 'com.example.controller.DeskController.page', '/desk/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:07:26');
-INSERT INTO `log_info` VALUES (2423, 'root', 'GET', 'com.example.controller.UserController.info', '/user/info', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:08:06');
-INSERT INTO `log_info` VALUES (2424, 'root', 'GET', 'com.example.controller.UserController.info', '/user/info', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:08:06');
-INSERT INTO `log_info` VALUES (2425, 'root', 'GET', 'com.example.controller.DeskController.page', '/desk/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:08:09');
-INSERT INTO `log_info` VALUES (2426, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:09:34');
-INSERT INTO `log_info` VALUES (2427, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:09:34');
-INSERT INTO `log_info` VALUES (2428, 'root', 'GET', 'com.example.controller.DeskController.page', '/desk/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:09:37');
-INSERT INTO `log_info` VALUES (2429, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:09:40');
-INSERT INTO `log_info` VALUES (2430, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:15:54');
-INSERT INTO `log_info` VALUES (2431, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:15:54');
-INSERT INTO `log_info` VALUES (2432, 'root', 'GET', 'com.example.controller.DeskController.page', '/desk/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:15:58');
-INSERT INTO `log_info` VALUES (2433, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:16:18');
-INSERT INTO `log_info` VALUES (2434, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:16:18');
-INSERT INTO `log_info` VALUES (2435, 'root', 'GET', 'com.example.controller.DeskController.page', '/desk/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:16:21');
-INSERT INTO `log_info` VALUES (2436, 'root', 'GET', 'com.example.controller.UserController.selectPage', '/user/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:16:38');
-INSERT INTO `log_info` VALUES (2437, 'root', 'GET', 'com.example.controller.UserController.selectPage', '/user/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:16:38');
-INSERT INTO `log_info` VALUES (2438, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:17:07');
-INSERT INTO `log_info` VALUES (2439, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:39:16');
-INSERT INTO `log_info` VALUES (2440, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:39:16');
-INSERT INTO `log_info` VALUES (2441, 'root', 'GET', 'com.example.controller.DeskController.page', '/desk/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:39:21');
-INSERT INTO `log_info` VALUES (2442, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:43:43');
-INSERT INTO `log_info` VALUES (2443, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:43:43');
-INSERT INTO `log_info` VALUES (2444, 'root', 'GET', 'com.example.controller.DeskController.page', '/desk/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:43:47');
-INSERT INTO `log_info` VALUES (2445, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:44:18');
-INSERT INTO `log_info` VALUES (2446, 'root', 'GET', 'com.example.controller.MenuController.selectPermMenu', '/menu/permMenu', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:44:18');
-INSERT INTO `log_info` VALUES (2447, 'root', 'GET', 'com.example.controller.DeskController.page', '/desk/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:44:21');
-INSERT INTO `log_info` VALUES (2448, 'root', 'GET', 'com.example.controller.OrdersController.page', '/orders/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:48:37');
-INSERT INTO `log_info` VALUES (2449, 'root', 'GET', 'com.example.controller.RoleController.selectAll', '/role/list', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:48:46');
-INSERT INTO `log_info` VALUES (2450, 'root', 'GET', 'com.example.controller.UserController.selectPage', '/user/page/1/5', 'Chrome 9', 'Windows 10', 'Computer', '127.0.0.1', NULL, '查询成功!😍', NULL, '2021-09-29 14:48:46');
+) ENGINE = InnoDB AUTO_INCREMENT = 3526 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for menu
@@ -339,7 +177,7 @@ CREATE TABLE `menu_role`  (
   INDEX `rid`(`rid`) USING BTREE,
   CONSTRAINT `menu_role_ibfk_1` FOREIGN KEY (`mid`) REFERENCES `menu` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `menu_role_ibfk_2` FOREIGN KEY (`rid`) REFERENCES `role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1682 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1731 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of menu_role
@@ -467,7 +305,7 @@ CREATE TABLE `orders`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   `version` int(0) NULL DEFAULT 1 COMMENT '版本',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orders
@@ -480,6 +318,9 @@ INSERT INTO `orders` VALUES (5, '9d116cb67c4647ef93d3147398611f93', 1, '2021-09-
 INSERT INTO `orders` VALUES (6, 'd64f0c20c5b84045aa41020933d2f7c2', 1, '2021-09-29 22:45:48', '2021-09-29 22:45:48', 1);
 INSERT INTO `orders` VALUES (7, '00746b26f3ab48d48ad157086f71a516', 1, '2021-09-29 22:46:10', '2021-09-29 22:46:10', 1);
 INSERT INTO `orders` VALUES (8, '9d937018b8f34ea9a04d0007a4a9a750', 1, '2021-09-29 22:46:59', '2021-09-29 22:46:59', 1);
+INSERT INTO `orders` VALUES (9, '049fa231653c437d9899726b60c726b4', 1, '2021-09-29 23:04:04', '2021-09-29 23:04:04', 1);
+INSERT INTO `orders` VALUES (10, 'f302ce7abaa0462aa6774258bf7ad264', 1, '2021-10-01 12:57:15', '2021-10-01 12:57:15', 1);
+INSERT INTO `orders` VALUES (11, 'e987319bc1cf41a89d644b44ba650af6', 3, '2021-10-02 03:33:00', '2021-10-02 03:33:00', 1);
 
 -- ----------------------------
 -- Table structure for orders_foods
@@ -495,7 +336,7 @@ CREATE TABLE `orders_foods`  (
   INDEX `fid`(`fid`) USING BTREE,
   CONSTRAINT `orders_foods_ibfk_1` FOREIGN KEY (`oid`) REFERENCES `orders` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `orders_foods_ibfk_2` FOREIGN KEY (`fid`) REFERENCES `foods` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orders_foods
@@ -509,6 +350,9 @@ INSERT INTO `orders_foods` VALUES (6, 5, 5, 2);
 INSERT INTO `orders_foods` VALUES (7, 6, 5, 2);
 INSERT INTO `orders_foods` VALUES (8, 7, 5, 2);
 INSERT INTO `orders_foods` VALUES (9, 8, 5, 2);
+INSERT INTO `orders_foods` VALUES (10, 9, 5, 2);
+INSERT INTO `orders_foods` VALUES (11, 10, 6, 1);
+INSERT INTO `orders_foods` VALUES (12, 11, 3, 1);
 
 -- ----------------------------
 -- Table structure for role
@@ -522,7 +366,7 @@ CREATE TABLE `role`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   `version` int(0) NULL DEFAULT 0 COMMENT '乐观锁',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role
@@ -545,7 +389,7 @@ CREATE TABLE `statis`  (
   `foods_count` int(0) NULL DEFAULT NULL COMMENT '餐品数量',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of statis
@@ -565,6 +409,9 @@ INSERT INTO `statis` VALUES (23, 1, 18, NULL, 7, '2021-09-26 00:00:00');
 INSERT INTO `statis` VALUES (24, 2, 18, NULL, 7, '2021-09-27 00:00:00');
 INSERT INTO `statis` VALUES (25, 2, 18, NULL, 7, '2021-09-28 10:00:00');
 INSERT INTO `statis` VALUES (26, 2, 18, NULL, 7, '2021-09-29 00:00:00');
+INSERT INTO `statis` VALUES (27, 1, 18, NULL, 7, '2021-09-30 00:00:00');
+INSERT INTO `statis` VALUES (28, 1, 18, NULL, 7, '2021-10-01 13:00:00');
+INSERT INTO `statis` VALUES (29, 3, 18, NULL, 7, '2021-10-02 00:00:00');
 
 -- ----------------------------
 -- Table structure for user
@@ -585,14 +432,14 @@ CREATE TABLE `user`  (
   `version` int(0) NULL DEFAULT 0 COMMENT '乐观锁',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `username`(`username`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Redundant;
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Redundant;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'user', '木灵鱼儿', '$2a$10$UfzfgbVxCAXoiyaCw7IXiuHiFqMMVbhbb3ox6nkxbAJLGTWjJ7Ciq', '06ddd9af-33e6-4c64-b69c-34eab5c20024', NULL, '15885326305', 'user@qq.com', 1, '2021-07-29 02:14:10', '2021-09-29 22:42:15', 8);
+INSERT INTO `user` VALUES (1, 'user', '木灵鱼儿', '$2a$10$UfzfgbVxCAXoiyaCw7IXiuHiFqMMVbhbb3ox6nkxbAJLGTWjJ7Ciq', '798a61e2-863d-48d3-84cf-d8a3068a92a8', NULL, '15885326305', 'user@qq.com', 1, '2021-07-29 02:14:10', '2021-09-30 12:01:36', 8);
 INSERT INTO `user` VALUES (2, 'admin', '初之音', '$2a$10$vnvYyOdeQr9EUAc..Zjh4ed73t3JQf74tFgwg/XpQYTQHL3cfEtn2', 'ee6ad42c-9137-4f24-982b-ac965915835f', NULL, '113', 'root', 1, '2021-07-29 13:11:51', '2021-09-22 12:49:12', 13);
-INSERT INTO `user` VALUES (3, 'root', '保罗的小宇宙', '$2a$10$eFWwgadiCeSOQnSH3FaJT.EJhCE77x8yIQk3/JlgQAmX39qejXBrm', 'c64925f9-1e14-449c-a05c-848900f28876', NULL, '15885326300', 'root@qq.com', 1, '2021-07-29 13:12:04', '2021-09-29 22:41:16', 5);
+INSERT INTO `user` VALUES (3, 'root', '保罗的小宇宙', '$2a$10$eFWwgadiCeSOQnSH3FaJT.EJhCE77x8yIQk3/JlgQAmX39qejXBrm', '6047d563-9d22-4e70-9a9b-279d574938f9', NULL, '15885326300', 'root@qq.com', 1, '2021-07-29 13:12:04', '2021-10-02 12:59:19', 5);
 INSERT INTO `user` VALUES (4, 'jack', '梦回少年', '$2a$10$FSJNe2Ezpyu6piw/VnfMru1S.DlCifpwwdzsklDrwEDEHzrKD0Z0i', NULL, NULL, '12121', NULL, 1, '2021-07-29 13:12:13', '2021-09-27 16:53:06', 4);
 INSERT INTO `user` VALUES (5, 'july', '夏和帆', '$2a$10$eOmN/XhXFxok4L0z06EWD.M/C2KdgUHaz5PsjCcCpP/l1NXHI73E.', NULL, NULL, '324', NULL, 0, '2021-07-29 23:44:20', '2021-09-27 16:52:53', 9);
 INSERT INTO `user` VALUES (6, 'hello', '樱花庄的白猫', '$2a$10$p0HMOn4c9W4VHESI1kbmp.MySrgM84bkw/actZ.4SlI83mQjDkccG', NULL, NULL, NULL, NULL, 0, '2021-07-30 00:33:03', '2021-09-21 02:13:28', 2);
@@ -622,7 +469,7 @@ CREATE TABLE `user_role`  (
   INDEX `rid`(`rid`) USING BTREE,
   CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`rid`) REFERENCES `role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 127 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 126 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_role
