@@ -31,7 +31,7 @@
   }
 }
 
-.container {
+.box-container {
   .layer {
     width: calc(100% - 330px);
   }
@@ -46,6 +46,7 @@
 
 
 .card-box {
+  gap: 15px;
   grid-template-columns: repeat(5, 1fr);
 
   .el-image {
@@ -69,6 +70,7 @@
 @media (max-width: 768px) {
   .card-box {
     grid-template-columns: repeat(2, 1fr);
+    gap: 10px !important;
 
     .el-image {
       height: 170px;
@@ -83,9 +85,11 @@
   width: 100px;
 }
 .el-image {
+  display: flex;
   width: 100%;
   height: 100%;
 }
+
 
 .si-bold {
   font-weight: bold;

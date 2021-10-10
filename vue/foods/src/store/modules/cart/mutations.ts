@@ -43,6 +43,12 @@ const mutations = {
       })
     })
   },
+  clearAllCart(state: cartState) {
+    state.carts = []
+    storage.remove("carts")
+    state.foods = []
+    storage.remove("buy-list")
+  }
 }
 
 export default mutations

@@ -8,6 +8,7 @@ const Aregister = apiAxios("/user/save", "post")
 const Afood = {
   page: apiAxios("/foods/page"),
   getById: apiAxios("/foods/getById"),
+  random: apiAxios("/foods/random"),
 }
 
 const Auser = {

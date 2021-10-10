@@ -72,7 +72,7 @@ async function onCommand(name: string) {
       router.push("/info")
       break
     case "admin":
-      window.open("http://localhost:3000/")
+      window.open("http://f-admin.f1dao.cn")
       break
     case "sign":
       router.push("/sign")
@@ -92,7 +92,7 @@ const menu = ref([
     title: "首页"
   },
   {
-    path: "/category",
+    path: "/category/1",
     icon: "el-icon-menu",
     title: "分类"
   },

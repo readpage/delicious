@@ -14,7 +14,12 @@ const routes =[
       {
         path: "/category",
         name: "category",
-        component: () => import("@/views/category/index.vue")
+        component: () => import("@/views/category/index.vue"),
+        children: [{
+          path: "/category/:type",
+          name: "type",
+          component: () => import("@/views/category/components/Box.vue")
+        }]
       },
       {
         path: "/cart",

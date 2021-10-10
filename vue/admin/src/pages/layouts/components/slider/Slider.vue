@@ -1,9 +1,7 @@
 <template>
   <div class="app-slider">
-    <div class="app-slider__logo">
-      <router-link :to="{path: '/'}">
-        <v-lottie src="/static/lottie/food.json" background="#304156"></v-lottie>
-      </router-link>
+    <div class="app-slider__logo" @click="before">
+      <v-lottie src="/static/lottie/food.json" background="#304156"></v-lottie>
     </div>
     <div class="app-slider__menu">
       <el-scrollbar>
@@ -17,8 +15,8 @@
           :collapse-transition="false"
           unique-opened
         >
-        <MenuTree :menu="menu" />
-      </el-menu>
+          <MenuTree :menu="menu" />
+        </el-menu>
       </el-scrollbar>
     </div>
   </div>
@@ -40,7 +38,9 @@ const menu = computed(() => state.menu.menu)
 const browser = computed<browserType>(() => getters["user/browser"])
 const collapse = computed(() => getters["user/collapse"])
 
-
+function before () {
+  window.open('http://food.f1dao.cn')
+}
 function resize() {
   window.addEventListener("resize", () => {
     commit("user/setBrowser")

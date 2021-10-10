@@ -31,14 +31,14 @@
         </div>
         <div class="card-bottom">
           <div class="item">
-            <el-image src="static/svg/info1.svg" fit="fill"></el-image>
+            <el-image src="/static/svg/info1.svg" fit="fill"></el-image>
             <div class="item-text">
               <div class="text1">分享赚钱</div>
               <div class="text2">零成本当合伙人</div>
             </div>
           </div>
           <div class="item">
-            <el-image src="static/svg/info2.svg" fit="fill"></el-image>
+            <el-image src="/static/svg/info2.svg" fit="fill"></el-image>
             <div class="item-text">
               <div class="text1">佣金/团队</div>
               <div class="text2">查看我的收益</div>

@@ -3,9 +3,12 @@ import jsCookie from 'js-cookie'
 
 interface cookieApi {
 	expires?: number | Date;
-	path?: string
+	path?: string,
+	domain?: string
 }
-function set(key: string, value: any, options: cookieApi = {expires: 7}): void {
+function set(key: string, value: any, options: cookieApi= {expires: 7}): void {
+	let expires = options.expires
+	options.expires = expires ? expires : 7
 	jsCookie.set(key, JSON.stringify(value), options)
 }
 

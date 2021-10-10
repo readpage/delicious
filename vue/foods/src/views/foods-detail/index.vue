@@ -1,12 +1,12 @@
 <template>
   <div class="foods-detail">
     <div class="header">
-      <el-page-header @back="goBack" content="商品详情"></el-page-header>
+      <el-page-header @back="$router.back()" content="商品详情"></el-page-header>
     </div>
     <el-scrollbar ref="scrollbar">
       <div class="content">
         <div class="main">
-          <el-skeleton :loading="loading">
+          <el-skeleton :loading="loading" animated>
             <template #template>
               <el-skeleton-item variant="image" class="img" />
             </template>
@@ -18,7 +18,7 @@
           </el-skeleton>
           <div class="info">
             <el-card>
-              <el-skeleton :loading="loading">
+              <el-skeleton :loading="loading" animated>
                 <template #template> 
                 </template>
                 <template #default>
@@ -27,8 +27,36 @@
                   </div>
                   <div class="attr">
                     <span class="is-price">{{ food.price }}</span>
-                    <span>{{ food.count }}件已售</span>
+                    <span>{{ food.count || 0 }}件已售</span>
                   </div>
+                </template>
+              </el-skeleton>
+            </el-card>
+          </div>
+          <div class="detail">
+            <el-card>
+              <el-skeleton :loading="loading">
+                <template #template></template>
+                <template #default>
+                  <div class="detail__header">商品原料</div>
+                  <div class="detail__content" v-if="food.material">
+                    {{food.material}}
+                  </div>
+                  <div class="empty" v-else>暂无内容</div>
+                </template>
+              </el-skeleton>
+            </el-card>
+          </div>
+          <div class="detail">
+            <el-card>
+              <el-skeleton :loading="loading">
+                <template #template></template>
+                <template #default>
+                  <div class="detail__header">商品详情</div>
+                  <div class="detail__content" v-if="food.content">
+                    {{food.content}}
+                  </div>
+                  <div class="empty" v-else>暂无详情</div>
                 </template>
               </el-skeleton>
             </el-card>
@@ -44,22 +72,6 @@
                   </div>
                   <div class="comment__content">
                     <div class="empty">暂无评论</div>
-                  </div>
-                </template>
-              </el-skeleton>
-            </el-card>
-          </div>
-          <div class="detail">
-            <el-card>
-              <el-skeleton :loading="loading">
-                <template #template></template>
-                <template #default>
-                  <div class="detail__header">商品详情</div>
-                  <!-- <div class="empty">暂无详情</div> -->
-                  <div class="detail__content">
-                    随着开学季的到来，妈妈们有开始为孩子的午餐便当而犯愁了，孩子课业压力大，吃饱吃好才能精力充沛的面对一天的学习，今天分享的香酥鱼条就超级适合做学生便当。
-                    今天的鱼条用到的鱼是拥有MSC小蓝鱼标识的比目鱼，山姆的袋装比目鱼抽真空分装，特别方便，经过处理后的鱼肉无刺，放心做给孩子吃，制作过程也免去了处理鱼刺的困扰。
-                    比目鱼含有丰富的不饱和脂肪酸Omega-3，以及丰富的蛋白质，维生素等等，比目鱼含有大脑组成需要的DHA，经常食用可增强智力，特别适合正在发育的孩子和学习压力大的学生，开学季的餐桌怎能少了它！
                   </div>
                 </template>
               </el-skeleton>
@@ -100,8 +112,8 @@
                   </router-link>
                   <div class="label ellipsis">{{ item.name }}</div>
                   <div class="desc">
-                    <span>￥{{ item.price }}</span>
-                    <span>{{ item.count }}件已售</span>
+                    <span class="is-price">{{ item.price }}</span>
+                    <span>{{ item.count|| 0 }}件已售</span>
                   </div>
                 </div>
               </el-card>
@@ -165,8 +177,8 @@ watch(
 );
 
 commit("app/otherLoading");
-Afood.page({ urlParam: "/1/10" }).then((res) => {
-  data.foods = res.data.list;
+Afood.random({ urlParam: "/10" }).then((res) => {
+  data.foods = res.data;
   commit("app/hideOtherLoading");
 });
 
@@ -202,10 +214,6 @@ const label = ref([
   "南瓜蒸百合",
   "蒜蓉黄瓜",
 ]);
-
-function goBack() {
-  router.push("/");
-}
 
 const scrollbar = ref();
 function active() {
@@ -277,7 +285,7 @@ const { food, foods, type } = toRefs(data);
       }
 
       .comment {
-        margin-top: 10px;
+        margin: 10px 0;
         .header {
           display: flex;
           justify-content: space-between;
@@ -358,6 +366,7 @@ const { food, foods, type } = toRefs(data);
             }
 
             .label {
+              box-sizing: content-box;
               height: 16px;
               font-size: 14px;
               padding: 5px;

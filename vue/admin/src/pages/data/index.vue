@@ -31,6 +31,9 @@
           <el-card></el-card>
         </div>
       </div>
+      <div class="footer bg-gray-700 grid place-content-center">
+        <a href="https://beian.miit.gov.cn/" class="text-white text-sm">黔ICP备2021007337号-1</a>
+      </div>
     </el-scrollbar>
   </div>
 </template>
@@ -103,7 +106,7 @@ Astatis.recent().then(res => {
 .view {
   height: 100%;
   .data {
-    padding: 10px;
+    padding: 0 10px;
     .statis {
       display: grid;
       gap: 20px;
@@ -180,6 +183,10 @@ Astatis.recent().then(res => {
         grid-template-columns: repeat(1, 1fr);
       }
     }
+  }
+
+  .footer {
+    height: 60px;
   }
 }
 

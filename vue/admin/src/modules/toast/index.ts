@@ -5,7 +5,7 @@ import toast, { toastApi } from "./index.vue"
 // 函数式调用
 export function Vtoast(options: toastApi) {
   let delay = options.delay
-  options.delay = delay ? delay : 2000
+  options.delay = delay ? delay : 1000
    // 根据components定义生成虚拟DOM
   const vnode = h(toast, options)
   // 需要创建一个容器div来渲染这个虚拟节点

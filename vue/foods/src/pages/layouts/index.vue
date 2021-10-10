@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="box-container">
     <div class="header" v-if ="!state.user.isMini">
       <Header />
     </div>
@@ -23,6 +23,11 @@
           </keep-alive>
         </router-view>
       </div>
+      <template v-if="route.path == '/'">
+        <div class="footer bg-gray-700 grid place-content-center">
+          <a href="https://beian.miit.gov.cn/" class="text-white text-sm">黔ICP备2021007337号-1</a>
+        </div>
+      </template>
     </el-scrollbar>
     <template v-if="state.user.isMini">
       <Tabbar />
@@ -44,7 +49,7 @@ const route = useRoute()
 </script>
 
 <style lang="scss" scoped>
-.container {
+.box-container {
   display: flex;
   height: 100%;
   flex-direction: column;
@@ -66,6 +71,11 @@ const route = useRoute()
   .layer2 {
     margin: 0;
     padding: 0;
+  }
+
+  .footer {
+    margin-top: 20px;
+    height: 60px;
   }
 
 }

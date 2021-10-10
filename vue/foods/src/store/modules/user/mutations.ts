@@ -21,7 +21,7 @@ const mutations = {
 
   setToken(state: userState, val: Itoken) {
     state.token = val
-    cookie.set("f1dao-token", val)
+    cookie.set("f1dao-token", val, {domain: ".f1dao.cn"})
   },
 
   remToken(state: userState) {

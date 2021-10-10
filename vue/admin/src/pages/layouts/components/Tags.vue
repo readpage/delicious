@@ -1,7 +1,7 @@
 <template>
   <div class="app-tags">
     <el-scrollbar>
-      <ul>
+      <ul class="flex items-center">
       <li v-for="(item, index) in tagsList" :key="index">
         <el-dropdown trigger="contextmenu">
           <el-tag
@@ -27,7 +27,7 @@
       </li>
     </ul>
     </el-scrollbar>
-    <el-dropdown @command="handleTags">
+    <el-dropdown @command="handleTags" class="flex items-center">
       <el-button type="primary" size="mini">
         标签选项
         <i class="el-icon-arrow-down el-icon--right"></i>
@@ -108,19 +108,18 @@ function closeOther() {
 <style lang="scss" scoped>
 .app-tags {
   display: flex;
-  height: 30px;
-  align-items: center;
+  height: 40px;
+  padding-left: 10px;
 
   .el-scrollbar {
     flex: 1;
-    padding: 10px;
   }
   .el-dropdown {
     padding: 10px;
   }
   
   ul {
-    display: flex;
+    height: 40px;
     
     li {
       list-style: none;

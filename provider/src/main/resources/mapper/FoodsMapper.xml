@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.FoodsMapper">
-
+    <select id="selectRandom" resultType="Foods" parameterType="Integer">
+        SELECT * FROM foods AS r1
+        JOIN (SELECT floor( RAND() * ((SELECT MAX(id) FROM foods)-(SELECT MIN(id) FROM foods)) + (SELECT MIN(id) FROM foods) ) AS id) AS r2
+        WHERE r1.id >= r2.id ORDER BY r1.id LIMIT #{num};
+    </select>
+    <select id="like" resultType="Foods" parameterType="String">
+        SELECT * FROM foods
+        WHERE 1
+        <if test="type != null and type !=''">
+            AND type=#{type}
+        </if>
+    </select>
 </mapper>

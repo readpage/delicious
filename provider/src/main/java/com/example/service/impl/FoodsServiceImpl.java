@@ -29,6 +29,17 @@ public class FoodsServiceImpl extends ServiceImpl<FoodsMapper, Foods> implements
     public PageInfo<Foods> selectPage(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<Foods> foods = foodsMapper.selectList(null);
-        return new PageInfo<Foods>(foods);
+        return new PageInfo<>(foods);
+    }
+
+    @Override
+    public PageInfo<Foods> likePage(int pageNum, int pageSize, String type) {
+        PageHelper.startPage(pageNum, pageSize);
+        return new PageInfo<>(foodsMapper.like(type));
+    }
+
+    @Override
+    public List<Foods> selectRandom(int num) {
+        return foodsMapper.selectRandom(num);
     }
 }

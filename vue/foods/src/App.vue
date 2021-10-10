@@ -14,6 +14,7 @@ import { ElConfigProvider } from "element-plus";
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
 import { useStore } from "./store";
 import { isEmpty } from "./util";
+import { closeLoad } from "./hooks/useUser";
 
 const locale = zhCn;
 const { commit, state, dispatch} = useStore()
@@ -30,6 +31,9 @@ window.addEventListener("resize", () => {
 })
 dispatch("app/appLoad")
 
+onMounted(() => {
+  closeLoad()
+})
 </script>
 
 <style lang="scss">
@@ -60,21 +64,5 @@ html, body, #app {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-}
-
-#loading {
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 3000;
-  background-color: #ffffff;
-}
-#loading .lottie-player {
-  position: relative;
 }
 </style>

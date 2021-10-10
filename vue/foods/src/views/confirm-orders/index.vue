@@ -44,7 +44,7 @@ import { useStore } from "@/store";
 import { computed } from "vue"
 import { useRouter } from "vue-router";
 
-const { state, getters } = useStore()
+const { state, getters, commit } = useStore()
 const router = useRouter()
 
 const totalPrice = computed(() => getters["cart/fTotalPrice"])
@@ -56,7 +56,9 @@ function submit() {
       return {"fid": v.id, "count": v.buyCount}
     })
     
-    Aorders.save({urlParam: `/${uid}`, data: orders})
+    Aorders.save({urlParam: `/${uid}`, data: orders}).then(res => {
+      commit("cart/clearAllCart")
+    })
   } else {
     router.push("/sign")
   } 

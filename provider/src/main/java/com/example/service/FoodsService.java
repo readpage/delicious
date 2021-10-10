@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.entity.Foods;
 import com.example.util.PageInfo;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -14,4 +16,8 @@ import com.example.util.PageInfo;
  */
 public interface FoodsService extends IService<Foods> {
     PageInfo<Foods> selectPage(int pageNum, int pageSize);
+
+    PageInfo<Foods> likePage(int pageNum, int pageSize, String type);
+    
+    List<Foods> selectRandom(int num);
 }

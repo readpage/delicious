@@ -32,7 +32,7 @@ const tab = ref([
   },
   {
     id: 2,
-    path: "/category",
+    path: "/category/1",
     imgUrl: "/static/img/category.png",
     imgUrl2: "/static/img/category2.png",
   },

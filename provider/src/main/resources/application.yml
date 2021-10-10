@@ -1,5 +1,5 @@
 server:
-  port: 80
+  port: 8081
 
 knife4j:
   # 开启增强配置
