@@ -20,6 +20,7 @@ interface Iuser {
   updateTime: string
   version: number
   roles: Irole[]
+  d_number?: number
 }
 
 interface Itoken {

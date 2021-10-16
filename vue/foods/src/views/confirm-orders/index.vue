@@ -55,9 +55,13 @@ function submit() {
     let orders = state.cart.foods.map(v => {
       return {"fid": v.id, "count": v.buyCount}
     })
-    
-    Aorders.save({urlParam: `/${uid}`, data: orders}).then(res => {
+    const data = {
+      dNumber: state.user.dNumber,
+      ordersFoods: orders
+    }
+    Aorders.save({urlParam: `/${uid}`, data: data}).then(res => {
       commit("cart/clearAllCart")
+      router.push("/orders")
     })
   } else {
     router.push("/sign")

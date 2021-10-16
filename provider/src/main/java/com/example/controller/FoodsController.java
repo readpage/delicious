@@ -36,14 +36,20 @@ public class FoodsController {
             @ApiImplicitParam(name = "pageNum", value = "页数", required = true, dataType = "int", example = "1"),
             @ApiImplicitParam(name = "pageSize", value = "页大小", required = true, dataType = "int", example = "5")
     })
-    public Result<PageInfo<Foods>> likePage(@PathVariable int pageNum, @PathVariable int pageSize, String type) {
-        return ResultUtils.query(foodsService.likePage(pageNum, pageSize, type));
+    public Result<PageInfo<Foods>> likePage(@PathVariable int pageNum, @PathVariable int pageSize, String type, String name) {
+        return ResultUtils.query(foodsService.likePage(pageNum, pageSize, type, name));
     }
 
     @ApiOperation("随机查询")
     @GetMapping("/random/{num}")
     public Result<List<Foods>> selectRandom(@PathVariable int num) {
         return ResultUtils.query(foodsService.selectRandom(num));
+    }
+
+    @ApiOperation("排序")
+    @GetMapping("/order/{pageNum}/{pageSize}")
+    public Result<PageInfo<Foods>> order(@PathVariable int pageNum, @PathVariable int pageSize) {
+        return ResultUtils.query(foodsService.orderBySales(pageNum, pageSize));
     }
 
     @ApiOperation("id获取餐品信息")

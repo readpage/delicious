@@ -1,14 +1,18 @@
 package com.example.service.impl;
 
+import cn.hutool.core.lang.ObjectId;
+import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.entity.Role;
 import com.example.entity.User;
 import com.example.entity.UserRole;
 import com.example.mapper.UserMapper;
+import com.example.service.AuthService;
 import com.example.service.UserRoleService;
 import com.example.service.UserService;
 import com.example.util.PageInfo;
+import com.example.util.result.Result;
 import com.example.util.result.ResultEnum;
 import com.example.util.result.ResultUtils;
 import com.github.pagehelper.PageHelper;
@@ -16,9 +20,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ResourceUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * <p>
@@ -36,16 +47,35 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private PasswordEncoder pw;
 
     @Autowired
+    private AuthService authService;
+
+    @Autowired
     private UserRoleService userRoleService;
+    private String randomName() {
+        try {
+            File file = ResourceUtils.getFile("classpath:file/username.txt");
+            BufferedReader reader = new BufferedReader(new FileReader(file));;
+            ArrayList<String> list = new ArrayList<>();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                list.add(line);
+            }
+            reader.close();
+            Random random = new Random();
+            int index = random.nextInt(list.size()); //产生的索引值的大小在0-size之间
+            String name = list.get(index);
+            return name;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean mySave(User user) throws Exception {
-        String result = ResultUtils.toJson(ResultEnum.CREATE_FAIL);
+    public void mySave(User user) {
         user.setPassword(pw.encode(user.getPassword()));
-        if (userMapper.insert(user) < 0) {
-            throw new Exception(result);
-        }
+        userMapper.insert(user);
         ArrayList<UserRole> userRoles = new ArrayList<>();
         for (Role role : user.getRoles()) {
             UserRole userRole = new UserRole();
@@ -53,11 +83,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             userRole.setRid(role.getId());
             userRoles.add(userRole);
         }
+        userRoleService.saveBatch(userRoles);
+    }
 
-        if (!userRoleService.saveBatch(userRoles)) {
-            throw new Exception(result);
-        }
-        return true;
+    @Override
+    public Result<Object> auto(HttpServletRequest request) {
+        User user = new User();
+        user.setNickname(randomName());
+        user.setUsername(ObjectId.next());
+        String password = RandomUtil.randomString(10);
+        user.setPassword(password);
+        user.setStatus(true);
+
+        Role role = new Role();
+        role.setId(3);
+        ArrayList<Role> list = new ArrayList<>();
+        list.add(role);
+        user.setRoles(list);
+        System.out.println(user);
+        mySave(user);
+        return authService.login(request, user.getUsername(), password);
     }
 
     @Override

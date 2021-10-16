@@ -4,7 +4,10 @@ import com.example.entity.OrdersFoods;
 import com.example.mapper.OrdersFoodsMapper;
 import com.example.service.OrdersFoodsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +20,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrdersFoodsServiceImpl extends ServiceImpl<OrdersFoodsMapper, OrdersFoods> implements OrdersFoodsService {
 
+    @Autowired
+    private OrdersFoodsMapper ordersFoodsMapper;
+
+    @Override
+    public boolean removeByOids(List<Integer> list) {
+        return ordersFoodsMapper.deleteBatchByOids(list) > 0;
+    }
+
+    @Override
+    public boolean removeByFids(List<Integer> list) {
+        return ordersFoodsMapper.deleteBatchByFids(list) > 0;
+    }
 }

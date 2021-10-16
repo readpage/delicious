@@ -6,9 +6,9 @@
           <div class="item">
             <el-space :size="15">
               <el-avatar src="https://empty" :size="60">
-                <img src="https://cdn.luogu.com.cn/upload/usericon/1.png" alt="">
+                <img src="@/assets/img/avatar.png" alt="">
               </el-avatar>
-              <span style="font-size: 23px">user</span>
+              <span style="font-size: 23px">{{userInfo.nickname || "用户未登录"}}</span>
             </el-space>
           </div>
           <div class="setting">
@@ -56,10 +56,12 @@
           </div>
         </template>
         <div class="content">
-          <el-space direction="vertical" v-for="item in data.order">
-            <i style="font-size: 25px" :class="item.icon"></i>
-            <span>{{item.title}}</span>
-          </el-space>
+          <template v-for="item in data.order">
+            <el-space class="px-2.5 cursor-pointer" direction="vertical" @click="$router.push(item.url)">
+              <i style="font-size: 25px" :class="item.icon"></i>
+              <span>{{item.title}}</span>
+            </el-space>
+          </template>
         </div>
       </el-card>
     </div>
@@ -77,22 +79,25 @@
       </el-card>
     </div>
     <div class="info__exit">
-      <el-card>
-        退出当前账号
+      <el-card :body-style="{padding: '5px'}">
+        <el-button type="text" @click="exit">退出当前账号</el-button>
       </el-card>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from "vue"
+import { useStore } from "@/store";
+import { ElMessageBox } from "element-plus";
+import { reactive, ref, toRefs } from "vue"
+import { useRouter } from "vue-router";
 
 const data = reactive({
   order: [
-    { icon: "el-icon-wallet", title: "待付款"},
-    { icon: "el-icon-s-claim", title: "评价"},
-    { icon: "el-icon-s-claim", title: "订单"},
-    { icon: "el-icon-s-comment", title: "退款"},
+    { icon: "el-icon-wallet", title: "待付款", url: ""},
+    { icon: "el-icon-s-claim", title: "评价", url: ""},
+    { icon: "el-icon-s-claim", title: "订单", url: "/orders"},
+    { icon: "el-icon-s-comment", title: "退款", url: ""},
   ]
 })
 
@@ -110,6 +115,17 @@ const other = ref([
     icon: "el-icon-warning"
   }
 ])
+
+const { state, dispatch } = useStore()
+const { userInfo } = toRefs(state.user)
+const router = useRouter()
+
+function exit() {
+  ElMessageBox.confirm("你是否确定退出当前账号?", {customClass: "w-5/6"}).then(async () => {
+    await dispatch("user/userLogout", state.user.token)
+    router.push("/sign")
+  })
+}
 
 </script>
 

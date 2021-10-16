@@ -16,13 +16,13 @@
       </div>
       <!-- 页面视图 -->
       <div class="page-layout__container">
-          <router-view v-slot="{ Component }">
-            <transition :name="transitionName" mode="out-in">
-              <keep-alive max="10">
-                <component :is="Component" />
-              </keep-alive>
-            </transition>
-          </router-view>
+        <router-view v-slot="{ Component }">
+          <transition :name="transitionName" mode="out-in">
+            <keep-alive max="10">
+              <component :is="Component" />
+            </keep-alive>
+          </transition>
+        </router-view>
       </div>
     </div>
   </div>

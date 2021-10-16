@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import { ImenuKey, menu } from "@/symbols";
 import { deepTree } from "@/util";
-import { computed, defineEmit, inject, ref, watch, watchEffect } from "vue"
+import { computed, inject, ref, watch, watchEffect } from "vue"
 
 const props = defineProps({
   id: Number,
@@ -63,7 +63,7 @@ watch(keyword, val => {
   treeRef.value.filter(val)
 })
 
-const emit = defineEmit(["updParent"])
+const emit = defineEmits(["updParent"])
 function onCurrentChange(data: any) {
   visible.value = false
   emit("updParent", data)

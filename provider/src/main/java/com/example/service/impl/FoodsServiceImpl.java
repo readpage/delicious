@@ -1,5 +1,6 @@
 package com.example.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.entity.Foods;
 import com.example.mapper.FoodsMapper;
@@ -33,9 +34,19 @@ public class FoodsServiceImpl extends ServiceImpl<FoodsMapper, Foods> implements
     }
 
     @Override
-    public PageInfo<Foods> likePage(int pageNum, int pageSize, String type) {
+    public PageInfo<Foods> likePage(int pageNum, int pageSize, String type, String name) {
         PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(foodsMapper.like(type));
+        return new PageInfo<>(foodsMapper.like(type, name));
+    }
+
+    @Override
+    public PageInfo<Foods> orderBySales(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Foods> foods = foodsMapper.selectList(
+                new QueryWrapper<Foods>()
+                        .last("ORDER BY sales DESC")
+        );
+        return new PageInfo<>(foods);
     }
 
     @Override

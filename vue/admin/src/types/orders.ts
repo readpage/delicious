@@ -5,5 +5,5 @@ interface Iorders {
   createTime: string
   updateTime: string
   version: number
-  foods: Ifood
+  foods: Ifood[]
 }

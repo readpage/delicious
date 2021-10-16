@@ -64,7 +64,12 @@ function login() {
       Alogin(form).then(async res => {
         commit("user/setToken", res.data)
         dispatch("user/userInfo")
-        router.push("/")
+        let redirect = route.query.redirect as string
+        if (redirect) {
+          router.push(redirect)
+        } else {
+          router.push("/")
+        }
         reset()
         ElMessage.success(res.msg)
         commit("app/hideOtherLoading")

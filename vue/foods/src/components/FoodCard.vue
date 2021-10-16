@@ -1,25 +1,44 @@
 <template>
-  <el-card shadow="hover" :style="{width: width, height: height}" :body-style="{ padding: '0px'}">
+  <el-card :style="{width: width, height: height}" :body-style="{ padding: '0px'}">
     <router-link :to="{path: `/foods/detail/${data.id}`}">
-      <div class="card-container" :style="{width: width, height: height}">
+      <div class="card-container">
         <div class="card-img">
-          <el-image fit="fill" :src="data.img" lazy></el-image>
+          <el-image fit="cover" style="height: 150px" :src="data.img" lazy></el-image>
           <span class="overlay"></span>
         </div>
         <div class="detail p-1.5 leading-4">
           <div class="title truncate">{{data.name}}</div>
           <div class="desc mt-1.5">
             <span class="is-price">{{data.price}}</span>
-            <span class="ml-1 text-gray-400 text-xs">0件已售</span>
+            <span class="ml-2 text-gray-400 text-xs">销售{{data.sales}}单</span>
           </div>
         </div>
       </div>
+      <div class="px-1.5 text-sm text-gray-400">
+        <span class="mr-2">
+          <v-icon name="#iconyanjing" class="mr-1"></v-icon>
+          <span>2988</span>
+        </span>
+        <span class="mr-2">
+          <v-icon name="#iconpinglun" class="mr-1"></v-icon>
+          <span>18</span>
+        </span>
+        <span class="mr-2">
+          <v-icon name="#icondianzan" class="mr-1"></v-icon>
+          <span>18</span>
+        </span>
+      </div>
     </router-link>
+    <el-divider class="mt-3 mb-0" content-position="left"><i class="el-icon-star-on"></i></el-divider>
+    <div class="flex justify-end">
+      <span class="p-1.5 text-gray-600 text-sm">{{updateTime}}</span>
+    </div>
   </el-card>
 </template>
 
 <script setup lang="ts">
-import { } from "vue"
+import dayjs from "@/plugins/day";
+import { ref } from "vue"
 
 interface propsApi {
   data: Ifood
@@ -30,9 +49,11 @@ const props = withDefaults(defineProps<propsApi>(), {
   height: "250px"
 })
 
+const updateTime = ref(dayjs(props.data.updateTime).fromNow())
+
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
 .card-container {
   .card-img {

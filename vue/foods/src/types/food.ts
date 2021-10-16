@@ -9,4 +9,9 @@ interface Ifood {
   count: number
   buyCount: number
   btn?: boolean
+  sales: number
+  createTime: string
+  updateTime: string
+  version: number
+  order: number
 }

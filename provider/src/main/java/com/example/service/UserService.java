@@ -3,7 +3,9 @@ package com.example.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.entity.User;
 import com.example.util.PageInfo;
+import com.example.util.result.Result;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -15,7 +17,9 @@ import java.util.List;
  * @since 2021-07-28
  */
 public interface UserService extends IService<User> {
-    boolean mySave(User user) throws Exception;
+    void mySave(User user);
+
+    Result<Object> auto(HttpServletRequest request);
 
     boolean myUpdateById(User user) throws Exception;
 

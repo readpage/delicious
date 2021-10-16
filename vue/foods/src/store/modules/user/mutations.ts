@@ -22,12 +22,23 @@ const mutations = {
   setToken(state: userState, val: Itoken) {
     state.token = val
     cookie.set("f1dao-token", val, {domain: ".f1dao.cn"})
+    // cookie.set("f1dao-token", val)
   },
 
   remToken(state: userState) {
     state.token = null as any
-    storage.remove("token")
-  }
+    cookie.remove("f1dao-token")
+  },
+
+  setDNumber(state: userState, val: number) {
+    state.dNumber = val
+    storage.set("d-number", val)
+  },
+
+  remDNumber(state: userState) {
+    state.dNumber = ""
+    storage.remove("d-number",)
+  },
 }
 
 export default mutations

@@ -1,6 +1,6 @@
 <template>
-  <div class="pie">
-    <v-chart :option="option"></v-chart>
+  <div class="pie h-72">
+    <v-chart :option="option" autoresize></v-chart>
   </div>
 </template>
 
@@ -46,5 +46,4 @@ const option = ref({
 </script>
 
 <style lang="scss" scoped>
-
 </style>

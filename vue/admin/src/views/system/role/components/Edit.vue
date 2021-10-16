@@ -8,7 +8,7 @@ import { Arole } from "@/api"
 import { useStore } from "@/store"
 import { role } from "@/symbols"
 import { isEmpty } from "lodash"
-import { defineEmit, inject, ref } from "vue"
+import { inject, ref } from "vue"
 import Form from "./Form.vue"
 
 const props = defineProps({
@@ -20,7 +20,7 @@ const { commit } = useStore()
 const reload = inject<Function>("reload", Function)
 
 const form = ref()
-const emit = defineEmit(["onUpdate"])
+const emit = defineEmits(["onUpdate"])
 function onUpdate() {
   emit("onUpdate")
   form.value.visible = true

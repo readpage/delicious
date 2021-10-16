@@ -99,24 +99,7 @@
               ><i class="el-icon-chicken"></i
             ></el-divider>
             <div class="cards">
-              <el-card :body-style="{ padding: '0px' }" v-for="item in foods">
-                <div class="card-container">
-                  <router-link
-                    :to="{ path: `/foods/detail/${item.id}` }"
-                    @click.native="active"
-                  >
-                    <div class="card-img">
-                      <el-image :src="item.img" fit="fill"></el-image>
-                      <span class="overlay"></span>
-                    </div>
-                  </router-link>
-                  <div class="label ellipsis">{{ item.name }}</div>
-                  <div class="desc">
-                    <span class="is-price">{{ item.price }}</span>
-                    <span>{{ item.count|| 0 }}件已售</span>
-                  </div>
-                </div>
-              </el-card>
+              <FoodCard :data="item" height="255px" v-for="item in foods" />
             </div>
           </div>
         </div>
@@ -148,6 +131,7 @@ import { computed, reactive, ref, toRefs, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import Drawer from "../components/Drawer.vue";
 import type { DrawerApi } from "../components/Drawer.vue";
+import FoodCard from "@/components/FoodCard.vue"
 
 const { state, commit } = useStore();
 const { loading } = toRefs(state.app)
@@ -161,12 +145,16 @@ const data = reactive({
 });
 
 const drawerRef = ref({} as DrawerApi);
+const scrollbar = ref();
 
 watch(
   () => route.params.id,
   (val) => {
     if (val) {
       commit("app/showLoading");
+      if (scrollbar.value) {
+        scrollbar.value.setScrollTop(0);
+      }
       Afood.getById({ urlParam: `/${val}` }).then((res) => {
         data.food = res.data;
         data.food.buyCount = 1
@@ -214,11 +202,6 @@ const label = ref([
   "南瓜蒸百合",
   "蒜蓉黄瓜",
 ]);
-
-const scrollbar = ref();
-function active() {
-  scrollbar.value.setScrollTop(0);
-}
 function openDrawer(val: number) {
   data.type = val
   drawerRef.value.drawer = true
@@ -248,7 +231,7 @@ const { food, foods, type } = toRefs(data);
     font-size: 14px;
 
     .main {
-      width: calc(100% - 330px);
+      width: calc(100% - 380px);
       box-sizing: border-box;
       padding: 20px;
 
@@ -307,14 +290,11 @@ const { food, foods, type } = toRefs(data);
     }
 
     .more {
-      width: 330px;
+      width: 380px;
       background-color: #fff;
       box-sizing: border-box;
       padding: 10px;
 
-      .el-divider--horizontal {
-        margin: 10px 0;
-      }
 
       &__content {
         .header {

@@ -20,7 +20,17 @@
         AND oid = #{id}
     </select>
 
-    <select id="selectPage" resultMap="ordersMap">
+    <select id="like" resultMap="ordersMap" parameterType="Integer">
         SELECT * FROM orders
+        WHERE 1
+        <if test="uid != null and uid !=''">
+            AND uid=#{uid}
+        </if>
+        ORDER BY create_time DESC
+    </select>
+
+    <select id="nowCount" resultType="Integer">
+        SELECT COUNT(0) FROM orders
+        WHERE TO_DAYS(create_time) = TO_DAYS(NOW())
     </select>
 </mapper>

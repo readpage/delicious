@@ -55,7 +55,7 @@
 import { Afood } from "@/api"
 import { useStore } from "@/store"
 import { ElMessageBox } from "element-plus"
-import { defineEmit, reactive, ref } from "vue"
+import { reactive, ref } from "vue"
 import Form from "./Form.vue"
 
 const { state, commit } = useStore()
@@ -80,7 +80,7 @@ const formRef = ref()
 const tableRef = ref()
 
 
-const emit = defineEmit(["page", "save", "remove"])
+const emit = defineEmits(["page", "save", "remove"])
 
 function handleSizeChange(val: number) {
   data.pageSize = val

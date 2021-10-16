@@ -11,6 +11,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * <p>
  *  前端控制器
@@ -36,6 +38,18 @@ public class DeskController {
     @GetMapping("/page/{pageNum}/{pageSize}")
     public Result<PageInfo<Desk>> page(@PathVariable Integer pageNum, @PathVariable Integer pageSize) {
         return ResultUtils.query(deskService.page(pageNum, pageSize));
+    }
+
+    @ApiOperation("修改桌号")
+    @PutMapping("/update")
+    public Result<Object> update(@RequestBody Desk desk) {
+        return ResultUtils.update(deskService.updateById(desk));
+    }
+
+    @ApiOperation("删除桌号")
+    @DeleteMapping("/remove")
+    public Result<Object> removeByIds(@RequestBody List<Integer> list) {
+        return ResultUtils.remove(deskService.removeByIds(list));
     }
 }
 

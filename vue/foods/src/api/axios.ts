@@ -67,6 +67,7 @@ service.interceptors.response.use(response  => {
         ElMessage.warning(res.msg)
     }
     store.commit("app/hideLoading")
+    store.commit("app/hideOtherLoading")
     throw response
   }
 },error => {

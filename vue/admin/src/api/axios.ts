@@ -71,7 +71,6 @@ service.interceptors.response.use(response  => {
 },error => {
   num--
   store.commit("user/hideLoading")
-  store.commit("app/hideAppLoading")
   store.commit("app/hideOtherLoading")
   router.push("/500")
   return Promise.reject(error)

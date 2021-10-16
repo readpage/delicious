@@ -15,4 +15,6 @@ import java.util.List;
  */
 public interface StatisService extends IService<Statis> {
     List<Statis> recent();
+
+    Statis total();
 }

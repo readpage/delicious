@@ -34,7 +34,7 @@ public class Statis implements Serializable {
     private Integer userCount;
 
     @ApiModelProperty(value = "销售量")
-    private String salesCount;
+    private Integer salesCount;
 
     @ApiModelProperty(value = "餐品数量")
     private Integer foodsCount;
@@ -68,11 +68,11 @@ public class Statis implements Serializable {
         this.userCount = userCount;
     }
 
-    public String getSalesCount() {
+    public Integer getSalesCount() {
         return salesCount;
     }
 
-    public void setSalesCount(String salesCount) {
+    public void setSalesCount(Integer salesCount) {
         this.salesCount = salesCount;
     }
 

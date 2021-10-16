@@ -6,7 +6,7 @@
 import { Auser } from "@/api"
 import { useStore } from "@/store"
 import { ElMessageBox } from "element-plus"
-import { defineEmit, inject, ref } from "vue"
+import { inject, ref } from "vue"
 import type { Ref } from "vue"
 
 const props = defineProps({
@@ -18,7 +18,7 @@ const uids = inject<Ref<number[]>>("uids", ref<number[]>([]))
 const reload = inject<Function>("reload", Function)
 const { commit } = useStore()
 
-const emit = defineEmit(["onDelete"])
+const emit = defineEmits(["onDelete"])
 function onDelete() {
   ElMessageBox.confirm("确认删除?")
   .then(() => {

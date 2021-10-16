@@ -8,8 +8,8 @@
     </div>
     <div class="center">
       <div class="h-full flex">
-        <el-scrollbar  class="menu">
-          <el-menu v-for="(item, index) in menu"  :default-active="$route.path" router>
+        <el-scrollbar class="menu">
+          <el-menu v-for="(item, index) in menu" :default-active="$route.path" router>
             <el-menu-item :index="item.path" :key="index">{{item.title}}</el-menu-item>
           </el-menu>
         </el-scrollbar>
@@ -87,7 +87,7 @@ const menu = ref([
 
     .menu {
       height: 100%;
-      width: 80px;
+      width: 100px;
       text-align: center;
     }
   }

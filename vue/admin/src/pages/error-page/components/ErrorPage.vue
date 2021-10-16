@@ -27,9 +27,10 @@
         </div>
       </template>
     </div>
-    <el-space alignment="flex-end" class="copyright">Copyright &copy; 2021 
-      <el-link type="primary" :underline="false" href="https://gitee.com/f1dao " target="_blank">gitee</el-link>
-    </el-space>
+    <div class="footer text-center text-sm mb-5">
+      <a href="https://beian.miit.gov.cn/" class="text-gray-600 hover:underline">黔ICP备2021007337号-1</a>
+      <p class="text-purple-800 font-medium">Copyright &copy; 2021 <a class="hover:underline" href="https://gitee.com/f1dao" target="_blank">gitee@f1dao</a></p>
+    </div>
   </div>
 </template>
 

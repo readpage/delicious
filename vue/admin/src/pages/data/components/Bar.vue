@@ -1,28 +1,43 @@
 <template>
-  <div class="bar">
-    <v-chart :loading="loading" :option="option"></v-chart>
+  <div class="bar h-72">
+    <v-chart :loading="loading" :option="option" autoresize></v-chart>
   </div>
 </template>
 
 <script setup lang="ts">
+import { IrecentKey, recentForm } from "@/symbols/rencent";
 import * as echarts from "echarts";
-import { reactive, ref, watch } from "vue";
+import { inject, reactive, ref, watch } from "vue";
 
 interface Props {
-  data: {
-    uv: number[]
-    date: string[]
-  }
   loading: boolean
 }
 const props = defineProps<Props>()
+const recent = inject(IrecentKey, recentForm)
 
-const option =reactive({
+const option = ref()
+const bar = {
   title: {
-    text: "柱状图",
+    text: "最近成交量",
+  },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'cross',
+      crossStyle: {
+        color: '#999'
+      }
+    }
+  },
+  toolbox: {
+    feature: {
+      dataView: { show: true, readOnly: false },
+      magicType: { show: true, type: ['line', 'bar'] },
+      restore: { show: true },
+      saveAsImage: { show: true }
+    }
   },
   color: ["#e01f54"],
-  tooltip: {},
   legend: {
     data: ["销量"],
   },
@@ -35,11 +50,12 @@ const option =reactive({
     type: "bar",
     data: [0],
   },
-})
+}
 
-watch(() => props.data, val => {
-  option.series.data = val.uv
-  option.xAxis.data = val.date
+watch(() => recent.value, val => {
+  bar.series.data = val.salesCount
+  bar.xAxis.data = val.date
+  option.value = bar
 }, {deep: true})
 
 </script>

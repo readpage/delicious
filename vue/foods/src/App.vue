@@ -65,4 +65,5 @@ html, body, #app {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
+
 </style>

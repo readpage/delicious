@@ -16,7 +16,11 @@ import java.util.List;
  * @since 2021-09-27
  */
 public interface OrdersService extends IService<Orders> {
-    void save(Integer uid, List<OrdersFoods> ordersFoods);
+    void save(Integer uid, String dNumber, List<OrdersFoods> ordersFoods);
 
-    PageInfo<Orders> selectPage(int pageNum, int PageSize);
+    PageInfo<Orders> selectPage(int pageNum, int PageSize, Integer uid);
+
+    List<Orders> selectSelf(String username);
+
+    void removeByIds(List<Integer> list);
 }

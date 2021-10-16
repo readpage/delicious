@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import { useStore } from "@/store"
 import { ElMessageBox } from "element-plus"
-import { computed, defineEmit, mergeProps, onMounted, reactive, ref, watchEffect } from "vue"
+import { computed, mergeProps, onMounted, reactive, ref, watchEffect } from "vue"
 
 
 interface Props {
@@ -36,7 +36,7 @@ const rules = reactive({
   number: { required: true, message: "请输入桌号"},
 })
 
-const emit = defineEmit(["submit"])
+const emit = defineEmits(["submit"])
 
 
 function beforeClose(done: any) {

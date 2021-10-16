@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import { useStore } from "@/store";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { computed, defineEmit, onMounted, reactive, ref, watch, watchEffect } from "vue";
+import { computed, onMounted, reactive, ref, watch, watchEffect } from "vue";
 
 interface Props {
   action: string,
@@ -51,7 +51,7 @@ if (token) {
 const upload = ref();
 
 
-const emit = defineEmit(["success", "updImg"]);
+const emit = defineEmits(["success", "updImg"]);
 
 function clearFiles() {
   emit("updImg", [])

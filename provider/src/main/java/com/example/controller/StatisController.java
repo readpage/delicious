@@ -37,6 +37,12 @@ public class StatisController {
         return ResultUtils.query(statisService.recent());
     }
 
+    @ApiOperation("总数量")
+    @GetMapping("/total")
+    public Result<Statis> total() {
+        return ResultUtils.query(statisService.total());
+    }
+
     @ApiOperation("服务监控")
     @GetMapping("/server")
     public Result<SysInfo> server() {

@@ -3,8 +3,8 @@
     <el-space>
       <el-button size="mini" icon="el-icon-refresh" @click="tableRef.reload">刷新</el-button>
       <el-button size="mini" icon="el-icon-plus" type="primary" @click="openForm()">新增</el-button>
-      <el-button size="mini" icon="el-icon-edit" type="success">修改</el-button>
-      <el-button size="mini" icon="el-icon-delete" type="danger">删除</el-button>
+      <el-button size="mini" icon="el-icon-edit" type="success" @click="openForm(obj.selections[0])" :disabled="obj.editDisabled">修改</el-button>
+      <el-button size="mini" icon="el-icon-delete" type="danger" :loading="state.user.btnLoading" @click="remove(obj.selections)" :disabled="obj.deleteDisabled">删除</el-button>
     </el-space>
     <v-table ref="tableRef" :loading="state.user.loading"
       :data="data"
@@ -16,7 +16,7 @@
         <template #default="scope">
           <el-space>
             <el-button size="mini" type="primary" icon="el-icon-edit" @click="openForm(scope.row)"></el-button>
-            <el-button size="mini" type="danger" icon="el-icon-delete"></el-button>
+            <el-button size="mini" type="danger" icon="el-icon-delete" :loading="state.user.btnLoading" @click="remove([scope.row])"></el-button>
           </el-space>
         </template>
       </el-table-column>
@@ -34,6 +34,7 @@ import Card from "../components/Card.vue";
 import Form from "./components/Form.vue";
 import type { formApi } from "./components/Form.vue";
 import { isEmpty } from "lodash";
+import { ElMessageBox } from "element-plus";
 
 const { state, commit } = useStore()
 
@@ -73,6 +74,11 @@ const form = reactive({
   data: {} as Idesk,
   msg: ""
 })
+const obj = reactive({
+  editDisabled: true,
+  deleteDisabled: true,
+  selections: []
+})
 
 const formRef = ref({} as formApi)
 const tableRef = ref({} as tableApi)
@@ -85,8 +91,10 @@ function page(pageNum: number, pageSize: number) {
   })
 }
 
-function onSelection(val: Idesk[]) {
-  console.log(val);
+function onSelection(val: any) {
+ obj.editDisabled = val.length != 1
+ obj.deleteDisabled = val.length == 0
+ obj.selections = val
 }
 
 function openForm(val = {} as Idesk) {
@@ -97,10 +105,22 @@ function openForm(val = {} as Idesk) {
 
 const { data, total, columns } = toRefs(table)
 
-function submit(val: Idesk) {
-  Adesk.save({urlParam: `/${val.number}`}).then(res => {
-    formRef.value.visible = false
-    tableRef.value.reload()
+async function submit(val: Idesk) {
+  if (val.id) {
+    await Adesk.update(val)
+  } else {
+    await Adesk.save({urlParam: `/${val.number}`})
+  }
+  formRef.value.visible = false
+  tableRef.value.reload()
+}
+
+function remove(val: Idesk[]) {
+  ElMessageBox.confirm("确认删除?").then(() => {
+    let ids = val.map(item => item.id)
+    Adesk.remove(ids).then(res => {
+      tableRef.value.reload()
+    })
   })
 }
 

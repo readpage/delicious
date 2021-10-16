@@ -49,4 +49,8 @@
         SELECT * FROM user WHERE username=#{username}
     </select>
 
+    <select id="nowCount" resultType="Integer">
+        SELECT COUNT(0) FROM user
+        WHERE TO_DAYS(create_time)=TO_DAYS(NOW())
+    </select>
 </mapper>

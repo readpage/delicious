@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import { useStore } from "@/store"
 import { ElMessageBox } from "element-plus"
-import { computed, defineEmit, mergeProps, onMounted, reactive, ref, watchEffect } from "vue"
+import { computed, mergeProps, onMounted, reactive, ref, watchEffect } from "vue"
 
 
 interface Props {
@@ -46,7 +46,7 @@ const rules = reactive({
   price: { required: true, message: "请输入价格"}
 })
 
-const emit = defineEmit(["submit"])
+const emit = defineEmits(["submit"])
 
 function updImg(val: any) {
   props.food.imgList = val

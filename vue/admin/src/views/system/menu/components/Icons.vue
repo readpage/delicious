@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import { iconList } from "@/hooks/theme";
-import { defineEmit, ref, watch } from "vue"
+import { ref, watch } from "vue"
 
 const props = defineProps({
   icon: String,
@@ -37,7 +37,7 @@ const list = ref(iconList)
 
 // 已选图标
 const name = ref(props.icon)
-const emit = defineEmit(["updIcon"])
+const emit = defineEmits(["updIcon"])
 watch(() => props.icon, val => {
   name.value = val
 })

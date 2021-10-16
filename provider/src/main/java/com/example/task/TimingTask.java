@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.example.entity.Statis;
 import com.example.mapper.FoodsMapper;
 import com.example.mapper.LogInfoMapper;
+import com.example.mapper.OrdersMapper;
 import com.example.mapper.UserMapper;
 import com.example.service.StatisService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +24,17 @@ public class TimingTask {
     private FoodsMapper foodsMapper;
 
     @Autowired
+    private OrdersMapper ordersMapper;
+
+    @Autowired
     private StatisService statisService;
 
     public Statis getStatis() {
         Statis statis = new Statis();
         statis.setUv(logInfoMapper.selectUv());
-        statis.setUserCount(userMapper.selectCount(null));
-        statis.setFoodsCount(foodsMapper.selectCount(null));
+        statis.setUserCount(userMapper.nowCount());
+        statis.setFoodsCount(foodsMapper.nowCount());
+        statis.setSalesCount(ordersMapper.nowCount());
         return statis;
     }
 

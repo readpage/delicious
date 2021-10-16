@@ -1,7 +1,7 @@
 <template>
   <div class="cart">
     <div class="cart__header" style="position: relative">
-      <div class="manage" style="position: absolute; z-index: 200;" @click="data.finish=!data.finish">
+      <div class="manage" @click="data.finish=!data.finish">
         {{data.finish?"管理":"完成"}}
       </div>
       <div class="title" style="position: absolute; left: 22px;">
@@ -161,6 +161,8 @@ const { totalPrice } = toRefs(data)
     line-height: 44px;
 
     .manage {
+      position: absolute; 
+      z-index: 200;
       cursor: pointer;
       width: 44px;
     }

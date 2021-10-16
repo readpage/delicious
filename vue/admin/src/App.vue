@@ -1,8 +1,5 @@
 <template>
   <el-config-provider :locale="locale">
-    <div id="loading" v-if="state.app.appLoading">
-      <v-lottie src="/static/lottie/food.json" width="500px" height="500px"></v-lottie>
-    </div>
     <router-view v-slot="{ Component }">
       <keep-alive max="10">
         <component :is="Component" />
@@ -13,14 +10,10 @@
 
 <script setup lang="ts">
 import { } from "vue";
-import { ElConfigProvider, ElMessageBox } from "element-plus";
+import { ElConfigProvider } from "element-plus";
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
-import { useStore } from "./store";
 
 const locale = zhCn;
-
-const { state } = useStore()
-
 </script>
 
 <style lang="scss">
@@ -46,19 +39,4 @@ html, body, #app {
   border-radius: 30px;
 }
 
-#loading {
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 3000;
-  background-color: #ffffff;
-}
-#loading .lottie-player {
-  position: relative;
-}
 </style>

@@ -72,7 +72,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmit, inject, reactive, ref } from "vue";
+import { inject, reactive, ref } from "vue";
 import { IroleKey, IuserFormKey, role, userForm } from "@/symbols";
 import { Auser } from "@/api";
 import { ElMessageBox } from "element-plus";
@@ -128,7 +128,7 @@ function beforeClose(done: any) {
     })
 }
 
-const emit = defineEmit(["submit"])
+const emit = defineEmits(["submit"])
 function submit() {
   formRef.value.validate((valid: any) => {
     if (valid) {

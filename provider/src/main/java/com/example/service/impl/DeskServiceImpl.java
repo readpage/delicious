@@ -38,7 +38,7 @@ public class DeskServiceImpl extends ServiceImpl<DeskMapper, Desk> implements De
         QrConfig qrConfig = QrConfig.create().setImg(new File(origin, "/img/qr.png")); //附带logo
         // 高纠错级别
         qrConfig.setErrorCorrection(ErrorCorrectionLevel.H);
-        QrCodeUtil.generate("https://hutool.cn/", qrConfig , upload);
+        QrCodeUtil.generate("http://food.f1dao.cn/desk/" +number, qrConfig , upload);
         return path;
     }
 
@@ -48,6 +48,12 @@ public class DeskServiceImpl extends ServiceImpl<DeskMapper, Desk> implements De
         desk.setNumber(number);
         desk.setImg("/api" +qr(number));
         return deskMapper.insert(desk) > 0;
+    }
+
+    @Override
+    public boolean updateById(Desk desk) {
+        desk.setImg("/api" +qr(desk.getNumber()));
+        return deskMapper.updateById(desk) > 0;
     }
 
     @Override

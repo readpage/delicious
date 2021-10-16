@@ -38,10 +38,10 @@
 
         <template #dropdown>
           <el-dropdown-menu slot="dropdown" class="popper-dropdown-menu-user">
-            <el-dropdown-item command="my">个人中心</el-dropdown-item>
-            <el-dropdown-item command="admin">后台管理</el-dropdown-item>
-            <el-dropdown-item command="sign">登录/注册</el-dropdown-item>
-            <el-dropdown-item command="exit">退出</el-dropdown-item>
+            <el-dropdown-item command="my"><i class="el-icon-user-solid"></i>个人中心</el-dropdown-item>
+            <el-dropdown-item command="admin"><i class="el-icon-setting"></i>后台管理</el-dropdown-item>
+            <el-dropdown-item command="sign"><i class="el-icon-user"></i>登录/注册</el-dropdown-item>
+            <el-dropdown-item command="exit"><i class="el-icon-close"></i>退出</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>

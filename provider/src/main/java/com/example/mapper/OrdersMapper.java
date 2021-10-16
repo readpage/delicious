@@ -14,5 +14,8 @@ import java.util.List;
  * @since 2021-09-27
  */
 public interface OrdersMapper extends BaseMapper<Orders> {
-    List<Orders> selectPage();
+    List<Orders> like(Integer uid);
+
+    Integer nowCount();
+
 }

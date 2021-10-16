@@ -17,7 +17,9 @@ import java.util.List;
 public interface FoodsService extends IService<Foods> {
     PageInfo<Foods> selectPage(int pageNum, int pageSize);
 
-    PageInfo<Foods> likePage(int pageNum, int pageSize, String type);
+    PageInfo<Foods> likePage(int pageNum, int pageSize, String type, String name);
+
+    PageInfo<Foods> orderBySales(int pageNum, int pageSize);
     
     List<Foods> selectRandom(int num);
 }

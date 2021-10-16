@@ -43,6 +43,9 @@ public class Foods implements Serializable {
     @ApiModelProperty(value = "内容")
     private String content;
 
+    @ApiModelProperty(value = "销量")
+    private Integer sales;
+
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;
@@ -99,6 +102,14 @@ public class Foods implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Integer getSales() {
+        return sales;
+    }
+
+    public void setSales(Integer sales) {
+        this.sales = sales;
     }
 
     public Date getCreateTime() {
@@ -159,6 +170,7 @@ public class Foods implements Serializable {
                 ", type='" + type + '\'' +
                 ", material='" + material + '\'' +
                 ", content='" + content + '\'' +
+                ", sales=" + sales +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 ", version=" + version +

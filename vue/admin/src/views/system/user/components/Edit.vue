@@ -4,9 +4,9 @@
 </template>
 
 <script setup lang="ts">
-import { Auser } from "@/api/modules/user"
+import { Auser } from "@/api"
 import { useStore } from "@/store"
-import { defineEmit, inject, ref } from "vue"
+import { inject, ref } from "vue"
 import Form from "./Form.vue"
 
 const props = defineProps({
@@ -20,7 +20,7 @@ const reload = inject<Function>("reload", Function)
 const { commit } = useStore()
 
 const form = ref()
-const emit = defineEmit(["open"])
+const emit = defineEmits(["open"])
 function open() {
   emit("open")
   delete form.value.rules.password
@@ -34,7 +34,7 @@ function submit(val: IuserForm) {
   })
   data.roles = roles
   commit("user/btnLoading")
-  Auser.update(data).then(res => {
+  Auser.update(data).then((res: any) => {
     form.value.visible = false
     reload()
   })

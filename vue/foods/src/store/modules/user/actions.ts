@@ -30,6 +30,7 @@ const actions = {
   userRemove({ commit }: any) {
     commit("remUser")
     commit("remToken")
+    commit("remDNumber")
   }
 }
 

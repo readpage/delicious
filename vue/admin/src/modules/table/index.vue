@@ -16,6 +16,9 @@
       <el-table-column v-else :label="item.label" :prop="item.prop" :width="item.width"></el-table-column>
     </template>
     <slot></slot>
+    <template #empty>
+      <el-empty style="height: 400px" :image-size="200"></el-empty>
+    </template>
   </el-table>
   <el-pagination layout="total, sizes, pre, pager, next, jumper"
     small :total="total" :page-sizes="[5, 10, 20, 40]"
@@ -27,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineEmit, reactive, toRefs } from "vue"
+import { computed, reactive, toRefs } from "vue"
 
 export interface Itable {
   loading?: boolean,
@@ -50,7 +53,7 @@ const obj = reactive({
   pageSize: 5,
 })
 
-const emit = defineEmit(["page", "onSelection"])
+const emit = defineEmits(["page", "onSelection"])
 function handleSizeChange(val: number) {
   obj.pageSize = val
   emit("page", obj.pageNum, obj.pageSize)
@@ -80,7 +83,7 @@ defineExpose({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
 .el-table {
   margin-bottom: 10px;

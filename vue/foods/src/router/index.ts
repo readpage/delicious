@@ -1,3 +1,4 @@
+import { cookie } from '@/util';
 import { createRouter, createWebHistory } from "vue-router"
 
 const routes =[
@@ -39,9 +40,24 @@ const routes =[
     ]
   },
   {
+    path: "/search",
+    name: "search",
+    component: () => import("@/views/search/index.vue")
+  },
+  {
+    path: "/orders/",
+    name: "orders",
+    component: () => import("@/views/orders/index.vue")
+  },
+  {
     path: "/foods/detail/:id",
     name: "detail",
     component: () => import("@/views/foods-detail/index.vue")
+  },
+  {
+    path: "/desk/:desk",
+    name: "desk",
+    component: () => import("@/views/desk/index.vue")
   },
   {
     path: "/confirm-orders",
@@ -71,6 +87,13 @@ const router = createRouter({
   routes,
 })
 
+router.beforeEach((to, form, next) => {
+  if (to.path == "/info" && !(cookie.get("f1dao-token"))) next({
+    path: "/sign",
+    query: { redirect: to.fullPath}
+  })
+  next()
+})
 
 router.afterEach(to => {
   document.title = to.meta.title as string

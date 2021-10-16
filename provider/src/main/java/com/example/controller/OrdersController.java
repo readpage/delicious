@@ -2,7 +2,7 @@ package com.example.controller;
 
 
 import com.example.entity.Orders;
-import com.example.entity.OrdersFoods;
+import com.example.input.OrdersForm;
 import com.example.service.OrdersService;
 import com.example.util.PageInfo;
 import com.example.util.result.Result;
@@ -10,6 +10,8 @@ import com.example.util.result.ResultUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,9 +33,9 @@ public class OrdersController {
 
     @ApiOperation("添加订单")
     @PostMapping("/save/{uid}")
-    public Result<Object> save(@PathVariable Integer uid, @RequestBody List<OrdersFoods> ordersFoods) {
+    public Result<Object> save(@PathVariable Integer uid, @RequestBody OrdersForm ordersForm) {
         try {
-            ordersService.save(uid, ordersFoods);
+            ordersService.save(uid, ordersForm.getdNumber(), ordersForm.getOrdersFoods());
         } catch (Exception e) {
             e.printStackTrace();
             return ResultUtils.save(false);
@@ -43,8 +45,27 @@ public class OrdersController {
 
     @ApiOperation("查询订单")
     @GetMapping("/page/{pageNum}/{pageSize}")
-    public Result<PageInfo<Orders>> page(@PathVariable int pageNum, @PathVariable int pageSize) {
-        return ResultUtils.query(ordersService.selectPage(pageNum, pageSize));
+    public Result<PageInfo<Orders>> page(@PathVariable int pageNum, @PathVariable int pageSize, Integer uid) {
+        return ResultUtils.query(ordersService.selectPage(pageNum, pageSize, uid));
+    }
+
+    @ApiOperation("查询个人订单")
+    @GetMapping("/self")
+    public Result<List<Orders>> selectSelf() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return ResultUtils.query(ordersService.selectSelf(auth.getName()));
+    }
+
+    @ApiOperation("删除订单")
+    @DeleteMapping("/remove")
+    public Result<Object> removeByIds(@RequestBody List<Integer> list) {
+        try {
+            ordersService.removeByIds(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtils.remove(false);
+        }
+        return ResultUtils.remove(true);
     }
 }
 

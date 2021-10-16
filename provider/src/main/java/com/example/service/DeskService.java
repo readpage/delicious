@@ -15,5 +15,7 @@ import com.example.util.PageInfo;
 public interface DeskService extends IService<Desk> {
     boolean save(Integer number);
 
+    boolean updateById(Desk desk);
+
     PageInfo<Desk> page(Integer pageNum, Integer pageSize);
 }

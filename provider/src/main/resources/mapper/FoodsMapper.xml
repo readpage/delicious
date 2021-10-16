@@ -6,11 +6,18 @@
         JOIN (SELECT floor( RAND() * ((SELECT MAX(id) FROM foods)-(SELECT MIN(id) FROM foods)) + (SELECT MIN(id) FROM foods) ) AS id) AS r2
         WHERE r1.id >= r2.id ORDER BY r1.id LIMIT #{num};
     </select>
-    <select id="like" resultType="Foods" parameterType="String">
+    <select id="like" resultType="Foods">
         SELECT * FROM foods
         WHERE 1
         <if test="type != null and type !=''">
             AND type=#{type}
         </if>
+        <if test="name != null and name !=''">
+            AND name like concat('%', #{name}, '%')
+        </if>
+    </select>
+    <select id="nowCount" resultType="Integer">
+        SELECT COUNT(0) FROM foods
+        WHERE TO_DAYS(create_time)=TO_DAYS(NOW())
     </select>
 </mapper>

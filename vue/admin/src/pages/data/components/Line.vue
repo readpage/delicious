@@ -1,11 +1,12 @@
 <template>
-  <div class="line">
-    <v-chart :option="option" :loading="loading"></v-chart>
+  <div class="line h-72">
+    <v-chart :option="option" :loading="loading" autoresize></v-chart>
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, watch } from "vue"
+import { reactive, ref, watch } from "vue"
+import line from "./data/line";
 
 interface Props {
   data: {
@@ -17,25 +18,12 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const option = reactive({
-  color: ["#2e4783"],
-  xAxis: {
-    type: 'category',
-    data: ['0']
-  },
-  yAxis: {
-    type: 'value'
-  },
-  series: {
-      data: [0],
-      type: 'line'
-  }
-})
+const option = ref()
 
 watch(() => props.data, val => {
-  option.series.data = val.uv
-  
-  option.xAxis.data = val.date
+  line.series.data = val.uv
+  line.xAxis.data = val.date
+  option.value = line
 }, {deep: true})
 
 </script>

@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmit, ref, toRefs } from "vue"
+import { ref, toRefs } from "vue"
 
 const props = defineProps({
   data: {
@@ -39,7 +39,7 @@ const { data } = toRefs(props)
 
 const visible = ref(false)
 
-const emit = defineEmit(["open"])
+const emit = defineEmits(["open"])
 function open() {
   emit("open")
   visible.value = true

@@ -43,7 +43,7 @@
 import { useStore } from "@/store"
 import { ImenuKey, IroleFormKey, roleForm } from "@/symbols"
 import { ElMessageBox } from "element-plus"
-import { defineEmit, inject, reactive, ref, toRefs, watch } from "vue"
+import { inject, reactive, ref, toRefs, watch } from "vue"
 import type { Ref } from "vue"
 
 // props
@@ -70,7 +70,7 @@ const rules = reactive({
 })
 
 // emit
-const emit = defineEmit(["submit"])
+const emit = defineEmits(["submit"])
 function submit() {
   formRef.value.validate((valid: any) => {
     if (valid) {

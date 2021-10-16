@@ -11,11 +11,11 @@
               <div class="detail">
                 <span class="label">{{item.label}}</span>
                 <span class="value">
-                  <v-count :end="item.value" :separator="item.separator"
-                    :decimals="item.decimals"></v-count>
+                  <v-count :end="item.value"></v-count>
                 </span>
               </div>
             </div>
+            
             <div class="card-footer"></div>
             <div :class="`mini-stat ${item.stat}`">
               <span style="color: #fff">+12%</span>
@@ -23,16 +23,17 @@
           </el-card>
         </div>
         <div class="statis2">
-          <el-card><Bar :data="line" :loading="loading"/></el-card>
-          <el-card><Line :data="line" :loading="loading" /></el-card>
+          <el-card><Bar :loading="loading"/></el-card>
+          <el-card><Line :data="recent" :loading="loading" /></el-card>
         </div>
         <div class="statis2">
           <el-card><Pie /></el-card>
-          <el-card></el-card>
+          <el-card><Test /></el-card>
         </div>
       </div>
-      <div class="footer bg-gray-700 grid place-content-center">
-        <a href="https://beian.miit.gov.cn/" class="text-white text-sm">黔ICP备2021007337号-1</a>
+      <div class="footer text-center text-sm">
+        <a href="https://beian.miit.gov.cn/" class="text-gray-600 hover:underline">黔ICP备2021007337号-1</a>
+        <p class="text-purple-800 font-medium">Copyright &copy; 2021 <a class="hover:underline" href="https://gitee.com/f1dao" target="_blank">gitee@f1dao</a></p>
       </div>
     </el-scrollbar>
   </div>
@@ -41,19 +42,24 @@
 <script setup lang="ts">
 import { Astatis } from "@/api";
 import dayjs from "@/plugins/day";
+import { IrecentKey } from "@/symbols/rencent";
 import { create } from "lodash";
-import { defineComponent, reactive, ref } from "vue"
+import { defineComponent, provide, reactive, ref, resolveComponent } from "vue"
 import Bar from "./components/Bar.vue";
 import Line from "./components/Line.vue";
 import Pie from "./components/Pie.vue";
+import Test from "./components/Test.vue";
 
 defineComponent({
   name: "data1"
 })
 
-const line = ref({
+const recent = ref({
   uv: [0],
-  date: ["0"]
+  userCount: [0],
+  salesCount: [0],
+  foodsCount: [0],
+  date: ["0"],
 })
 const loading = ref(true)
 const list = ref([
@@ -63,24 +69,30 @@ const list = ref([
     stat: "bg-success"
   },
   {
-    label: "用户数量",
+    label: "总用户数量",
     value: 0,
     stat: "bg-danger"
   },
   {
-    label: "餐品数量",
+    label: "总成交量",
     value: 0,
     stat: "bg-primary"
   },
   {
-    label: "总销售额",
-    value: 20012.23,
+    label: "总商品数量",
+    value: 0,
     stat: "bg-warning",
-    separator: ",",
-    decimals: 2,
   },
 ])
 
+provide(IrecentKey, recent)
+Astatis.total().then(res => {
+  const statis: Istatis = res.data
+  list.value[0].value = statis.uv
+  list.value[1].value = statis.userCount
+  list.value[2].value = statis.salesCount
+  list.value[3].value = statis.foodsCount
+})
 
 Astatis.recent().then(res => {
   let statis:Istatis[] = res.data
@@ -88,14 +100,12 @@ Astatis.recent().then(res => {
   statis.forEach(item => {
     item.createTime = dayjs(item.createTime).format("MM-DD")
   })
-  line.value.uv = statis.map(item => item.uv)
-  line.value.date = statis.map(item => item.createTime)
+  recent.value.uv = statis.map(item => item.uv)
+  recent.value.userCount = statis.map(item => item.userCount)
+  recent.value.salesCount = statis.map(item => item.salesCount)
+  recent.value.foodsCount = statis.map(item => item.foodsCount)
+  recent.value.date = statis.map(item => item.createTime)
   loading.value = false
-  
-  if (today) {
-    list.value[1].value = today.userCount
-    list.value[2].value = today.foodsCount
-  }
 })
 
 

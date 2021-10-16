@@ -2,6 +2,7 @@ package com.example.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.entity.Foods;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,5 +17,7 @@ import java.util.List;
 public interface FoodsMapper extends BaseMapper<Foods> {
     List<Foods> selectRandom(int Num);
     
-    List<Foods> like(String type);
+    List<Foods> like(@Param("type") String type, @Param("name") String name);
+
+    Integer nowCount();
 }

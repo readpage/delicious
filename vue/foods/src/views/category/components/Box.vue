@@ -4,26 +4,25 @@
       <el-image :src="data.img" fit="cover"></el-image>
       <span class="text-white" style="position: absolute; left: 50%; margin-left: -16px;">{{data.title}}</span>
     </div> 
-    <div class="bottom grid grid-cols-2 gap-1 lg:gap-2.5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 m-1 lg:m-2.5" 
-        v-infinite-scroll="loadMore" infinite-scroll-disabled="disabled">
-      <FoodCard :data="item" height="200px" v-for="item in foods" />
+    <div ref="scroll" class="bottom grid grid-cols-1 gap-2.5 m-1 md:grid-cols-3 lg:m-2.5 lg:grid-cols-4 lg:gap-2.5 xl:grid-cols-5">
+      <FoodCard :data="item" height="270px" v-for="item in foods" />
     </div>
     <div class="flex justify-center">
-      <img v-if="loading" src="/static/svg/load.svg" style="height: 45px;"  alt="">
+      <img v-if="loading" src="@/assets/svg/load.svg" style="height: 45px;"  alt="">
       <span v-if="onMore()">没有更多了</span>
     </div>
   </el-scrollbar>
 </template>
 
-<script setup lang="ts">
-import { computed, onActivated, reactive, ref, toRefs, watch } from "vue"
+<script setup lang="ts" scoped>
+import { computed, onActivated, onMounted, reactive, ref, toRefs, watch } from "vue"
 import { useRoute } from "vue-router"
 import FoodCard from "@/components/FoodCard.vue"
 import { Afood } from "@/api"
 import { useStore } from "@/store"
 
 const route = useRoute()
-const { commit } = useStore()
+const { commit, state } = useStore()
 const title = reactive([
   {
     id: 1,
@@ -62,7 +61,7 @@ const title = reactive([
   },
 ])
 const obj = reactive({
-  count: 10,
+  count: 20,
   loading: false,
   total: 30,
   foods: []
@@ -72,36 +71,51 @@ const data = computed(() => {
   let val = title.find(item => route.params.type == item.id as any)
   return val ? val :title[0]
 })
-const disabled = computed(() => {
-  return onMore() || obj.loading
-})
 
 const scrollbar = ref()
+const scroll = ref()
+
+onMounted(() => {
+  scrollbar.value.wrap.addEventListener("scroll", onScroll)
+})
+function onScroll() {
+  if (scrollbar.value.wrap.scrollTop+ scrollbar.value.wrap.offsetHeight >= scroll.value.offsetHeight && !obj.loading)
+  loadMore()
+}
 
 function onMore() {
   return obj.count >= obj.total 
 }
 
 function loadMore() {
-  obj.loading = true
-  setTimeout(() => {
-    obj.count += 10
-    page()
-  }, 500)
+  if (!onMore()) {
+    obj.loading = true
+    setTimeout(() => {
+      obj.count += 10
+      page().then(res => {
+        obj.loading = false
+      })
+    }, 500)
+  }
 }
 
 function page() {
   commit("app/showLoading");
-  Afood.page({urlParam: `/1/${obj.count}`, type: data.value.title}).then(res => {
+  return Afood.page({urlParam: `/1/${obj.count}`, type: data.value.title}).then(res => {
     obj.foods = res.data.list
     obj.total = res.data.total
-    obj.loading = false
   })
 }
 watch(() => route.params.type, val => {
-  if (scrollbar.value) scrollbar.value.setScrollTop(0);
-  obj.count = 10
-  loadMore()
+  if (val) {
+    if (state.user.isMini) {
+      obj.count = 3
+    } else {
+      obj.count = 20
+    }
+    page()
+    if (scrollbar.value) scrollbar.value.setScrollTop(0);
+  }
 }, {immediate: true}) 
 
 

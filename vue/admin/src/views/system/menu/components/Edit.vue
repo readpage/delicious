@@ -5,13 +5,13 @@
 
 <script setup lang="ts">
 import { Amenu } from "@/api"
-import { defineEmit, inject, ref } from "vue"
+import { inject, ref } from "vue"
 import Form from "./Form.vue"
 
 const reload = inject<Function>("reload", Function)
 
 const form = ref()
-const emit = defineEmit(["onUpdate"])
+const emit = defineEmits(["onUpdate"])
 function onUpdate() {
   emit("onUpdate")
   form.value.visible = true

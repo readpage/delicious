@@ -1,5 +1,4 @@
 import {storage} from '@/util';
-import { ElMessage } from 'element-plus';
 import { cartState } from './store';
 
 const mutations = {

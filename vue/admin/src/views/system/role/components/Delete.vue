@@ -4,14 +4,13 @@
 
 <script setup lang="ts">
 import { ElMessageBox } from "element-plus";
-import { defineEmit } from "vue"
 
 const props = defineProps({
   disable: Boolean,
   msg: String,
 })
 
-const emit = defineEmit(["onDelete"])
+const emit = defineEmits(["onDelete"])
 function onDelete() {
   ElMessageBox.confirm("确认删除?")
   .then(() => {

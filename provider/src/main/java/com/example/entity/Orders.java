@@ -33,6 +33,9 @@ public class Orders implements Serializable {
     @ApiModelProperty(value = "用户ID")
     private Integer uid;
 
+    @ApiModelProperty(value = "桌号")
+    private String dNumber;
+
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;
@@ -75,6 +78,14 @@ public class Orders implements Serializable {
         this.uid = uid;
     }
 
+    public String getdNumber() {
+        return dNumber;
+    }
+
+    public void setdNumber(String dNumber) {
+        this.dNumber = dNumber;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -113,6 +124,7 @@ public class Orders implements Serializable {
                 "id=" + id +
                 ", number='" + number + '\'' +
                 ", uid=" + uid +
+                ", dNumber=" + dNumber +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 ", version=" + version +

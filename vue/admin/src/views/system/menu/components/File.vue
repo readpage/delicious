@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmit, ref, watch } from "vue"
+import { ref, watch } from "vue"
 
 const props = defineProps({
   component: String,
@@ -16,7 +16,7 @@ const component = ref(props.component)
 watch(() => props.component, val => {
   component.value = val
 })
-const emit = defineEmit(["updComponent"])
+const emit = defineEmits(["updComponent"])
 watch(component, val => {
   emit("updComponent", val)
 })

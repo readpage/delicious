@@ -8,4 +8,5 @@ interface Ifood {
   createTime: string
   updateTime: string
   version: number | undefined
+  count?: number
 }

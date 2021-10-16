@@ -4,7 +4,6 @@ import modules from './modules'
 import plugins from './plugins'
 import router from './router'
 import { store, key } from './store'
-import "@lottiefiles/lottie-player"
 import "./assets/index.css"
 
 

@@ -1,7 +1,7 @@
 <template>
   <div style="min-height: 550px">
     <div class="card-box">
-      <el-card :body-style="{ padding: '0px' }" shadow="hover" v-for="item in foods" :key="item.id">
+      <!-- <el-card :body-style="{ padding: '0px' }" shadow="hover" v-for="item in foods" :key="item.id">
         <div class="card-container">
           <router-link :to="{path: `/foods/detail/${item.id}`}">
             <div class="card-img">
@@ -15,7 +15,8 @@
             <span>{{item.count || 0}}件已售</span>
           </div>
         </div>
-      </el-card>
+      </el-card> -->
+      <FoodCard :data="item" height="265px" v-for="item in foods" />
     </div>
     <el-skeleton :loading="state.app.loading" animated :count="10" class="card-box" style="margin-top: 10px">
       <template #template>
@@ -40,6 +41,7 @@ import { Afood } from "@/api"
 import { useStore } from "@/store"
 import { preLoad } from "@/util"
 import { onActivated, onMounted, reactive, ref, toRefs } from "vue"
+import FoodCard from "@/components/FoodCard.vue"
 
 const { state, commit } = useStore()
 const data = reactive({
@@ -142,7 +144,6 @@ const { loadText } = toRefs(data)
     }
 
     .desc {
-      padding: 5px;
       span:nth-child(2) {
         font-size: 12px;
         margin-left: 10px;

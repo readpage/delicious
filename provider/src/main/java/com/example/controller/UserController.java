@@ -18,7 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -42,9 +44,20 @@ public class UserController {
     @ApiOperation(value = "添加用户", notes = "请求实列还需要添加password(密码)字段")
     @ApiOperationSupport(includeParameters = {"user.username", "user.password"})
     @PostMapping("/save")
-    public Result<Object> save(@RequestBody User user) throws Exception {
-        userService.mySave(user);
-        return ResultUtils.ok(ResultEnum.CREATE_SUCCESS);
+    public Result<Object> save(@RequestBody User user) {
+        try {
+            userService.mySave(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtils.save(false);
+        }
+        return ResultUtils.save(true);
+    }
+
+    @ApiOperation("自动生成用户")
+    @GetMapping("/auto")
+    public Result<Object> auto(@ApiIgnore HttpServletRequest request) {
+        return userService.auto(request);
     }
 
     @ApiOperation("分配角色")
@@ -65,6 +78,12 @@ public class UserController {
     })
     public Result<PageInfo<User>> selectPage(@PathVariable int pageNum, @PathVariable int pageSize) {
         return ResultUtils.ok(ResultEnum.RETRIEVE_SUCCESS, userService.selectPage(pageNum, pageSize));
+    }
+
+    @ApiOperation("id查询用户")
+    @GetMapping("/getById")
+    public Result<User> getById(Integer uid) {
+        return ResultUtils.query(userService.getById(uid));
     }
 
     @ApiOperation("用户信息")
