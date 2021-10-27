@@ -35,6 +35,7 @@ service.interceptors.response.use(response  => {
     switch (res.code) {
       case 201:
       case 205:
+      case 204:
         break
       case 202:
         return response
@@ -108,10 +109,10 @@ function expire(msg: string) {
     cancelButtonText: "取消",
     type: "warning"
   }).then(() => {
-    store.dispatch("user/userRemove")
+    store.dispatch("user/remUser")
     router.push("/sign")
   }).catch(() => {
-    store.dispatch("user/userRemove")
+    store.dispatch("user/remUser")
     ElMessage.info("已取消登录!")
   })
 }

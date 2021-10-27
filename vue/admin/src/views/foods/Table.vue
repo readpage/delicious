@@ -1,17 +1,46 @@
 <template>
   <div class="cl-table">
-    <el-space :size="10">
-      <el-button size="mini" icon="el-icon-refresh" @click="reload">刷新</el-button>
-      <el-button type="primary" size="mini" icon="el-icon-plus" @click="openForm">新增</el-button>
-      <el-button size="mini" type="success" icon="el-icon-edit" 
-        @click="openForm(data.multipleSelection[0])" :disabled="data.editDisabled">
-        修改
-      </el-button>
-      <el-button size="mini" type="danger" icon="el-icon-delete" :loading="state.user.btnLoading" 
-        @click="remove(data.multipleSelection)" :disabled="data.deleteDisabled">
-        删除
-      </el-button>
-    </el-space>
+    <el-form v-show="param.visible" :model="param" ref="paramRef" :inline="true">
+      <el-form-item label="餐品名称" prop="name">
+        <el-input size="mini" v-model="param.name" clearable placeholder="请输入餐品名称"></el-input>
+      </el-form-item>
+      <el-form-item label="餐品类型" prop="type">
+        <el-select v-model="param.type" size="mini" placeholder="请选择餐品类型" clearable>
+          <el-option 
+            v-for="item in param.options"
+            :key="item"
+            :value="item">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-button size="mini" type="info" icon="el-icon-search" @click="search">搜索</el-button>
+        <el-button size="mini" type="warning" icon="el-icon-refresh-left" @click="reset">重置</el-button>
+      </el-form-item>
+    </el-form>
+
+    <div class="flex justify-between">
+      <div class="space-x-2.5 mb-2.5">
+        <el-button type="primary" size="mini" icon="el-icon-plus" @click="openForm">新增</el-button>
+        <el-button size="mini" type="success" icon="el-icon-edit" 
+          @click="openForm(data.multipleSelection[0])" :disabled="data.editDisabled">
+          修改
+        </el-button>
+        <el-button size="mini" type="danger" icon="el-icon-delete" :loading="state.user.btnLoading" 
+          @click="remove(data.multipleSelection)" :disabled="data.deleteDisabled">
+          删除
+        </el-button>
+      </div>
+      <div>
+        <el-tooltip :content="param.visible ? '隐藏搜索' : '显示搜索'" placement="top">
+          <el-button size="mini" icon="el-icon-search" circle @click="param.visible = !param.visible"></el-button>
+        </el-tooltip>
+        <el-tooltip content="刷新" placement="top">
+          <el-button size="mini" icon="el-icon-refresh" circle @click="reload"></el-button>
+        </el-tooltip>
+      </div>
+    </div>
+
     <el-table :data="foods" stripe
       ref="tableRef"
       :header-cell-style="{ background: '#f5f7fa', color: '#606266' }"
@@ -76,11 +105,29 @@ const data = reactive({
   deleteDisabled: true,
   multipleSelection: [],
 })
+
+const param = reactive({
+  visible: true,
+  name: "",
+  type: "",
+  options: ["热菜", "凉菜", "主食", "小吃", "西餐", "烘焙", "饮品"],
+})
+
 const formRef = ref()
 const tableRef = ref()
+const paramRef = ref()
 
 
-const emit = defineEmits(["page", "save", "remove"])
+const emit = defineEmits(["page", "save", "remove", "param"])
+
+function search() {
+  emit("param", param)
+}
+
+function reset() {
+  paramRef.value.resetFields()
+  reload()
+}
 
 function handleSizeChange(val: number) {
   data.pageSize = val

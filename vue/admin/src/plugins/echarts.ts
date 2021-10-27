@@ -6,6 +6,8 @@ import { BarChart, LineChart, PieChart } from "echarts/charts"
 import {
   TitleComponent,
   TooltipComponent,
+  ToolboxComponent,
+  GridComponent,
   LegendComponent,
   DatasetComponent,
 } from "echarts/components";
@@ -17,7 +19,12 @@ use([
   PieChart,
   TitleComponent,
   TooltipComponent,
+  ToolboxComponent,
+  GridComponent,
   LegendComponent,
   DatasetComponent,
 ])
+import "echarts/lib/component/markLine"
+import "echarts/lib/component/markPoint"
+
 export default ECharts

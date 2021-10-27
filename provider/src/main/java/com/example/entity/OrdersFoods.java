@@ -1,11 +1,11 @@
 package com.example.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -32,6 +32,9 @@ public class OrdersFoods implements Serializable {
 
     @ApiModelProperty(value = "数量")
     private Integer count;
+
+    @ApiModelProperty(value = "类型")
+    private Integer type;
 
 
     public Integer getId() {
@@ -66,13 +69,22 @@ public class OrdersFoods implements Serializable {
         this.count = count;
     }
 
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "OrdersFoods{" +
-        "id=" + id +
-        ", oid=" + oid +
-        ", fid=" + fid +
-        ", count=" + count +
-        "}";
+                "id=" + id +
+                ", oid=" + oid +
+                ", fid=" + fid +
+                ", count=" + count +
+                ", type=" + type +
+                '}';
     }
 }

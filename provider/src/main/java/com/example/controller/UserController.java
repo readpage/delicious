@@ -76,8 +76,8 @@ public class UserController {
             @ApiImplicitParam(name = "pageNum", value = "页数", required = true, dataType = "int", example = "1"),
             @ApiImplicitParam(name = "pageSize", value = "页大小", required = true, dataType = "int", example = "5")
     })
-    public Result<PageInfo<User>> selectPage(@PathVariable int pageNum, @PathVariable int pageSize) {
-        return ResultUtils.ok(ResultEnum.RETRIEVE_SUCCESS, userService.selectPage(pageNum, pageSize));
+    public Result<PageInfo<User>> selectPage(@PathVariable int pageNum, @PathVariable int pageSize, String nickname) {
+        return ResultUtils.ok(ResultEnum.RETRIEVE_SUCCESS, userService.page(pageNum, pageSize, nickname));
     }
 
     @ApiOperation("id查询用户")

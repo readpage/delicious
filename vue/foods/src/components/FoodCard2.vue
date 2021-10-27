@@ -1,5 +1,5 @@
 <template>
-  <el-card :style="{width: width, height: height}" :body-style="{ padding: '10px'}">
+  <el-card :body-style="{ padding: '10px'}">
     <router-link :to="{path: `/foods/detail/${data.id}`}">
       <div class="card-container flex">
         <div class="card-img">
@@ -10,13 +10,13 @@
           <div class="flex justify-between">
             <div class="title truncate">{{data.name}}</div>
             <template v-if="data.order == 1">
-              <div class="italic text-red-500 text-lg">{{data.order}}</div>
+              <div class="italic pr-2.5 text-red-500 text-lg">{{data.order}}</div>
             </template>
             <template v-else-if="data.order == 2">
-              <div class="italic text-pink-500 text-lg">{{data.order}}</div>
+              <div class="italic pr-2.5 text-pink-500 text-lg">{{data.order}}</div>
             </template>
             <template v-else-if="data.order == 3">
-              <div class="italic text-yellow-500 text-lg">{{data.order}}</div>
+              <div class="italic pr-2.5 text-yellow-500 text-lg">{{data.order}}</div>
             </template>
             <div v-else class="italic text-gray-500 text-lg">{{data.order}}</div>
           </div>
@@ -41,9 +41,9 @@
         </span>
       </div>
     </router-link>
-    <el-divider class="mt-3 mb-0" content-position="left"><i class="el-icon-star-on"></i></el-divider>
+    <el-divider content-position="left"><i class="el-icon-star-on"></i></el-divider>
     <div class="flex justify-end">
-      <span class="p-1.5 text-gray-600 text-sm">{{updateTime}}</span>
+      <span class="pr-2.5 text-gray-600 text-sm">{{updateTime}}</span>
     </div>
   </el-card>
 </template>
@@ -54,12 +54,8 @@ import { ref } from "vue"
 
 interface propsApi {
   data: Ifood
-  width?: string
-  height?: string
 }
-const props = withDefaults(defineProps<propsApi>(), {
-  height: "250px"
-})
+const props = withDefaults(defineProps<propsApi>(), {})
 
 const updateTime = ref(dayjs(props.data.updateTime).fromNow())
 

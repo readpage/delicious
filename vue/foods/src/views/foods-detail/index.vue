@@ -29,6 +29,10 @@
                     <span class="is-price">{{ food.price }}</span>
                     <span>{{ food.count || 0 }}件已售</span>
                   </div>
+                  <div class="flex justify-between text-sm text-gray-500 mt-2.5" @click="openDrawer(1)">
+                    <span>选择规格</span>
+                    <span>{{data.label}}<i class="el-icon-arrow-right"></i></span>
+                  </div>
                 </template>
               </el-skeleton>
             </el-card>
@@ -62,16 +66,16 @@
             </el-card>
           </div>
           <div class="comment">
-            <el-card>
+            <el-card :body-style="{padding: '0px'}">
               <el-skeleton :loading="loading">
                 <template #template></template>
                 <template #default>
-                  <div class="header">
+                  <div class="header p-2.5">
                     <span>商品评论(0)</span>
                     <span>好评率100%</span>
                   </div>
                   <div class="comment__content">
-                    <div class="empty">暂无评论</div>
+                    <v-comment :fId="$route.params.id"></v-comment>
                   </div>
                 </template>
               </el-skeleton>
@@ -120,7 +124,7 @@
         >
       </div>
     </div>
-    <Drawer :type="type" :food="food" ref="drawerRef" />
+    <Drawer :type="type" :food="food" ref="drawerRef" @onSelect="onSelect" />
   </div>
 </template>
 
@@ -142,6 +146,7 @@ const data = reactive({
   food: {} as Ifood,
   foods: [] as Ifood[],
   type: 0,
+  label: ""
 });
 
 const drawerRef = ref({} as DrawerApi);
@@ -158,6 +163,7 @@ watch(
       Afood.getById({ urlParam: `/${val}` }).then((res) => {
         data.food = res.data;
         data.food.buyCount = 1
+        data.food.taste = 0
       });
     }
   },
@@ -205,6 +211,10 @@ const label = ref([
 function openDrawer(val: number) {
   data.type = val
   drawerRef.value.drawer = true
+}
+
+function onSelect(val: any) {
+  data.label = val
 }
 
 const { food, foods, type } = toRefs(data);

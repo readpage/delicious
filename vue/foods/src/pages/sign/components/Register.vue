@@ -52,18 +52,30 @@
 </template>
 
 <script setup lang="ts">
-import { Aregister, Auser } from "@/api";
+import { Auser } from "@/api";
 import { reactive, ref } from "vue";
+import { useRouter } from "vue-router";
+
+
+const router = useRouter()
 
 const ruleForm = reactive({
   username: "",
   password: "",
   checkPass: "",
+  status: true,
+  roles: [{
+    id: 4
+  }]
 })
 const ruleFormRef = ref()
 const checkUsername: Ivalidate = (rule, value, callback) => {
+  const nameReg = /^[0-9a-zA-Z]*$/
   if (!value) {
     return callback("请输入用户名😒")
+  }
+  if (!nameReg.test(value)) {
+    callback("账户只能是数字或字母😒!")
   }
   const params: any = {}
   params.username = value
@@ -106,10 +118,8 @@ const rules = reactive({
 function register() {
   ruleFormRef.value.validate((valid: any) => {
     if (valid) {
-      let param = JSON.parse(JSON.stringify(ruleForm))
-      delete param.checkPass
-      Aregister(param).then(res => {
-        console.log(res.data);
+      Auser.add(ruleForm).then(res => {
+        window.location.href = "/sign"
       })
     }
   })

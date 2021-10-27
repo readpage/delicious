@@ -1,15 +1,28 @@
 <template>
   <Card>
-    <el-space>
-      <el-button size="mini" icon="el-icon-refresh" @click="tableRef.reload">刷新</el-button>
-      <el-button size="mini" icon="el-icon-plus" type="primary" @click="openForm()">新增</el-button>
-      <el-button size="mini" icon="el-icon-edit" type="success" @click="openForm(obj.selections[0])" :disabled="obj.editDisabled">修改</el-button>
-      <el-button size="mini" icon="el-icon-delete" type="danger" :loading="state.user.btnLoading" @click="remove(obj.selections)" :disabled="obj.deleteDisabled">删除</el-button>
-    </el-space>
+    <el-form v-show="param.visible" :model="param" ref="form2Ref" :inline="true">
+      <el-form-item label="桌号" prop="number">
+        <el-input size="mini" v-model="param.number" placeholder="请输入桌号" clearable></el-input>
+      </el-form-item>
+      <el-form-item>
+        <v-btn name="search" type="info" @click="tableRef.reload">搜索</v-btn>
+        <v-btn name="reset" @click="reset">重置</v-btn>
+      </el-form-item>
+    </el-form>
+    
+    <div class="flex justify-between">
+      <div class="space-x-2.5 mb-2.5">
+        <el-button size="mini" icon="el-icon-plus" type="primary" @click="openForm()">新增</el-button>
+        <el-button size="mini" icon="el-icon-edit" type="success" @click="openForm(obj.selections[0])" :disabled="obj.editDisabled">修改</el-button>
+        <el-button size="mini" icon="el-icon-delete" type="danger" :loading="state.user.btnLoading" @click="remove(obj.selections)" :disabled="obj.deleteDisabled">删除</el-button>
+      </div>
+      <div>
+        <el-tooltip :content="param.visible ? '隐藏搜索': '显示搜索'" placement="top"><el-button size="mini" icon="el-icon-search" @click="param.visible = !param.visible" circle></el-button></el-tooltip>
+        <el-tooltip content="刷新" placement="top"><el-button size="mini" icon="el-icon-refresh" circle @click="tableRef.reload"></el-button></el-tooltip>
+      </div>
+    </div>
     <v-table ref="tableRef" :loading="state.user.loading"
-      :data="data"
-      :total="total"
-      :columns="columns"
+      :table="table"
       @page="page"
       @onSelection="onSelection">
       <el-table-column label="操作" fixed="right" width="135">
@@ -29,7 +42,7 @@
 import { Adesk } from "@/api";
 import type { Itable, tableApi } from "@/modules/table/index.vue";
 import { useStore } from "@/store";
-import { reactive, ref, toRefs } from "vue"
+import { reactive, ref, toRefs, watch } from "vue"
 import Card from "../components/Card.vue";
 import Form from "./components/Form.vue";
 import type { formApi } from "./components/Form.vue";
@@ -37,6 +50,10 @@ import { isEmpty } from "lodash";
 import { ElMessageBox } from "element-plus";
 
 const { state, commit } = useStore()
+const param = reactive({
+  number: "",
+  visible: true
+})
 
 const table = reactive<Itable>({
   columns: [
@@ -82,19 +99,25 @@ const obj = reactive({
 
 const formRef = ref({} as formApi)
 const tableRef = ref({} as tableApi)
+const form2Ref = ref()
+
+function reset() {
+  form2Ref.value.resetFields()
+  tableRef.value.reload()
+}
 
 function page(pageNum: number, pageSize: number) {
   commit("user/showLoading")
-  Adesk.page({urlParam: `/${pageNum}/${pageSize}`}).then(res => {
+  Adesk.page({urlParam: `/${pageNum}/${pageSize}`, number: param.number}).then(res => {
     table.data = res.data.list
     table.total = res.data.total
   })
 }
 
 function onSelection(val: any) {
- obj.editDisabled = val.length != 1
- obj.deleteDisabled = val.length == 0
- obj.selections = val
+  obj.editDisabled = val.length != 1
+  obj.deleteDisabled = val.length == 0
+  obj.selections = val
 }
 
 function openForm(val = {} as Idesk) {
@@ -103,7 +126,6 @@ function openForm(val = {} as Idesk) {
   formRef.value.visible = true
 }
 
-const { data, total, columns } = toRefs(table)
 
 async function submit(val: Idesk) {
   if (val.id) {
@@ -117,6 +139,7 @@ async function submit(val: Idesk) {
 
 function remove(val: Idesk[]) {
   ElMessageBox.confirm("确认删除?").then(() => {
+    commit("user/btnLoading")
     let ids = val.map(item => item.id)
     Adesk.remove(ids).then(res => {
       tableRef.value.reload()

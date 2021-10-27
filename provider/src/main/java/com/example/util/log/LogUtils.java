@@ -7,6 +7,7 @@ import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
@@ -40,7 +41,7 @@ public class LogUtils {
         browserInfo.setOs(os.getName());
         browserInfo.setDeviceType(os.getDeviceType().getName());
         browserInfo.setIpAddr(getIpAddress(request));
-//        browserInfo.setLocation(getLocation(browserInfo.getIpAddr()));
+        browserInfo.setLocation(getLocation(browserInfo.getIpAddr()));
         return browserInfo;
     }
 
@@ -65,13 +66,20 @@ public class LogUtils {
         String ak = "gGlcW2VEuTk6W92P2CBQ3qZlTKvD69a6";
         String url = "https://api.map.baidu.com/location/ip?ak={ak}&ip={ip}";
         String location = "";
-        String result = restTemplate.getForObject(url, String.class, ak, ip);
-        Pattern p = Pattern.compile("[^{]\"address\":\"(.+?)\"[}|,]");
-        Matcher m = p.matcher(result);
-        if (m.find()) {
-            location = UnicodeUtil.toString(m.group(1));
+        String result = null;
+        try {
+            result = restTemplate.getForObject(url, String.class, ak, ip);
+            Pattern p = Pattern.compile("[^{]\"address\":\"(.+?)\"[}|,]");
+            Matcher m = p.matcher(result);
+            if (m.find()) {
+                location = UnicodeUtil.toString(m.group(1));
+            }
+            return location;
+        } catch (RestClientException e) {
+            e.printStackTrace();
+            return "";
         }
-        return location;
+
     }
 
 }

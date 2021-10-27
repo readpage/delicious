@@ -16,12 +16,12 @@
           </div>
         </div>
       </el-card> -->
-      <FoodCard :data="item" height="265px" v-for="item in foods" />
+      <FoodCard :data="item" v-for="item in foods" />
     </div>
     <el-skeleton :loading="state.app.loading" animated :count="10" class="card-box" style="margin-top: 10px">
       <template #template>
-        <div>
-          <el-skeleton-item variant="image" class="el-image" />
+        <div style="height: 250px">
+          <el-skeleton-item variant="image" style="height: 150px; width: 100%;" />
           <el-skeleton-item variant="text" style="margin: 5px 0; width: 50%;"></el-skeleton-item>
           <div style="display: flex; justify-items: space-between;">
             <el-skeleton-item variant="text" style="margin-right: 16px; width: 30%" />

@@ -1,7 +1,9 @@
 package com.example.mapper;
 
-import com.example.entity.Desk;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.entity.Desk;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +14,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2021-09-27
  */
 public interface DeskMapper extends BaseMapper<Desk> {
-
+    List<Desk> like(Integer number);
 }

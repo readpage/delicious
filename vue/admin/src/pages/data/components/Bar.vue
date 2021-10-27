@@ -33,7 +33,6 @@ const bar = {
     feature: {
       dataView: { show: true, readOnly: false },
       magicType: { show: true, type: ['line', 'bar'] },
-      restore: { show: true },
       saveAsImage: { show: true }
     }
   },
@@ -47,7 +46,7 @@ const bar = {
   yAxis: {},
   series: {
     name: "销量",
-    type: "bar",
+    type: "line",
     data: [0],
   },
 }

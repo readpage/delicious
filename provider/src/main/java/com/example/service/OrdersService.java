@@ -18,7 +18,7 @@ import java.util.List;
 public interface OrdersService extends IService<Orders> {
     void save(Integer uid, String dNumber, List<OrdersFoods> ordersFoods);
 
-    PageInfo<Orders> selectPage(int pageNum, int PageSize, Integer uid);
+    PageInfo<Orders> page(int pageNum, int PageSize, Integer uid, String number);
 
     List<Orders> selectSelf(String username);
 

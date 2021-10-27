@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ResourceUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
@@ -53,7 +52,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private UserRoleService userRoleService;
     private String randomName() {
         try {
-            File file = ResourceUtils.getFile("classpath:file/username.txt");
+            File path = new File("");
+            File file = new File(path.getAbsolutePath(), "/static/private/file/username.txt");
             BufferedReader reader = new BufferedReader(new FileReader(file));;
             ArrayList<String> list = new ArrayList<>();
             String line = null;
@@ -137,9 +137,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public PageInfo<User> selectPage(int pageNum, int pageSize) {
+    public PageInfo<User> page(int pageNum, int pageSize, String nickname) {
         PageHelper.startPage(pageNum, pageSize);
-        List<User> users = userMapper.selectPage();
+        List<User> users = userMapper.like(nickname);
         return new PageInfo<User>(users);
     }
 

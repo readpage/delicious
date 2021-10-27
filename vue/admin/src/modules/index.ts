@@ -8,7 +8,7 @@ export default {
       const component = modules[item].default
       item.match("/([^/]+?)/index.vue")
       app.component("v-" +RegExp.$1, component)
-      // app.config.globalProperties[`$${RegExp.$1}`] = component
+      // app.config.globalProperties[`${RegExp.$1}`] = component
     })
   }
 }

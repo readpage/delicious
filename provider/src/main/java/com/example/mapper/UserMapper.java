@@ -14,7 +14,7 @@ import java.util.List;
  * @since 2021-07-28
  */
 public interface UserMapper extends BaseMapper<User> {
-    List<User> selectPage();
+    List<User> like(String nickname);
 
     User selectByUsername(String username);
 

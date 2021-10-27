@@ -2,12 +2,31 @@
   <div class="view">
     <el-scrollbar>
       <div class="user">
-        <el-space :size="10">
-          <el-button size="mini" icon="el-icon-refresh" @click="reload">刷新</el-button>
-          <Add />
+        <el-form v-show="param.visible" :model="param" ref="paramRef" :inline="true">
+          <el-form-item label="用户昵称" prop="nickname">
+            <el-input size="mini" v-model="param.nickname" clearable></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button size="mini" type="info" icon="el-icon-search" @click="search">搜索</el-button>
+            <el-button size="mini" type="warning" icon="el-icon-refresh-left" @click="reset">重置</el-button>
+          </el-form-item>
+        </el-form>
+
+        <div class="flex justify-between">
+          <div class="space-x-2.5 mb-2.5">
+            <Add />
           <Edit :disabled="editDisabled" type="success" icon="el-icon-edit" msg="修改" @open="open(multipleSelection[0])" />
           <Delete :disabled="deleteDisabled" :loading="state.user.btnLoading" msg="删除" @onDelete="onDelete(multipleSelection)" />
-        </el-space>
+          </div>
+          <div>
+            <el-tooltip :content="param.visible ? '隐藏搜索' : '显示搜索'" placement="top">
+              <el-button size="mini" icon="el-icon-search" circle @click="param.visible = !param.visible"></el-button>
+            </el-tooltip>
+            <el-tooltip content="刷新" placement="top">
+              <el-button size="mini" icon="el-icon-refresh" circle @click="reload"></el-button>
+            </el-tooltip>
+          </div>
+        </div>
         <el-table :data="table.user" stripe
           ref="tableRef"
           :header-cell-style="{ background: '#f5f7fa', color: '#606266' }"
@@ -46,7 +65,9 @@
           <el-table-column label="用户名" prop="username" show-overflow-tooltip min-width="150"></el-table-column>
           <el-table-column label="头像" prop="headImg" width="120">
             <template #default="scope">
-              <el-image :src="scope.row.img" style="height: 58px" :preview-src-list="[scope.row.img]" fit="cover"></el-image>
+              <el-avatar :src="scope.row.img">
+                <img src="@/assets/img/avatar.png" alt="">
+              </el-avatar>
             </template>
           </el-table-column>
           <el-table-column label="昵称" prop="nickname" show-overflow-tooltip min-width="180"></el-table-column>
@@ -61,7 +82,11 @@
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column label="状态" prop="status" width="80"></el-table-column>
+          <el-table-column label="状态" prop="status" width="80">
+            <template #default="scope">
+              <el-switch v-model="scope.row.status" :loading="state.user.btnLoading" />
+            </template>
+          </el-table-column>
           <el-table-column label="创建时间" prop="createTime" width="160"></el-table-column>
           <el-table-column label="修改时间" prop="updateTime" width="160"></el-table-column>
           <el-table-column label="操作" fixed="right" width="135">
@@ -101,9 +126,28 @@ const table = reactive({
   pageNum: 1,
   user: [] as Iuser[],
 })
+
+const param = reactive({
+  visible: true,
+  nickname: ""
+})
 const multipleSelection = ref([])
 const editDisabled = ref(true)
 const deleteDisabled = ref(true)
+const paramRef = ref()
+
+function search() {
+  commit("user/showLoading")
+  Auser.page({urlParam: `/${table.pageNum}/${table.pageSize}`, nickname: param.nickname}).then(res => {
+    table.user = res.data.list
+    table.total = res.data.total
+  })
+}
+
+function reset() {
+  paramRef.value.resetFields()
+  reload()
+}
 
 function handleSizeChange(val: number) {
   table.pageSize = val

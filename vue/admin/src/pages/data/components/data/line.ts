@@ -19,7 +19,7 @@ export default {
   },
   xAxis: {
     type: 'category',
-    data: ['0']
+    data: [""],
   },
   yAxis: {
     type: 'value',

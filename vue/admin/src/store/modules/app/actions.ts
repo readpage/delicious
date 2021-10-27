@@ -8,7 +8,7 @@ const actions = {
       store.dispatch("user/sysInfo")
       await store.dispatch("menu/permMenu")
       closeLoad()
-      resolve(null)
+      resolve(true)
     })
   },
 }

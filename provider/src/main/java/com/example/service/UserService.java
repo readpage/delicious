@@ -23,7 +23,7 @@ public interface UserService extends IService<User> {
 
     boolean myUpdateById(User user) throws Exception;
 
-    PageInfo<User> selectPage(int pageNum, int pageSize);
+    PageInfo<User> page(int pageNum, int pageSize, String nickname);
 
     boolean removeById(Integer id) throws Exception;
 

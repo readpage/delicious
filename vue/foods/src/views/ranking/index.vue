@@ -2,7 +2,7 @@
   <div class="search">
     <el-scrollbar ref="scrollbar">
       <div ref="scroll">
-        <FoodCard2 class="my-2.5" :data="item" height="210px" v-for="item in obj.foods" />
+        <FoodCard2 class="my-2.5" :data="item" v-for="item in obj.foods" />
       </div>
       <div class="flex justify-center">
         <img v-if="obj.loading" src="@/assets/svg/load.svg" style="height: 45px;"  alt="">

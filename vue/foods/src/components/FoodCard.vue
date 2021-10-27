@@ -1,5 +1,5 @@
 <template>
-  <el-card :style="{width: width, height: height}" :body-style="{ padding: '0px'}">
+  <el-card :body-style="{ padding: '0px'}">
     <router-link :to="{path: `/foods/detail/${data.id}`}">
       <div class="card-container">
         <div class="card-img">
@@ -29,9 +29,9 @@
         </span>
       </div>
     </router-link>
-    <el-divider class="mt-3 mb-0" content-position="left"><i class="el-icon-star-on"></i></el-divider>
+    <el-divider content-position="left"><i class="el-icon-star-on"></i></el-divider>
     <div class="flex justify-end">
-      <span class="p-1.5 text-gray-600 text-sm">{{updateTime}}</span>
+      <span class="mr-2.5 mb-2.5 text-gray-600 text-sm">{{updateTime}}</span>
     </div>
   </el-card>
 </template>
@@ -42,12 +42,8 @@ import { ref } from "vue"
 
 interface propsApi {
   data: Ifood
-  width?: string
-  height?: string
 }
-const props = withDefaults(defineProps<propsApi>(), {
-  height: "250px"
-})
+const props = withDefaults(defineProps<propsApi>(), {})
 
 const updateTime = ref(dayjs(props.data.updateTime).fromNow())
 

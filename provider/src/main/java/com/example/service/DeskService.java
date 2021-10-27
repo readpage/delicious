@@ -17,5 +17,5 @@ public interface DeskService extends IService<Desk> {
 
     boolean updateById(Desk desk);
 
-    PageInfo<Desk> page(Integer pageNum, Integer pageSize);
+    PageInfo<Desk> page(Integer pageNum, Integer pageSize, Integer number);
 }

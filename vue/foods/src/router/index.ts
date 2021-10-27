@@ -40,6 +40,11 @@ const routes =[
     ]
   },
   {
+    path: "/test",
+    name: "test",
+    component: () => import("@/views/test/index.vue")
+  },
+  {
     path: "/search",
     name: "search",
     component: () => import("@/views/search/index.vue")

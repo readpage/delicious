@@ -19,6 +19,7 @@ import { closeLoad } from "./hooks/useUser";
 const locale = zhCn;
 const { commit, state, dispatch} = useStore()
 
+
 function init() {
   let token = state.user.token
   if (isEmpty(token)) {

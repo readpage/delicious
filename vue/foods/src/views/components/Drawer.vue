@@ -10,7 +10,7 @@
           <!-- <span class="ml size-12">库存：{{food.count}}件</span> -->
           <div class="selected">
             <span>已选</span>
-            <span class="ml">微辣</span>
+            <span class="ml">{{label}}</span>
           </div>
         </div>
       </div>
@@ -19,8 +19,9 @@
           <div class="label mb">规格</div>
           <div class="item">
             <el-space>
-              <el-button size="mini" type="info">微辣</el-button>
-              <el-button size="mini">超辣</el-button>
+              <template v-for="item in obj.options">
+                <el-button size="mini" :type="food.taste==item.value?'info':''" @click="onSelect(item)">{{item.label}}</el-button>
+              </template>
             </el-space>
           </div>
           <div class="item">
@@ -41,7 +42,7 @@
 import { Vtoast } from "@/modules/toast";
 import { useStore } from "@/store";
 import { ElMessage } from "element-plus";
-import { ref } from "vue"
+import { ref, reactive, computed } from "vue"
 import { onBeforeRouteLeave, useRouter } from "vue-router";
 
 interface Props {
@@ -55,10 +56,25 @@ const { commit } = useStore()
 
 const drawer = ref(false)
 
+const obj = reactive({
+  options: [
+    { label: "不辣", value: 0 },
+    { label: "微辣", value: 1 },
+    { label: "中辣", value: 2 },
+    { label: "超辣", value: 3 }
+  ],
+})
+
+const label = computed(() => {
+  let t = obj.options.find((item) => item.value== props.food.taste)
+  return t ? t.label : "不辣"
+})
 
 onBeforeRouteLeave(() => {
   drawer.value = false
 })
+
+const emit = defineEmits(["onSelect"])
 
 function cart() {
   commit("cart/addCart", props.food)
@@ -71,7 +87,10 @@ function buy() {
   router.push("/confirm-orders")
 }
 
-
+function onSelect(val: any) {
+  props.food.taste=val.value
+  emit("onSelect", val.label)
+}
 
 
 export interface DrawerApi {
@@ -109,7 +128,7 @@ defineExpose({
       }
     }
     &__container {
-      height: 220px;
+      height: 200px;
       .item {
         padding: 10px 0;
         display: flex;

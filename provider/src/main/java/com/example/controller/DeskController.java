@@ -36,8 +36,8 @@ public class DeskController {
 
     @ApiOperation("查询桌号")
     @GetMapping("/page/{pageNum}/{pageSize}")
-    public Result<PageInfo<Desk>> page(@PathVariable Integer pageNum, @PathVariable Integer pageSize) {
-        return ResultUtils.query(deskService.page(pageNum, pageSize));
+    public Result<PageInfo<Desk>> page(@PathVariable Integer pageNum, @PathVariable Integer pageSize, Integer number) {
+        return ResultUtils.query(deskService.page(pageNum, pageSize, number));
     }
 
     @ApiOperation("修改桌号")

@@ -16,7 +16,7 @@
 
    ```npm
    // 下载vue相应框架组件(注意在admin目录下运行命令)
-   npm install
+   npm install --legacy-peer-deps
    // 启动vue项目
    npm run dev
    ```

@@ -25,6 +25,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
             "/oauth/**",
             "/img/**",
             "/upload/**",
+            "/public/**"
     };
 
 

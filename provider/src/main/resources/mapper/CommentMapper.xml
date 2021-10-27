@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.CommentMapper">
+    <select id="like" resultType="Comment">
+        SELECT * FROM comment
+        WHERE 1
+        <if test="fId != null">
+            AND f_id=#{fId}
+        </if>
+        <if test="state != null">
+            AND state = #{state}
+        </if>
+        <if test="username != null and username != ''">
+            AND username like concat('%', #{username}, '%')
+        </if>
+    </select>
+
+    <select id="vLike" resultType="Comment">
+        SELECT * FROM comment
+        WHERE (state = true
+            <if test="uid != null">
+                OR uid = #{uid}
+            </if>
+        )
+        <if test="fId != null">
+            AND f_id=#{fId}
+        </if>
+        <choose>
+            <when test="parentId != null">
+                AND parent_id=#{parentId}
+            </when>
+            <otherwise>
+                AND parent_id IS NULL
+            </otherwise>
+        </choose>
+    </select>
+</mapper>

@@ -1,16 +1,21 @@
 <template>
-  <el-table :data="data" stripe
+  <el-table :data="table.data" stripe
     :header-cell-style="{ background: '#f5f7fa', color: '#606266' }"
     max-height="500"
     v-loading="loading"
     @selection-change="handleSelectionChange"
     element-loading-text="拼命加载中"
     element-loading-spinner="el-icon-loading">
-    <template v-for="(item, index) in columns" :key="index">
+    <template v-for="(item, index) in table.columns" :key="index">
       <el-table-column v-if="item.type == 'selection'" type="selection" width="50"></el-table-column>
       <el-table-column v-else-if="item.type == 'img'" :label="item.label" :prop="item.prop" :width="item.width">
         <template #default="scope">
           <el-image :src="scope.row.img" style="height: 58px" :preview-src-list="[scope.row.img]" fit="cover"></el-image>
+        </template>
+      </el-table-column>
+      <el-table-column v-else-if= "item.type == 'other'" :label="item.label">
+        <template #default="scope">
+          <slot :name="item.prop" :row="scope.row"></slot>
         </template>
       </el-table-column>
       <el-table-column v-else :label="item.label" :prop="item.prop" :width="item.width"></el-table-column>
@@ -20,9 +25,9 @@
       <el-empty style="height: 400px" :image-size="200"></el-empty>
     </template>
   </el-table>
-  <el-pagination layout="total, sizes, pre, pager, next, jumper"
-    small :total="total" :page-sizes="[5, 10, 20, 40]"
-    :page-size="pageSize"
+  <el-pagination layout="total, sizes, prev, pager, next, jumper"
+    small :total="table.total" :page-sizes="[5, 10, 20, 40]"
+    :page-size="obj.pageSize"
     background
     @current-change="handleCurrentChange"
     @size-change="handleSizeChange"
@@ -33,7 +38,6 @@
 import { computed, reactive, toRefs } from "vue"
 
 export interface Itable {
-  loading?: boolean,
   columns: {
     label?: string,
     prop?: string,
@@ -43,12 +47,16 @@ export interface Itable {
   data: {}[],
   total: number
 }
-const props = withDefaults(defineProps<Itable>(), {
-  loading: false,
+
+interface propsApi {
+  table: Itable
+  loading?: boolean
+}
+const props = withDefaults(defineProps<propsApi>(), {
+  loading: false
 })
 
 const obj = reactive({
-  table: [],
   pageNum: 1,
   pageSize: 5,
 })
@@ -73,7 +81,7 @@ function reload() {
 }
 reload()
 
-const { table, pageNum, pageSize } = toRefs(obj)
+
 
 export interface tableApi {
   reload: Function

@@ -1,7 +1,7 @@
 <template>
   <div class="foods">
     <el-scrollbar>
-      <Table ref="tableRef" :foods="data.foods"  :total="data.total"  @page="page" @save="save" @remove="remove" />
+      <Table ref="tableRef" :foods="data.foods"  :total="data.total" @param="param"  @page="page" @save="save" @remove="remove" />
     </el-scrollbar>
   </div>
 </template>
@@ -44,6 +44,14 @@ function save(val: Ifood) {
 function remove(val: any) {
   Afood.remove({urlParam: `/${val}`}).then(res => {
     tableRef.value?.closeForm()
+  })
+}
+
+function param(val: any) {
+  commit("user/showLoading")
+  Afood.page({urlParam: "/1/5", name: val.name, type: val.type}).then(res => {
+    data.foods = res.data.list
+    data.total = res.data.total
   })
 }
 

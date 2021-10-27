@@ -45,8 +45,8 @@ public class OrdersController {
 
     @ApiOperation("查询订单")
     @GetMapping("/page/{pageNum}/{pageSize}")
-    public Result<PageInfo<Orders>> page(@PathVariable int pageNum, @PathVariable int pageSize, Integer uid) {
-        return ResultUtils.query(ordersService.selectPage(pageNum, pageSize, uid));
+    public Result<PageInfo<Orders>> page(@PathVariable int pageNum, @PathVariable int pageSize, Integer uid, String number) {
+        return ResultUtils.query(ordersService.page(pageNum, pageSize, uid, number));
     }
 
     @ApiOperation("查询个人订单")

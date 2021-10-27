@@ -5,7 +5,7 @@
       <span class="text-white" style="position: absolute; left: 50%; margin-left: -16px;">{{data.title}}</span>
     </div> 
     <div ref="scroll" class="bottom grid grid-cols-1 gap-2.5 m-1 md:grid-cols-3 lg:m-2.5 lg:grid-cols-4 lg:gap-2.5 xl:grid-cols-5">
-      <FoodCard :data="item" height="270px" v-for="item in foods" />
+      <FoodCard :data="item" v-for="item in foods" />
     </div>
     <div class="flex justify-center">
       <img v-if="loading" src="@/assets/svg/load.svg" style="height: 45px;"  alt="">

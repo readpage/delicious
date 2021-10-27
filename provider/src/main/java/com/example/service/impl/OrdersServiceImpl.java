@@ -57,16 +57,16 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
     }
 
     @Override
-    public PageInfo<Orders> selectPage(int pageNum, int pageSize, Integer uid) {
+    public PageInfo<Orders> page(int pageNum, int pageSize, Integer uid, String number) {
         PageHelper.startPage(pageNum, pageSize);
-        List<Orders> orders = ordersMapper.like(uid);
+        List<Orders> orders = ordersMapper.like(uid, number);
         return new PageInfo<>(orders);
     }
 
     @Override
     public List<Orders> selectSelf(String username) {
         Integer id = userService.selectByUsername(username).getId();
-        return ordersMapper.like(id);
+        return ordersMapper.like(id, null);
     }
 
     @Transactional(rollbackFor = Exception.class)

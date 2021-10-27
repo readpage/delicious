@@ -69,9 +69,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     }
 
     @Override
-    public PageInfo<Role> selectPage(int pageNum, int pageSize) {
+    public PageInfo<Role> page(int pageNum, int pageSize, String nickname) {
         PageHelper.startPage(pageNum, pageSize);
-        List<Role> roles = roleMapper.selectList(null);
+        List<Role> roles = roleMapper.like(nickname);
         return new PageInfo<>(roles);
     }
 

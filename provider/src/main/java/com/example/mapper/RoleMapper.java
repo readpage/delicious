@@ -1,7 +1,9 @@
 package com.example.mapper;
 
-import com.example.entity.Role;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.entity.Role;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +14,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2021-07-28
  */
 public interface RoleMapper extends BaseMapper<Role> {
-
+    List<Role> like(String nickname);
 }

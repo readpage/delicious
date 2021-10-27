@@ -4,18 +4,24 @@
       <div class="data">
         <div class="statis">
           <el-card class="bg-primary2" v-for="(item, index) in list" :key="index">
-            <div class="card-header">
+            <div class="card-header flex my-5">
               <div class="card-img">
-                <el-image src="http://v.bootstrapmb.com/2021/8/xusdd10936/assets/images/services-icon/01.png" fit="fill"></el-image>
+                <el-image :src="item.img" fit="fill"></el-image>
               </div>
-              <div class="detail">
-                <span class="label">{{item.label}}</span>
-                <span class="value">
-                  <v-count :end="item.value"></v-count>
-                </span>
+              <div class="detail flex flex-col justify-between">
+                <div>
+                  <span class="label">{{item.label}}</span>
+                  <span class="value">
+                    <v-count :end="item.value"></v-count>
+                  </span>
+                </div>
+                <div class="space-x-2">
+                  <span>{{item.label2}}</span>
+                  <v-count :end="item.value2"></v-count>
+                  <v-icon :name="item.icon" size="25"></v-icon>
+                </div>
               </div>
             </div>
-            
             <div class="card-footer"></div>
             <div :class="`mini-stat ${item.stat}`">
               <span style="color: #fff">+12%</span>
@@ -65,23 +71,39 @@ const loading = ref(true)
 const list = ref([
   {
     label: "总访问量",
+    label2: "新增访问量",
     value: 0,
-    stat: "bg-success"
+    value2: 0,
+    stat: "bg-success",
+    img: "/static/svg/1.svg",
+    icon: "#iconshangsheng"
   },
   {
     label: "总用户数量",
+    label2: "新增用户数量",
     value: 0,
-    stat: "bg-danger"
+    value2: 0,
+    stat: "bg-danger",
+    img: "/static/svg/2.svg",
+    icon: "#iconxiadie"
   },
   {
     label: "总成交量",
+    label2: "新增成交量",
     value: 0,
-    stat: "bg-primary"
+    value2: 0,
+    stat: "bg-primary",
+    img: "/static/svg/3.svg",
+    icon: "#iconshangsheng"
   },
   {
     label: "总商品数量",
+    label2: "新增商品数量",
     value: 0,
+    value2: 0,
     stat: "bg-warning",
+    img: "/static/svg/4.svg",
+    icon: "#iconxiadie"
   },
 ])
 
@@ -106,6 +128,11 @@ Astatis.recent().then(res => {
   recent.value.foodsCount = statis.map(item => item.foodsCount)
   recent.value.date = statis.map(item => item.createTime)
   loading.value = false
+
+  list.value[0].value2 = recent.value.uv[6]
+  list.value[1].value2 = recent.value.userCount[6]
+  list.value[2].value2 = recent.value.salesCount[6]
+  list.value[3].value2 = recent.value.foodsCount[6]
 })
 
 
@@ -124,22 +151,19 @@ Astatis.recent().then(res => {
       margin-bottom: 10px;
       .el-card {
         box-sizing: border-box;
-        height: 150px;
         position: relative;
         .card-header {
-          display: flex;
-          align-items: center;
           .card-img {
-            height: 58px;
-            width: 58px;
+            height: 70px;
+            width: 70px;
             background: rgba(255,255,255,.15);
             margin-right: 20px;
             display: grid;
 
             .el-image {
               place-self: center;
-              width: 32px;
-              height: 32px;
+              width: 60px;
+              height: 60px;
             }
           }
           .label {
@@ -158,7 +182,7 @@ Astatis.recent().then(res => {
         }
         .mini-stat {
           position: absolute;
-          top: 20px;
+          top: 10px;
           right: 0;
           padding: 2px 10px 2px 32px;
           clip-path: polygon(100% 0,100% 50%,100% 100%,0 100%,24% 50%,6% 0);

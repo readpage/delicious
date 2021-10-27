@@ -13,5 +13,6 @@ interface Ifood {
   createTime: string
   updateTime: string
   version: number
-  order: number
+  order: number,
+  taste?: number
 }

@@ -1,10 +1,33 @@
 <template>
   <Card>
-    <el-space :size="20">
-      <el-button size="mini" icon="el-icon-refresh" @click="tableRef.reload">刷新</el-button>
-      <el-button size="mini" icon="el-icon-delete" type="danger" :loading="state.user.btnLoading" @click="remove(obj.selections)" :disabled="obj.deleteDisabled">删除</el-button>
-    </el-space>
-    <v-table :data="data" :total="total" :loading="state.user.loading" :columns="columns"
+    <el-form v-show="param.visible" :model="param" ref="paramRef" :inline="true">
+      <el-form-item label="用户id" prop="uid">
+        <el-input size="mini" v-model="param.uid" placeholder="请输入用户id"></el-input>
+      </el-form-item>
+      <el-form-item label="订单编号" prop="number">
+        <el-input size="mini" v-model="param.number" placeholder="请输入订单编号"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button size="mini" type="info" icon="el-icon-search" @click="tableRef.reload">搜索</el-button>
+        <el-button size="mini" icon="el-icon-refresh-left" @click="reset">重置</el-button>
+      </el-form-item>
+    </el-form>
+
+    <div class="flex justify-between">
+      <div class="space-x-2.5 mb-2.5">
+        <el-button size="mini" icon="el-icon-refresh" @click="tableRef.reload">刷新</el-button>
+        <el-button size="mini" icon="el-icon-delete" type="danger" :loading="state.user.btnLoading" @click="remove(obj.selections)" :disabled="obj.deleteDisabled">删除</el-button>
+      </div>
+      <div>
+        <el-tooltip placement="top" :content="param.visible ? '隐藏搜索' : '显示搜索' ">
+          <el-button size="mini" icon="el-icon-search" @click="param.visible = !param.visible" circle></el-button>
+        </el-tooltip>
+        <el-tooltip content="刷新" placement="top">
+          <el-button size="mini" icon="el-icon-refresh" @click="tableRef.reload" circle></el-button>
+        </el-tooltip>
+      </div>
+    </div>
+    <v-table :table="table" :loading="state.user.loading"
       ref="tableRef"
       @page="page"
       @onSelection="onSelection">
@@ -17,11 +40,6 @@
           </template>
         </template>
       </el-table-column>
-      <el-table-column label="总计">
-        <template #default="scope" >
-          ￥{{cTotalPrice(scope.row.foods)}}
-        </template>
-      </el-table-column>
       <el-table-column label="操作" fixed="right" width="135">
         <template #default="scope">
           <el-space>
@@ -32,6 +50,9 @@
           </el-space>
         </template>
       </el-table-column>
+      <template #total="scope">
+        ￥{{cTotalPrice(scope.row.foods)}}
+      </template>
     </v-table>
     <Detail :data="detail" :user="user" ref="detailRef" />
   </Card>
@@ -69,6 +90,11 @@ const table = reactive<Itable>({
       prop: "createTime",
       label: "下单时间"
     },
+    {
+      prop: "total",
+      label: "总计",
+      type: "other"
+    }
   ],
   data: [],
 })
@@ -78,22 +104,34 @@ const obj = reactive({
   selections: [],
 })
 
+const param = reactive({
+  visible: true,
+  uid: "",
+  number: ""
+})
+
 const detail = ref()
 const user = ref()
 const tableRef = ref({} as tableApi)
 const detailRef = ref({} as detailApi)
+const paramRef = ref()
+
+function reset() {
+  paramRef.value.resetFields()
+  tableRef.value.reload()
+}
 
 function page(pageNum: number, pageSize: number) {
   commit("user/showLoading")
-  Aorders.page({urlParam: `/${pageNum}/${pageSize}`}).then(res => {
+  Aorders.page({urlParam: `/${pageNum}/${pageSize}`, uid: param.uid, number: param.number}).then(res => {
     table.total = res.data.total
     table.data = res.data.list
   })
 }
 
 function onSelection(val: any) {
- obj.deleteDisabled = val.length == 0
- obj.selections = val
+  obj.deleteDisabled = val.length == 0
+  obj.selections = val
 }
 
 function openDetail(val: any) {
@@ -107,6 +145,7 @@ function openDetail(val: any) {
 function remove(val: Iorders[]) {
   ElMessageBox.confirm("确认删除?").then(() => {
     let ids = val.map(item => item.id)
+    commit("user/btnLoading")
     Aorders.remove(ids).then(res => {
       tableRef.value.reload()
     })
@@ -122,7 +161,6 @@ function cTotalPrice(val: Ifood[]) {
   return totalPrice
 }
 
-const { columns, data, total } = toRefs(table)
 </script>
 
 <style lang="scss" scoped>

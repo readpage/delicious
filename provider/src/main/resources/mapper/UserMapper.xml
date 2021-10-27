@@ -41,8 +41,12 @@
         WHERE u.id=ur.uid AND r.id=ur.rid
         AND u.id = #{id}
     </select>
-    <select id="selectPage" resultMap="userMap">
+    <select id="like" resultMap="userMap">
         SELECT * FROM user
+        WHERE 1
+        <if test="nickname != null and nickname != ''">
+            AND nickname like concat('%', #{nickname}, '%')
+        </if>
     </select>
 
     <select id="selectByUsername" parameterType="String" resultMap="userMap">

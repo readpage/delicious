@@ -20,7 +20,7 @@ public interface RoleService extends IService<Role> {
 
     boolean add(Role role, List<Integer> menuIdList);
 
-    PageInfo<Role> selectPage(int pageNum, int pageSize);
+    PageInfo<Role> page(int pageNum, int pageSize, String nickname);
 
     void updateById(List<Integer> menuIds, Role role);
 

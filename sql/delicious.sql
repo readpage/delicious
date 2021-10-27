@@ -11,11 +11,55 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 16/10/2021 21:51:06
+ Date: 27/10/2021 21:09:54
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for comment
+-- ----------------------------
+DROP TABLE IF EXISTS `comment`;
+CREATE TABLE `comment`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '评论id',
+  `uid` int(0) NULL DEFAULT NULL COMMENT '用户id',
+  `f_id` int(0) NULL DEFAULT NULL COMMENT '餐品id',
+  `parent_id` int(0) NULL DEFAULT NULL COMMENT '父节点',
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户名',
+  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '头像',
+  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '评论内容',
+  `state` int(0) NULL DEFAULT 0 COMMENT '状态 ',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
+  `version` int(0) NULL DEFAULT 1 COMMENT '版本',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of comment
+-- ----------------------------
+INSERT INTO `comment` VALUES (1, 1, 89, NULL, '木灵鱼儿', NULL, '内容', 1, NULL, NULL, 1);
+INSERT INTO `comment` VALUES (2, 2, 89, NULL, '初之音', NULL, '内容2', 1, NULL, NULL, 1);
+INSERT INTO `comment` VALUES (3, 3, 89, NULL, '保罗的小宇宙', NULL, '内容3', 1, NULL, '2021-10-27 19:13:39', 1);
+INSERT INTO `comment` VALUES (4, 2, 89, 1, '初之音', NULL, '回复1', 1, NULL, NULL, 1);
+INSERT INTO `comment` VALUES (5, 3, 89, 1, '保罗的小宇宙', NULL, '回复2', 1, NULL, '2021-10-26 17:30:53', 1);
+INSERT INTO `comment` VALUES (6, 1, 89, 2, '木灵鱼儿', NULL, '回复1', 1, NULL, '2021-10-27 19:13:40', 1);
+INSERT INTO `comment` VALUES (7, 3, 89, 2, '保罗的小宇宙', NULL, '回复2', 1, NULL, '2021-10-27 19:13:42', 1);
+INSERT INTO `comment` VALUES (8, 1, 89, 3, '木灵鱼儿', NULL, '回复1', 1, NULL, '2021-10-27 19:13:44', 1);
+INSERT INTO `comment` VALUES (9, 2, 89, 3, '初之音', NULL, '回复2', 1, NULL, '2021-10-27 19:13:47', 1);
+INSERT INTO `comment` VALUES (10, 3, NULL, 3, '保罗的小宇宙', NULL, 'a', 1, '2021-10-26 19:51:30', '2021-10-27 19:13:35', 1);
+INSERT INTO `comment` VALUES (11, 3, NULL, 2, '保罗的小宇宙', NULL, '哈哈😀', 1, '2021-10-26 19:57:59', '2021-10-26 19:58:41', 1);
+INSERT INTO `comment` VALUES (13, 3, 255, NULL, '保罗的小宇宙', NULL, '不错', 1, '2021-10-26 20:28:38', '2021-10-26 20:30:43', 1);
+INSERT INTO `comment` VALUES (14, 1, NULL, 13, '木灵鱼儿', NULL, '😃', 1, '2021-10-26 20:32:18', '2021-10-26 20:33:11', 1);
+INSERT INTO `comment` VALUES (15, 1, 255, NULL, '木灵鱼儿', NULL, '😘🙄', 1, '2021-10-26 20:32:44', '2021-10-26 20:33:07', 1);
+INSERT INTO `comment` VALUES (16, 1, 889, NULL, '木灵鱼儿', NULL, '不错不错😜', 1, '2021-10-26 20:35:58', '2021-10-26 20:37:34', 1);
+INSERT INTO `comment` VALUES (17, 1, 889, NULL, '木灵鱼儿', NULL, '哈哈😄', 1, '2021-10-26 20:36:24', '2021-10-26 20:37:32', 1);
+INSERT INTO `comment` VALUES (18, 1, NULL, 16, '木灵鱼儿', NULL, '1', 1, '2021-10-26 20:36:39', '2021-10-26 20:37:31', 1);
+INSERT INTO `comment` VALUES (19, 1, NULL, 17, '木灵鱼儿', NULL, '2', 1, '2021-10-26 20:36:43', '2021-10-26 20:37:27', 1);
+INSERT INTO `comment` VALUES (20, 1, NULL, 17, '木灵鱼儿', NULL, '3', 1, '2021-10-26 20:36:47', '2021-10-26 20:37:25', 1);
+INSERT INTO `comment` VALUES (23, 3, 734, NULL, '保罗的小宇宙', NULL, '不错', 1, '2021-10-27 19:12:54', '2021-10-27 19:13:33', 1);
+INSERT INTO `comment` VALUES (24, 3, NULL, 23, '保罗的小宇宙', NULL, '😂', 1, '2021-10-27 19:13:07', '2021-10-27 19:13:31', 1);
 
 -- ----------------------------
 -- Table structure for desk
@@ -30,7 +74,7 @@ CREATE TABLE `desk`  (
   `version` int(0) NULL DEFAULT 1 COMMENT '版本',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `number`(`number`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of desk
@@ -995,7 +1039,7 @@ CREATE TABLE `log_info`  (
   `error` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '异常信息',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7420 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4275 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for menu
@@ -1015,7 +1059,7 @@ CREATE TABLE `menu`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `version` int(0) UNSIGNED NULL DEFAULT 1 COMMENT '乐观锁',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 90 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 101 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of menu
@@ -1066,7 +1110,7 @@ INSERT INTO `menu` VALUES (73, '/statis/recent', 0, NULL, 2, 72, '', '最近7天
 INSERT INTO `menu` VALUES (75, '/system/monintor/server', 1, NULL, 1, 31, '/src/views/system/monitor/server/index.vue', '服务监控', 'el-icon-date', '2021-09-24 14:03:22', '2021-09-25 12:05:44', 2);
 INSERT INTO `menu` VALUES (76, '/statis/server', 0, NULL, 2, 75, '', '查询系统信息', '', '2021-09-24 14:04:38', '2021-09-24 14:04:38', 1);
 INSERT INTO `menu` VALUES (77, '/orders/save', 1, NULL, 2, 35, '', '添加订单', '', '2021-09-27 16:54:55', '2021-09-27 16:54:55', 1);
-INSERT INTO `menu` VALUES (78, '/desk', 6, NULL, 1, NULL, '/src/views/desk/index.vue', '桌号管理', 'el-icon-knife-fork', '2021-09-27 17:52:42', '2021-09-29 00:42:24', 4);
+INSERT INTO `menu` VALUES (78, '/desk', 5, NULL, 1, NULL, '/src/views/desk/index.vue', '桌号管理', 'el-icon-knife-fork', '2021-09-27 17:52:42', '2021-10-23 14:20:18', 6);
 INSERT INTO `menu` VALUES (79, '/orders/page', 2, NULL, 2, 35, '', '查询订单', '', '2021-09-28 09:57:35', '2021-09-28 09:57:35', 1);
 INSERT INTO `menu` VALUES (80, '/desk/save', 0, NULL, 2, 78, '', '添加桌号', '', '2021-09-28 18:00:00', '2021-09-28 18:00:00', 1);
 INSERT INTO `menu` VALUES (81, '/desk/page', 2, NULL, 2, 78, '', '查询桌号', '', '2021-09-29 12:05:04', '2021-09-29 12:05:04', 1);
@@ -1076,10 +1120,19 @@ INSERT INTO `menu` VALUES (84, '/user/auto', 0, NULL, 2, 26, '', '自动生成�
 INSERT INTO `menu` VALUES (85, '/desk/remove', 0, NULL, 2, 78, '', '删除桌号', '', '2021-10-14 19:09:55', '2021-10-14 19:09:55', 1);
 INSERT INTO `menu` VALUES (86, '/desk/update', 0, NULL, 2, 78, '', '修改桌号', '', '2021-10-14 21:31:55', '2021-10-14 21:31:55', 1);
 INSERT INTO `menu` VALUES (87, '/desk/remove', 0, NULL, 2, 78, '', '删除桌号', '', '2021-10-14 21:52:57', '2021-10-14 21:52:57', 1);
-INSERT INTO `menu` VALUES (88, '/document', 6, NULL, 1, NULL, '/src/views/document/index.vue', '接口文档', 'el-icon-collection-tag', '2021-10-15 10:23:45', '2021-10-15 10:25:45', 3);
+INSERT INTO `menu` VALUES (88, '/document', 7, NULL, 1, NULL, '/src/views/document/index.vue', '接口文档', 'el-icon-collection-tag', '2021-10-15 10:23:45', '2021-10-23 14:20:46', 4);
 INSERT INTO `menu` VALUES (89, '/orders/self', 0, NULL, 2, 35, '', '查询个人订单', '', '2021-10-15 15:40:45', '2021-10-15 15:40:45', 1);
 INSERT INTO `menu` VALUES (90, '/foods/order', 0, NULL, 2, 34, '', '排序', '', '2021-10-16 10:43:09', '2021-10-16 10:43:09', 1);
 INSERT INTO `menu` VALUES (91, '/user/getById', 0, NULL, 2, 26, '', 'id查询用户', '', '2021-10-16 17:30:59', '2021-10-16 17:30:59', 1);
+INSERT INTO `menu` VALUES (92, '/comment/page', 6, NULL, 1, NULL, '/src/views/comment/index.vue', '评论管理', 'el-icon-chat-line-round', '2021-10-22 17:52:23', '2021-10-23 14:20:33', 3);
+INSERT INTO `menu` VALUES (93, '/comment/page', 0, NULL, 2, 92, '', '分页查询评论', '', '2021-10-22 17:57:26', '2021-10-22 17:57:26', 1);
+INSERT INTO `menu` VALUES (94, '/comment-reply/page', 1, NULL, 2, 92, '', '分页查询回复', '', '2021-10-22 22:03:11', '2021-10-22 22:03:26', 2);
+INSERT INTO `menu` VALUES (95, '/comment/add', 0, NULL, 2, 92, '', '添加评论', '', '2021-10-24 17:32:20', '2021-10-24 17:32:20', 1);
+INSERT INTO `menu` VALUES (96, '/comment-reply/add', 0, NULL, 2, 92, '', '添加回复', '', '2021-10-24 19:23:22', '2021-10-24 19:23:22', 1);
+INSERT INTO `menu` VALUES (97, '/comment/v/page', 0, NULL, 2, 92, '', '分页查询审核成功的评论', '', '2021-10-25 09:12:54', '2021-10-26 15:12:14', 2);
+INSERT INTO `menu` VALUES (98, '/comment/update', 0, NULL, 2, 92, '', '修改评论', '', '2021-10-25 12:56:46', '2021-10-25 12:56:46', 1);
+INSERT INTO `menu` VALUES (99, '/comment-reply/v/page/', 0, NULL, 2, 92, '', '分页查询审核成功的回复', '', '2021-10-26 15:11:57', '2021-10-26 15:11:57', 1);
+INSERT INTO `menu` VALUES (100, '/comment/remove', 0, NULL, 2, 92, '', '删除评论', '', '2021-10-27 13:26:33', '2021-10-27 13:26:33', 1);
 
 -- ----------------------------
 -- Table structure for menu_role
@@ -1094,7 +1147,7 @@ CREATE TABLE `menu_role`  (
   INDEX `rid`(`rid`) USING BTREE,
   CONSTRAINT `menu_role_ibfk_1` FOREIGN KEY (`mid`) REFERENCES `menu` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `menu_role_ibfk_2` FOREIGN KEY (`rid`) REFERENCES `role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 2349 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3298 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of menu_role
@@ -1106,134 +1159,157 @@ INSERT INTO `menu_role` VALUES (1442, 24, 8);
 INSERT INTO `menu_role` VALUES (1443, 31, 8);
 INSERT INTO `menu_role` VALUES (1444, 36, 8);
 INSERT INTO `menu_role` VALUES (1445, 34, 8);
-INSERT INTO `menu_role` VALUES (2349, 73, 3);
-INSERT INTO `menu_role` VALUES (2350, 28, 3);
-INSERT INTO `menu_role` VALUES (2351, 33, 3);
-INSERT INTO `menu_role` VALUES (2352, 21, 3);
-INSERT INTO `menu_role` VALUES (2353, 90, 3);
-INSERT INTO `menu_role` VALUES (2354, 71, 3);
-INSERT INTO `menu_role` VALUES (2355, 64, 3);
-INSERT INTO `menu_role` VALUES (2356, 89, 3);
-INSERT INTO `menu_role` VALUES (2357, 77, 3);
-INSERT INTO `menu_role` VALUES (2358, 79, 3);
-INSERT INTO `menu_role` VALUES (2359, 72, 3);
-INSERT INTO `menu_role` VALUES (2360, 24, 3);
-INSERT INTO `menu_role` VALUES (2361, 25, 3);
-INSERT INTO `menu_role` VALUES (2362, 26, 3);
-INSERT INTO `menu_role` VALUES (2363, 29, 3);
-INSERT INTO `menu_role` VALUES (2364, 34, 3);
-INSERT INTO `menu_role` VALUES (2365, 35, 3);
-INSERT INTO `menu_role` VALUES (2464, 73, 2);
-INSERT INTO `menu_role` VALUES (2465, 84, 2);
-INSERT INTO `menu_role` VALUES (2466, 3, 2);
-INSERT INTO `menu_role` VALUES (2467, 28, 2);
-INSERT INTO `menu_role` VALUES (2468, 33, 2);
-INSERT INTO `menu_role` VALUES (2469, 50, 2);
-INSERT INTO `menu_role` VALUES (2470, 54, 2);
-INSERT INTO `menu_role` VALUES (2471, 17, 2);
-INSERT INTO `menu_role` VALUES (2472, 8, 2);
-INSERT INTO `menu_role` VALUES (2473, 21, 2);
-INSERT INTO `menu_role` VALUES (2474, 36, 2);
-INSERT INTO `menu_role` VALUES (2475, 58, 2);
-INSERT INTO `menu_role` VALUES (2476, 49, 2);
-INSERT INTO `menu_role` VALUES (2477, 68, 2);
-INSERT INTO `menu_role` VALUES (2478, 67, 2);
-INSERT INTO `menu_role` VALUES (2479, 90, 2);
-INSERT INTO `menu_role` VALUES (2480, 71, 2);
-INSERT INTO `menu_role` VALUES (2481, 69, 2);
-INSERT INTO `menu_role` VALUES (2482, 64, 2);
-INSERT INTO `menu_role` VALUES (2483, 35, 2);
-INSERT INTO `menu_role` VALUES (2484, 89, 2);
-INSERT INTO `menu_role` VALUES (2485, 70, 2);
-INSERT INTO `menu_role` VALUES (2486, 77, 2);
-INSERT INTO `menu_role` VALUES (2487, 79, 2);
-INSERT INTO `menu_role` VALUES (2488, 78, 2);
-INSERT INTO `menu_role` VALUES (2489, 87, 2);
-INSERT INTO `menu_role` VALUES (2490, 86, 2);
-INSERT INTO `menu_role` VALUES (2491, 85, 2);
-INSERT INTO `menu_role` VALUES (2492, 80, 2);
-INSERT INTO `menu_role` VALUES (2493, 81, 2);
-INSERT INTO `menu_role` VALUES (2494, 65, 2);
-INSERT INTO `menu_role` VALUES (2495, 66, 2);
-INSERT INTO `menu_role` VALUES (2496, 72, 2);
-INSERT INTO `menu_role` VALUES (2497, 24, 2);
-INSERT INTO `menu_role` VALUES (2498, 25, 2);
-INSERT INTO `menu_role` VALUES (2499, 26, 2);
-INSERT INTO `menu_role` VALUES (2500, 30, 2);
-INSERT INTO `menu_role` VALUES (2501, 29, 2);
-INSERT INTO `menu_role` VALUES (2502, 31, 2);
-INSERT INTO `menu_role` VALUES (2503, 34, 2);
-INSERT INTO `menu_role` VALUES (2514, 72, 1);
-INSERT INTO `menu_role` VALUES (2515, 83, 1);
-INSERT INTO `menu_role` VALUES (2516, 73, 1);
-INSERT INTO `menu_role` VALUES (2517, 24, 1);
-INSERT INTO `menu_role` VALUES (2518, 25, 1);
-INSERT INTO `menu_role` VALUES (2519, 26, 1);
-INSERT INTO `menu_role` VALUES (2520, 91, 1);
-INSERT INTO `menu_role` VALUES (2521, 84, 1);
-INSERT INTO `menu_role` VALUES (2522, 2, 1);
-INSERT INTO `menu_role` VALUES (2523, 3, 1);
-INSERT INTO `menu_role` VALUES (2524, 4, 1);
-INSERT INTO `menu_role` VALUES (2525, 5, 1);
-INSERT INTO `menu_role` VALUES (2526, 6, 1);
-INSERT INTO `menu_role` VALUES (2527, 28, 1);
-INSERT INTO `menu_role` VALUES (2528, 33, 1);
-INSERT INTO `menu_role` VALUES (2529, 30, 1);
-INSERT INTO `menu_role` VALUES (2530, 50, 1);
-INSERT INTO `menu_role` VALUES (2531, 54, 1);
-INSERT INTO `menu_role` VALUES (2532, 12, 1);
-INSERT INTO `menu_role` VALUES (2533, 13, 1);
-INSERT INTO `menu_role` VALUES (2534, 16, 1);
-INSERT INTO `menu_role` VALUES (2535, 17, 1);
-INSERT INTO `menu_role` VALUES (2536, 18, 1);
-INSERT INTO `menu_role` VALUES (2537, 19, 1);
-INSERT INTO `menu_role` VALUES (2538, 29, 1);
-INSERT INTO `menu_role` VALUES (2539, 7, 1);
-INSERT INTO `menu_role` VALUES (2540, 8, 1);
-INSERT INTO `menu_role` VALUES (2541, 9, 1);
-INSERT INTO `menu_role` VALUES (2542, 10, 1);
-INSERT INTO `menu_role` VALUES (2543, 21, 1);
-INSERT INTO `menu_role` VALUES (2544, 31, 1);
-INSERT INTO `menu_role` VALUES (2545, 36, 1);
-INSERT INTO `menu_role` VALUES (2546, 58, 1);
-INSERT INTO `menu_role` VALUES (2547, 49, 1);
-INSERT INTO `menu_role` VALUES (2548, 75, 1);
-INSERT INTO `menu_role` VALUES (2549, 76, 1);
-INSERT INTO `menu_role` VALUES (2550, 34, 1);
-INSERT INTO `menu_role` VALUES (2551, 82, 1);
-INSERT INTO `menu_role` VALUES (2552, 68, 1);
-INSERT INTO `menu_role` VALUES (2553, 90, 1);
-INSERT INTO `menu_role` VALUES (2554, 67, 1);
-INSERT INTO `menu_role` VALUES (2555, 69, 1);
-INSERT INTO `menu_role` VALUES (2556, 71, 1);
-INSERT INTO `menu_role` VALUES (2557, 64, 1);
-INSERT INTO `menu_role` VALUES (2558, 35, 1);
-INSERT INTO `menu_role` VALUES (2559, 89, 1);
-INSERT INTO `menu_role` VALUES (2560, 70, 1);
-INSERT INTO `menu_role` VALUES (2561, 77, 1);
-INSERT INTO `menu_role` VALUES (2562, 79, 1);
-INSERT INTO `menu_role` VALUES (2563, 78, 1);
-INSERT INTO `menu_role` VALUES (2564, 85, 1);
-INSERT INTO `menu_role` VALUES (2565, 86, 1);
-INSERT INTO `menu_role` VALUES (2566, 87, 1);
-INSERT INTO `menu_role` VALUES (2567, 80, 1);
-INSERT INTO `menu_role` VALUES (2568, 81, 1);
-INSERT INTO `menu_role` VALUES (2569, 88, 1);
-INSERT INTO `menu_role` VALUES (2570, 63, 1);
-INSERT INTO `menu_role` VALUES (2571, 62, 1);
-INSERT INTO `menu_role` VALUES (2572, 65, 1);
-INSERT INTO `menu_role` VALUES (2573, 66, 1);
-INSERT INTO `menu_role` VALUES (2574, 84, 4);
-INSERT INTO `menu_role` VALUES (2575, 21, 4);
-INSERT INTO `menu_role` VALUES (2576, 82, 4);
-INSERT INTO `menu_role` VALUES (2577, 90, 4);
-INSERT INTO `menu_role` VALUES (2578, 71, 4);
-INSERT INTO `menu_role` VALUES (2579, 64, 4);
-INSERT INTO `menu_role` VALUES (2580, 24, 4);
-INSERT INTO `menu_role` VALUES (2581, 25, 4);
-INSERT INTO `menu_role` VALUES (2582, 26, 4);
-INSERT INTO `menu_role` VALUES (2583, 29, 4);
-INSERT INTO `menu_role` VALUES (2584, 34, 4);
+INSERT INTO `menu_role` VALUES (2951, 73, 3);
+INSERT INTO `menu_role` VALUES (2952, 28, 3);
+INSERT INTO `menu_role` VALUES (2953, 33, 3);
+INSERT INTO `menu_role` VALUES (2954, 21, 3);
+INSERT INTO `menu_role` VALUES (2955, 90, 3);
+INSERT INTO `menu_role` VALUES (2956, 71, 3);
+INSERT INTO `menu_role` VALUES (2957, 64, 3);
+INSERT INTO `menu_role` VALUES (2958, 89, 3);
+INSERT INTO `menu_role` VALUES (2959, 77, 3);
+INSERT INTO `menu_role` VALUES (2960, 79, 3);
+INSERT INTO `menu_role` VALUES (2961, 95, 3);
+INSERT INTO `menu_role` VALUES (2962, 97, 3);
+INSERT INTO `menu_role` VALUES (2963, 96, 3);
+INSERT INTO `menu_role` VALUES (2964, 72, 3);
+INSERT INTO `menu_role` VALUES (2965, 24, 3);
+INSERT INTO `menu_role` VALUES (2966, 25, 3);
+INSERT INTO `menu_role` VALUES (2967, 26, 3);
+INSERT INTO `menu_role` VALUES (2968, 29, 3);
+INSERT INTO `menu_role` VALUES (2969, 34, 3);
+INSERT INTO `menu_role` VALUES (2970, 35, 3);
+INSERT INTO `menu_role` VALUES (2971, 92, 3);
+INSERT INTO `menu_role` VALUES (3120, 84, 4);
+INSERT INTO `menu_role` VALUES (3121, 21, 4);
+INSERT INTO `menu_role` VALUES (3122, 90, 4);
+INSERT INTO `menu_role` VALUES (3123, 82, 4);
+INSERT INTO `menu_role` VALUES (3124, 71, 4);
+INSERT INTO `menu_role` VALUES (3125, 64, 4);
+INSERT INTO `menu_role` VALUES (3126, 97, 4);
+INSERT INTO `menu_role` VALUES (3127, 99, 4);
+INSERT INTO `menu_role` VALUES (3128, 24, 4);
+INSERT INTO `menu_role` VALUES (3129, 25, 4);
+INSERT INTO `menu_role` VALUES (3130, 26, 4);
+INSERT INTO `menu_role` VALUES (3131, 29, 4);
+INSERT INTO `menu_role` VALUES (3132, 34, 4);
+INSERT INTO `menu_role` VALUES (3133, 92, 4);
+INSERT INTO `menu_role` VALUES (3182, 73, 2);
+INSERT INTO `menu_role` VALUES (3183, 84, 2);
+INSERT INTO `menu_role` VALUES (3184, 3, 2);
+INSERT INTO `menu_role` VALUES (3185, 28, 2);
+INSERT INTO `menu_role` VALUES (3186, 33, 2);
+INSERT INTO `menu_role` VALUES (3187, 50, 2);
+INSERT INTO `menu_role` VALUES (3188, 54, 2);
+INSERT INTO `menu_role` VALUES (3189, 17, 2);
+INSERT INTO `menu_role` VALUES (3190, 8, 2);
+INSERT INTO `menu_role` VALUES (3191, 21, 2);
+INSERT INTO `menu_role` VALUES (3192, 36, 2);
+INSERT INTO `menu_role` VALUES (3193, 58, 2);
+INSERT INTO `menu_role` VALUES (3194, 49, 2);
+INSERT INTO `menu_role` VALUES (3195, 90, 2);
+INSERT INTO `menu_role` VALUES (3196, 71, 2);
+INSERT INTO `menu_role` VALUES (3197, 69, 2);
+INSERT INTO `menu_role` VALUES (3198, 68, 2);
+INSERT INTO `menu_role` VALUES (3199, 67, 2);
+INSERT INTO `menu_role` VALUES (3200, 64, 2);
+INSERT INTO `menu_role` VALUES (3201, 35, 2);
+INSERT INTO `menu_role` VALUES (3202, 89, 2);
+INSERT INTO `menu_role` VALUES (3203, 70, 2);
+INSERT INTO `menu_role` VALUES (3204, 77, 2);
+INSERT INTO `menu_role` VALUES (3205, 79, 2);
+INSERT INTO `menu_role` VALUES (3206, 78, 2);
+INSERT INTO `menu_role` VALUES (3207, 87, 2);
+INSERT INTO `menu_role` VALUES (3208, 86, 2);
+INSERT INTO `menu_role` VALUES (3209, 85, 2);
+INSERT INTO `menu_role` VALUES (3210, 80, 2);
+INSERT INTO `menu_role` VALUES (3211, 81, 2);
+INSERT INTO `menu_role` VALUES (3212, 97, 2);
+INSERT INTO `menu_role` VALUES (3213, 96, 2);
+INSERT INTO `menu_role` VALUES (3214, 95, 2);
+INSERT INTO `menu_role` VALUES (3215, 93, 2);
+INSERT INTO `menu_role` VALUES (3216, 99, 2);
+INSERT INTO `menu_role` VALUES (3217, 94, 2);
+INSERT INTO `menu_role` VALUES (3218, 65, 2);
+INSERT INTO `menu_role` VALUES (3219, 66, 2);
+INSERT INTO `menu_role` VALUES (3220, 72, 2);
+INSERT INTO `menu_role` VALUES (3221, 24, 2);
+INSERT INTO `menu_role` VALUES (3222, 25, 2);
+INSERT INTO `menu_role` VALUES (3223, 26, 2);
+INSERT INTO `menu_role` VALUES (3224, 30, 2);
+INSERT INTO `menu_role` VALUES (3225, 29, 2);
+INSERT INTO `menu_role` VALUES (3226, 31, 2);
+INSERT INTO `menu_role` VALUES (3227, 34, 2);
+INSERT INTO `menu_role` VALUES (3228, 92, 2);
+INSERT INTO `menu_role` VALUES (3229, 72, 1);
+INSERT INTO `menu_role` VALUES (3230, 73, 1);
+INSERT INTO `menu_role` VALUES (3231, 83, 1);
+INSERT INTO `menu_role` VALUES (3232, 24, 1);
+INSERT INTO `menu_role` VALUES (3233, 25, 1);
+INSERT INTO `menu_role` VALUES (3234, 26, 1);
+INSERT INTO `menu_role` VALUES (3235, 91, 1);
+INSERT INTO `menu_role` VALUES (3236, 84, 1);
+INSERT INTO `menu_role` VALUES (3237, 2, 1);
+INSERT INTO `menu_role` VALUES (3238, 3, 1);
+INSERT INTO `menu_role` VALUES (3239, 4, 1);
+INSERT INTO `menu_role` VALUES (3240, 5, 1);
+INSERT INTO `menu_role` VALUES (3241, 6, 1);
+INSERT INTO `menu_role` VALUES (3242, 28, 1);
+INSERT INTO `menu_role` VALUES (3243, 33, 1);
+INSERT INTO `menu_role` VALUES (3244, 30, 1);
+INSERT INTO `menu_role` VALUES (3245, 50, 1);
+INSERT INTO `menu_role` VALUES (3246, 54, 1);
+INSERT INTO `menu_role` VALUES (3247, 12, 1);
+INSERT INTO `menu_role` VALUES (3248, 13, 1);
+INSERT INTO `menu_role` VALUES (3249, 16, 1);
+INSERT INTO `menu_role` VALUES (3250, 17, 1);
+INSERT INTO `menu_role` VALUES (3251, 19, 1);
+INSERT INTO `menu_role` VALUES (3252, 18, 1);
+INSERT INTO `menu_role` VALUES (3253, 29, 1);
+INSERT INTO `menu_role` VALUES (3254, 7, 1);
+INSERT INTO `menu_role` VALUES (3255, 8, 1);
+INSERT INTO `menu_role` VALUES (3256, 9, 1);
+INSERT INTO `menu_role` VALUES (3257, 10, 1);
+INSERT INTO `menu_role` VALUES (3258, 21, 1);
+INSERT INTO `menu_role` VALUES (3259, 31, 1);
+INSERT INTO `menu_role` VALUES (3260, 36, 1);
+INSERT INTO `menu_role` VALUES (3261, 58, 1);
+INSERT INTO `menu_role` VALUES (3262, 49, 1);
+INSERT INTO `menu_role` VALUES (3263, 75, 1);
+INSERT INTO `menu_role` VALUES (3264, 76, 1);
+INSERT INTO `menu_role` VALUES (3265, 34, 1);
+INSERT INTO `menu_role` VALUES (3266, 90, 1);
+INSERT INTO `menu_role` VALUES (3267, 82, 1);
+INSERT INTO `menu_role` VALUES (3268, 71, 1);
+INSERT INTO `menu_role` VALUES (3269, 69, 1);
+INSERT INTO `menu_role` VALUES (3270, 68, 1);
+INSERT INTO `menu_role` VALUES (3271, 67, 1);
+INSERT INTO `menu_role` VALUES (3272, 64, 1);
+INSERT INTO `menu_role` VALUES (3273, 35, 1);
+INSERT INTO `menu_role` VALUES (3274, 89, 1);
+INSERT INTO `menu_role` VALUES (3275, 70, 1);
+INSERT INTO `menu_role` VALUES (3276, 77, 1);
+INSERT INTO `menu_role` VALUES (3277, 79, 1);
+INSERT INTO `menu_role` VALUES (3278, 78, 1);
+INSERT INTO `menu_role` VALUES (3279, 87, 1);
+INSERT INTO `menu_role` VALUES (3280, 86, 1);
+INSERT INTO `menu_role` VALUES (3281, 85, 1);
+INSERT INTO `menu_role` VALUES (3282, 80, 1);
+INSERT INTO `menu_role` VALUES (3283, 81, 1);
+INSERT INTO `menu_role` VALUES (3284, 92, 1);
+INSERT INTO `menu_role` VALUES (3285, 96, 1);
+INSERT INTO `menu_role` VALUES (3286, 95, 1);
+INSERT INTO `menu_role` VALUES (3287, 93, 1);
+INSERT INTO `menu_role` VALUES (3288, 100, 1);
+INSERT INTO `menu_role` VALUES (3289, 97, 1);
+INSERT INTO `menu_role` VALUES (3290, 98, 1);
+INSERT INTO `menu_role` VALUES (3291, 99, 1);
+INSERT INTO `menu_role` VALUES (3292, 94, 1);
+INSERT INTO `menu_role` VALUES (3293, 63, 1);
+INSERT INTO `menu_role` VALUES (3294, 62, 1);
+INSERT INTO `menu_role` VALUES (3295, 88, 1);
+INSERT INTO `menu_role` VALUES (3296, 65, 1);
+INSERT INTO `menu_role` VALUES (3297, 66, 1);
 
 -- ----------------------------
 -- Table structure for orders
@@ -1248,7 +1324,7 @@ CREATE TABLE `orders`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   `version` int(0) NULL DEFAULT 1 COMMENT '版本',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orders
@@ -1292,52 +1368,53 @@ CREATE TABLE `orders_foods`  (
   `oid` int(0) NULL DEFAULT NULL COMMENT '订单id',
   `fid` int(0) NULL DEFAULT NULL COMMENT '餐品id',
   `count` int(0) NULL DEFAULT NULL COMMENT '数量',
+  `type` int(0) NULL DEFAULT NULL COMMENT '类型',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `oid`(`oid`) USING BTREE,
   INDEX `fid`(`fid`) USING BTREE,
   CONSTRAINT `orders_foods_ibfk_1` FOREIGN KEY (`oid`) REFERENCES `orders` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `orders_foods_ibfk_2` FOREIGN KEY (`fid`) REFERENCES `foods` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orders_foods
 -- ----------------------------
-INSERT INTO `orders_foods` VALUES (5, 3, 90, 2);
-INSERT INTO `orders_foods` VALUES (6, 3, 938, 1);
-INSERT INTO `orders_foods` VALUES (7, 3, 755, 1);
-INSERT INTO `orders_foods` VALUES (8, 3, 963, 1);
-INSERT INTO `orders_foods` VALUES (9, 3, 491, 1);
-INSERT INTO `orders_foods` VALUES (10, 4, 819, 1);
-INSERT INTO `orders_foods` VALUES (11, 4, 116, 2);
-INSERT INTO `orders_foods` VALUES (12, 5, 816, 2);
-INSERT INTO `orders_foods` VALUES (13, 6, 356, 2);
-INSERT INTO `orders_foods` VALUES (14, 7, 793, 1);
-INSERT INTO `orders_foods` VALUES (15, 8, 304, 2);
-INSERT INTO `orders_foods` VALUES (16, 9, 600, 1);
-INSERT INTO `orders_foods` VALUES (17, 9, 599, 2);
-INSERT INTO `orders_foods` VALUES (18, 10, 599, 1);
-INSERT INTO `orders_foods` VALUES (19, 11, 577, 1);
-INSERT INTO `orders_foods` VALUES (20, 12, 577, 1);
-INSERT INTO `orders_foods` VALUES (21, 13, 577, 1);
-INSERT INTO `orders_foods` VALUES (22, 14, 239, 1);
-INSERT INTO `orders_foods` VALUES (23, 14, 240, 2);
-INSERT INTO `orders_foods` VALUES (24, 15, 778, 2);
-INSERT INTO `orders_foods` VALUES (25, 16, 720, 1);
-INSERT INTO `orders_foods` VALUES (26, 17, 720, 2);
-INSERT INTO `orders_foods` VALUES (27, 18, 446, 2);
-INSERT INTO `orders_foods` VALUES (28, 19, 807, 2);
-INSERT INTO `orders_foods` VALUES (29, 20, 580, 1);
-INSERT INTO `orders_foods` VALUES (30, 21, 649, 1);
-INSERT INTO `orders_foods` VALUES (31, 22, 692, 1);
-INSERT INTO `orders_foods` VALUES (32, 23, 689, 1);
-INSERT INTO `orders_foods` VALUES (33, 24, 889, 3);
-INSERT INTO `orders_foods` VALUES (34, 25, 889, 1);
-INSERT INTO `orders_foods` VALUES (35, 26, 578, 1);
-INSERT INTO `orders_foods` VALUES (36, 27, 584, 1);
-INSERT INTO `orders_foods` VALUES (37, 28, 520, 1);
-INSERT INTO `orders_foods` VALUES (38, 29, 248, 1);
-INSERT INTO `orders_foods` VALUES (39, 30, 853, 1);
-INSERT INTO `orders_foods` VALUES (40, 31, 459, 1);
+INSERT INTO `orders_foods` VALUES (5, 3, 90, 2, NULL);
+INSERT INTO `orders_foods` VALUES (6, 3, 938, 1, NULL);
+INSERT INTO `orders_foods` VALUES (7, 3, 755, 1, NULL);
+INSERT INTO `orders_foods` VALUES (8, 3, 963, 1, NULL);
+INSERT INTO `orders_foods` VALUES (9, 3, 491, 1, NULL);
+INSERT INTO `orders_foods` VALUES (10, 4, 819, 1, NULL);
+INSERT INTO `orders_foods` VALUES (11, 4, 116, 2, NULL);
+INSERT INTO `orders_foods` VALUES (12, 5, 816, 2, NULL);
+INSERT INTO `orders_foods` VALUES (13, 6, 356, 2, NULL);
+INSERT INTO `orders_foods` VALUES (14, 7, 793, 1, NULL);
+INSERT INTO `orders_foods` VALUES (15, 8, 304, 2, NULL);
+INSERT INTO `orders_foods` VALUES (16, 9, 600, 1, NULL);
+INSERT INTO `orders_foods` VALUES (17, 9, 599, 2, NULL);
+INSERT INTO `orders_foods` VALUES (18, 10, 599, 1, NULL);
+INSERT INTO `orders_foods` VALUES (19, 11, 577, 1, NULL);
+INSERT INTO `orders_foods` VALUES (20, 12, 577, 1, NULL);
+INSERT INTO `orders_foods` VALUES (21, 13, 577, 1, NULL);
+INSERT INTO `orders_foods` VALUES (22, 14, 239, 1, NULL);
+INSERT INTO `orders_foods` VALUES (23, 14, 240, 2, NULL);
+INSERT INTO `orders_foods` VALUES (24, 15, 778, 2, NULL);
+INSERT INTO `orders_foods` VALUES (25, 16, 720, 1, NULL);
+INSERT INTO `orders_foods` VALUES (26, 17, 720, 2, NULL);
+INSERT INTO `orders_foods` VALUES (27, 18, 446, 2, NULL);
+INSERT INTO `orders_foods` VALUES (28, 19, 807, 2, NULL);
+INSERT INTO `orders_foods` VALUES (29, 20, 580, 1, NULL);
+INSERT INTO `orders_foods` VALUES (30, 21, 649, 1, NULL);
+INSERT INTO `orders_foods` VALUES (31, 22, 692, 1, NULL);
+INSERT INTO `orders_foods` VALUES (32, 23, 689, 1, NULL);
+INSERT INTO `orders_foods` VALUES (33, 24, 889, 3, NULL);
+INSERT INTO `orders_foods` VALUES (34, 25, 889, 1, NULL);
+INSERT INTO `orders_foods` VALUES (35, 26, 578, 1, NULL);
+INSERT INTO `orders_foods` VALUES (36, 27, 584, 1, NULL);
+INSERT INTO `orders_foods` VALUES (37, 28, 520, 1, NULL);
+INSERT INTO `orders_foods` VALUES (38, 29, 248, 1, NULL);
+INSERT INTO `orders_foods` VALUES (39, 30, 853, 1, NULL);
+INSERT INTO `orders_foods` VALUES (40, 31, 459, 1, NULL);
 
 -- ----------------------------
 -- Table structure for role
@@ -1356,10 +1433,10 @@ CREATE TABLE `role`  (
 -- ----------------------------
 -- Records of role
 -- ----------------------------
-INSERT INTO `role` VALUES (1, 'root', '超级管理员', NULL, '2021-10-16 17:31:21', 37);
-INSERT INTO `role` VALUES (2, 'admin', '管理员', NULL, '2021-10-16 15:48:31', 11);
-INSERT INTO `role` VALUES (3, 'user', '用户', NULL, '2021-10-16 10:43:28', 23);
-INSERT INTO `role` VALUES (4, 'tourist', '游客', NULL, '2021-10-16 19:26:21', 12);
+INSERT INTO `role` VALUES (1, 'root', '超级管理员', NULL, '2021-10-27 13:28:12', 45);
+INSERT INTO `role` VALUES (2, 'admin', '管理员', NULL, '2021-10-26 15:19:10', 14);
+INSERT INTO `role` VALUES (3, 'user', '用户', NULL, '2021-10-25 09:34:15', 24);
+INSERT INTO `role` VALUES (4, 'tourist', '游客', NULL, '2021-10-26 15:18:33', 14);
 INSERT INTO `role` VALUES (8, 'a', 'a', '2021-08-29 19:10:27', '2021-09-27 17:24:24', 17);
 
 -- ----------------------------
@@ -1374,7 +1451,7 @@ CREATE TABLE `statis`  (
   `foods_count` int(0) NULL DEFAULT NULL COMMENT '餐品数量',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 43 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 54 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of statis
@@ -1409,7 +1486,18 @@ INSERT INTO `statis` VALUES (38, 2, 0, 3, 0, '2021-10-12 00:00:00');
 INSERT INTO `statis` VALUES (39, 2, 4, 0, 0, '2021-10-13 00:00:00');
 INSERT INTO `statis` VALUES (40, 1, 0, 1, 0, '2021-10-14 09:00:00');
 INSERT INTO `statis` VALUES (41, 2, 0, 3, 0, '2021-10-15 00:00:00');
-INSERT INTO `statis` VALUES (42, 2, 3, 25, 0, '2021-10-16 00:00:00');
+INSERT INTO `statis` VALUES (42, 3, 4, 25, 0, '2021-10-16 00:00:00');
+INSERT INTO `statis` VALUES (43, 1, 0, 0, 0, '2021-10-17 01:00:00');
+INSERT INTO `statis` VALUES (44, 1, 0, 0, 0, '2021-10-18 00:00:00');
+INSERT INTO `statis` VALUES (45, 1, 0, 0, 0, '2021-10-19 00:00:00');
+INSERT INTO `statis` VALUES (46, 1, 0, 0, 0, '2021-10-20 00:00:00');
+INSERT INTO `statis` VALUES (47, 1, 0, 0, 0, '2021-10-21 19:00:00');
+INSERT INTO `statis` VALUES (48, 2, 0, 0, 0, '2021-10-22 00:00:00');
+INSERT INTO `statis` VALUES (49, 2, 0, 0, 0, '2021-10-23 00:00:00');
+INSERT INTO `statis` VALUES (50, 2, 0, 0, 0, '2021-10-24 00:00:00');
+INSERT INTO `statis` VALUES (51, 2, 0, 0, 0, '2021-10-25 00:00:00');
+INSERT INTO `statis` VALUES (52, 2, 0, 0, 0, '2021-10-26 15:00:00');
+INSERT INTO `statis` VALUES (53, 1, 1, 0, 0, '2021-10-27 10:00:00');
 
 -- ----------------------------
 -- Table structure for user
@@ -1430,14 +1518,14 @@ CREATE TABLE `user`  (
   `version` int(0) NULL DEFAULT 0 COMMENT '乐观锁',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `username`(`username`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 49 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Redundant;
+) ENGINE = InnoDB AUTO_INCREMENT = 56 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Redundant;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'user', '木灵鱼儿', '$2a$10$UfzfgbVxCAXoiyaCw7IXiuHiFqMMVbhbb3ox6nkxbAJLGTWjJ7Ciq', '8aefd710-bfe8-4c72-925f-f892c796005a', NULL, '15885326305', 'user@qq.com', 1, '2021-07-29 02:14:10', '2021-10-16 18:44:07', 11);
+INSERT INTO `user` VALUES (1, 'user', '木灵鱼儿', '$2a$10$UfzfgbVxCAXoiyaCw7IXiuHiFqMMVbhbb3ox6nkxbAJLGTWjJ7Ciq', '160e21c1-60a9-47dc-87a1-7984bf7f0eec', NULL, '15885326305', 'user@qq.com', 1, '2021-07-29 02:14:10', '2021-10-26 20:35:38', 11);
 INSERT INTO `user` VALUES (2, 'admin', '初之音', '$2a$10$vnvYyOdeQr9EUAc..Zjh4ed73t3JQf74tFgwg/XpQYTQHL3cfEtn2', 'c387895e-6df3-4637-bb00-ef22ea1cd507', NULL, '113', 'root', 1, '2021-07-29 13:11:51', '2021-10-16 19:21:52', 13);
-INSERT INTO `user` VALUES (3, 'root', '保罗的小宇宙', '$2a$10$eFWwgadiCeSOQnSH3FaJT.EJhCE77x8yIQk3/JlgQAmX39qejXBrm', 'c8a27123-08ad-4ed5-abcb-c03d4fe475ac', NULL, '15885326300', 'root@qq.com', 1, '2021-07-29 13:12:04', '2021-10-16 20:07:43', 5);
+INSERT INTO `user` VALUES (3, 'root', '保罗的小宇宙', '$2a$10$eFWwgadiCeSOQnSH3FaJT.EJhCE77x8yIQk3/JlgQAmX39qejXBrm', '33a251f4-d83f-41a7-8a07-505e595d34b1', NULL, '15885326300', 'root@qq.com', 1, '2021-07-29 13:12:04', '2021-10-27 09:38:55', 5);
 INSERT INTO `user` VALUES (4, 'jack', '梦回少年', '$2a$10$FSJNe2Ezpyu6piw/VnfMru1S.DlCifpwwdzsklDrwEDEHzrKD0Z0i', NULL, NULL, '12121', NULL, 1, '2021-07-29 13:12:13', '2021-09-27 16:53:06', 4);
 INSERT INTO `user` VALUES (5, 'july', '夏和帆', '$2a$10$eOmN/XhXFxok4L0z06EWD.M/C2KdgUHaz5PsjCcCpP/l1NXHI73E.', NULL, NULL, '324', NULL, 0, '2021-07-29 23:44:20', '2021-10-13 20:53:47', 10);
 INSERT INTO `user` VALUES (6, 'hello', '樱花庄的白猫', '$2a$10$p0HMOn4c9W4VHESI1kbmp.MySrgM84bkw/actZ.4SlI83mQjDkccG', NULL, NULL, NULL, NULL, 0, '2021-07-30 00:33:03', '2021-09-21 02:13:28', 2);
@@ -1449,6 +1537,8 @@ INSERT INTO `user` VALUES (48, '6166dab1e058ea125c7ed808', '谢娜', '$2a$10$QpC
 INSERT INTO `user` VALUES (49, '616a9adb4b98cad694bb2815', '前羽_rr', '$2a$10$.8YkNPKYd14M3T4MIR6U2OwVArPNIl/zR3pb.FWas7VFQ/Qwt19X6', '9b18fea2-963c-47e7-b7e8-701fbb26f1a4', NULL, '114321342', NULL, 1, '2021-10-16 17:26:53', '2021-10-16 17:26:53', 0);
 INSERT INTO `user` VALUES (50, '616aac874b98cad694bb2816', '哆啦A梦壁纸', '$2a$10$sAaRUj3UPcOVFBhjdsdBreNy2/WlLsA7Bs.zzVkg2tPXw4vkIN9Ky', 'd5b99596-b327-4bfa-832e-d5e16762a1c4', NULL, NULL, NULL, 1, '2021-10-16 18:42:18', '2021-10-16 18:42:19', 0);
 INSERT INTO `user` VALUES (51, '616ab0814b98cad694bb2817', 'love勇士', '$2a$10$jFjsdikjJ/kqMoXQ.tArZ.1dMxSbkzn.8anS5v0lG18H/t5tdJPoa', 'f3ccf532-6f0e-4ff8-a399-b0de992da417', NULL, NULL, NULL, 1, '2021-10-16 18:59:15', '2021-10-16 18:59:15', 0);
+INSERT INTO `user` VALUES (52, '616ae3ad4b98e6565255c4f3', '袁和平', '$2a$10$UmiPxr4eHQ66ffaK1TIW3.wQOGBQPf8nOcQKKnsmClUAR9/eFEL2e', 'e7d19106-f82a-4f0a-b22a-914f909b5dcf', NULL, NULL, NULL, 1, '2021-10-16 22:37:34', '2021-10-16 22:37:35', 0);
+INSERT INTO `user` VALUES (56, 'a', NULL, '$2a$10$M9csqPPryepeiUCcqYa.VeGj2xH8BGImPA0qf6nJ1a3fOajAY2zFe', NULL, NULL, NULL, NULL, 1, '2021-10-27 20:44:44', '2021-10-27 20:44:44', 0);
 
 -- ----------------------------
 -- Table structure for user_role
@@ -1463,7 +1553,7 @@ CREATE TABLE `user_role`  (
   INDEX `rid`(`rid`) USING BTREE,
   CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`rid`) REFERENCES `role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 138 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 142 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_role
@@ -1483,5 +1573,7 @@ INSERT INTO `user_role` VALUES (137, 1, 3);
 INSERT INTO `user_role` VALUES (138, 49, 3);
 INSERT INTO `user_role` VALUES (139, 50, 3);
 INSERT INTO `user_role` VALUES (140, 51, 3);
+INSERT INTO `user_role` VALUES (141, 52, 3);
+INSERT INTO `user_role` VALUES (142, 56, 4);
 
 SET FOREIGN_KEY_CHECKS = 1;

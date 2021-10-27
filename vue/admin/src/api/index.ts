@@ -8,6 +8,7 @@ const Alogin = apiAxios("/oauth/login", "post")
 const Alogout = apiAxios("/oauth/logout", "delete")
 const ArefToken = apiAxios("/oauth/refresh", "put")
 const Aregister = apiAxios("/user/save", "post")
+
 const Astatis = {
   recent: apiAxios("/statis/recent"),
   server: apiAxios<IsysInfo>("/statis/server"),
@@ -36,6 +37,13 @@ const Adesk = {
   update: apiAxios("/desk/update", "put")
 }
 
+const Acomment = {
+  page: apiAxios("/comment/page"),
+  update: apiAxios("/comment/update", "put"),
+  remove: apiAxios("/comment/remove", "delete")
+}
+
+
 
 export {
   Alogin,
@@ -50,4 +58,5 @@ export {
   Astatis,
   Aorders,
   Adesk,
+  Acomment,
 }

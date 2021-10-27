@@ -57,8 +57,8 @@ public class DeskServiceImpl extends ServiceImpl<DeskMapper, Desk> implements De
     }
 
     @Override
-    public PageInfo<Desk> page(Integer pageNum, Integer pageSize) {
+    public PageInfo<Desk> page(Integer pageNum, Integer pageSize, Integer number) {
         PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo(deskMapper.selectList(null));
+        return new PageInfo(deskMapper.like(number));
     }
 }

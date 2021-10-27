@@ -10,6 +10,7 @@ export const createState = () => ({
   dNumber: storage.get("d-number") || "",
   userInfo: storage.get("userInfo") as Iuser || {},
   token: cookie.get("f1dao-token") as Itoken || {},
+  parentId: null,
 })
 
 

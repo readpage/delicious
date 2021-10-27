@@ -39,6 +39,11 @@ const mutations = {
     state.dNumber = ""
     storage.remove("d-number",)
   },
+
+  setParentId(state: userState, val: any) {
+    state.parentId = val
+  },
+
 }
 
 export default mutations
