@@ -13,6 +13,11 @@
     >
       <el-row>
         <el-col :span="24">
+          <el-form-item label="头像" prop="img">
+            <v-upload ref="uploadRef" action="/api/file/upload" :file-list="imgList" @success="success" @updImg="updImg"></v-upload>
+          </el-form-item>
+        </el-col>
+        <el-col :span="24">
           <el-form-item style="width: 100%" label="用户名:" prop="username">
             <el-input v-model="data.username"></el-input>
           </el-form-item>
@@ -83,6 +88,7 @@ const props = defineProps({
   msg: String,
 })
 
+
 const { state, commit } = useStore()
 const visible = ref(false)
 const roles = inject(IroleKey, role)
@@ -135,6 +141,15 @@ function submit() {
       emit("submit", data.value)
     }
   }) 
+}
+
+const imgList = ref([])
+function updImg(val: any) {
+  imgList.value = val
+}
+
+function success(val: any) {
+  data.value.headImg = val.data
 }
 
 defineExpose({

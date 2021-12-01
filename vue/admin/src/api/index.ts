@@ -12,7 +12,8 @@ const Aregister = apiAxios("/user/save", "post")
 const Astatis = {
   recent: apiAxios("/statis/recent"),
   server: apiAxios<IsysInfo>("/statis/server"),
-  total: apiAxios("/statis/total")
+  total: apiAxios("/statis/total"),
+  foodType: apiAxios("/statis/foodType")
 }
 
 const Auser = {

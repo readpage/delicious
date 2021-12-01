@@ -2,6 +2,9 @@ package com.example.util.log;
 
 
 import cn.hutool.core.text.UnicodeUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.entity.LogInfo;
+import com.example.mapper.LogInfoMapper;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -18,13 +21,18 @@ import java.util.regex.Pattern;
 @Component
 public class LogUtils {
     private static RestTemplate restTemplate;
+    private static LogInfoMapper logInfoMapper;
 
     @Autowired
     private RestTemplate myRestTemplate;
 
+    @Autowired
+    private LogInfoMapper myLogInfoMapper;
+
     @PostConstruct
     public void init() {
         LogUtils.restTemplate = this.myRestTemplate;
+        LogUtils.logInfoMapper = this.myLogInfoMapper;
     }
 
     public static BrowserInfo getBrowserInfo(HttpServletRequest request) {
@@ -40,8 +48,19 @@ public class LogUtils {
         browserInfo.setBrowser(browser.getName());
         browserInfo.setOs(os.getName());
         browserInfo.setDeviceType(os.getDeviceType().getName());
-        browserInfo.setIpAddr(getIpAddress(request));
-        browserInfo.setLocation(getLocation(browserInfo.getIpAddr()));
+        String ipAddress = getIpAddress(request);
+        browserInfo.setIpAddr(ipAddress);
+        LogInfo logInfo = logInfoMapper.selectOne(
+                new QueryWrapper<LogInfo>()
+                        .eq("ip_addr", ipAddress)
+                        .last("AND TO_DAYS(create_time) = TO_DAYS(NOW()) LIMIT 1")
+
+        );
+        if (logInfo == null) {
+            browserInfo.setLocation(getLocation(ipAddress));
+        } else {
+            browserInfo.setLocation(logInfo.getLocation());
+        }
         return browserInfo;
     }
 

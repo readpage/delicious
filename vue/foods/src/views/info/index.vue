@@ -5,7 +5,7 @@
         <div class="card-header">
           <div class="item">
             <el-space :size="15">
-              <el-avatar src="https://empty" :size="60">
+              <el-avatar :src="state.user.userInfo.headImg">
                 <img src="@/assets/img/avatar.png" alt="">
               </el-avatar>
               <span style="font-size: 23px">{{userInfo.nickname || "用户未登录"}}</span>

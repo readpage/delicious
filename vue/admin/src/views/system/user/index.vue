@@ -65,7 +65,7 @@
           <el-table-column label="用户名" prop="username" show-overflow-tooltip min-width="150"></el-table-column>
           <el-table-column label="头像" prop="headImg" width="120">
             <template #default="scope">
-              <el-avatar :src="scope.row.img">
+              <el-avatar :src="scope.row.headImg">
                 <img src="@/assets/img/avatar.png" alt="">
               </el-avatar>
             </template>

@@ -58,6 +58,8 @@
       </el-table-column>
       <el-table-column label="价格" prop="price" width="80"></el-table-column>
       <el-table-column label="类型" prop="type"></el-table-column>
+      <el-table-column label="原料" prop="material"></el-table-column>
+      <el-table-column label="内容" prop="content"></el-table-column>
       <el-table-column label="创建时间" prop="createTime" width="160"></el-table-column>
       <el-table-column label="修改时间" prop="updateTime" width="160"></el-table-column>
       <el-table-column label="操作" fixed="right" width="135">

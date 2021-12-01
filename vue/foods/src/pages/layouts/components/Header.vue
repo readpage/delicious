@@ -32,8 +32,9 @@
       <el-dropdown trigger="click" @command="onCommand">
         <span class="el-dropdown-link">
           <span class="name">{{ username || "未登录" }}</span>
-          <!-- <img class="avatar" :src="userInfo.headImg | default_avatar" alt /> -->
-          <el-avatar src="https://cdn.luogu.com.cn/upload/usericon/1.png"></el-avatar>
+          <el-avatar :src="state.user.userInfo.headImg">
+            <img src="@/assets/img/avatar.png" alt="">
+          </el-avatar>
         </span>
 
         <template #dropdown>

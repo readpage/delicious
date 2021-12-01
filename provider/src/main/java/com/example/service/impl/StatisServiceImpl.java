@@ -7,6 +7,7 @@ import com.example.mapper.FoodsMapper;
 import com.example.mapper.OrdersMapper;
 import com.example.mapper.StatisMapper;
 import com.example.mapper.UserMapper;
+import com.example.output.FoodInfo;
 import com.example.service.StatisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,5 +51,10 @@ public class StatisServiceImpl extends ServiceImpl<StatisMapper, Statis> impleme
         statis.setFoodsCount(foodsMapper.selectCount(null));
         statis.setSalesCount(ordersMapper.selectCount(null));
         return statis;
+    }
+
+    @Override
+    public List<FoodInfo> selectByType() {
+        return foodsMapper.selectByType();
     }
 }

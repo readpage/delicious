@@ -21,13 +21,14 @@ const mutations = {
 
   setToken(state: userState, val: Itoken) {
     state.token = val
-    cookie.set("f1dao-token", val, {domain: ".f1dao.cn"})
     // cookie.set("f1dao-token", val)
+    cookie.set("f1dao-token", val, {domain: ".f1dao.cn"})
   },
 
   remToken(state: userState) {
     state.token = null as any
-    cookie.remove("f1dao-token")
+    // cookie.remove("f1dao-token")
+    cookie.remove("f1dao-token", {domain: ".f1dao.cn", path: "/"})
   },
 
   setDNumber(state: userState, val: number) {

@@ -14,7 +14,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <v-btn name="search" type="info" @click="tableRef.reload">搜索</v-btn>
+        <v-btn name="search" type="info" @click="reload">搜索</v-btn>
         <v-btn name="reset" @click="reset">重置</v-btn>
       </el-form-item>
     </el-form>
@@ -142,6 +142,10 @@ function onSwitch(val: any) {
 const paramRef = ref()
 function reset() {
   paramRef.value.resetFields()
+  tableRef.value.reload()
+}
+
+function reload() {
   tableRef.value.reload()
 }
 

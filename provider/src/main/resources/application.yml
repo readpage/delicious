@@ -56,11 +56,11 @@ spring:
 
 mybatis-plus:
   configuration:
-    # 配置日志
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    # 配置日志
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     # 开启驼峰命名
     map-underscore-to-camel-case: true
   # 加载mapper目录下的所有xml文件
   mapper-locations: classpath*:mapper/*.xml
   # 实体类别名,无需添加完整包路径
-  type-aliases-package: com.example.entity
+  type-aliases-package: com.example.entity,com.example.output,

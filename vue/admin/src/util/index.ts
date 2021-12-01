@@ -17,8 +17,8 @@ function get(key: string): any {
 	return value ? JSON.parse(value) : value
 }
 
-function remove(key: string): void {
-	jsCookie.remove(key)
+function remove(key: string, options?: cookieApi): void {
+	jsCookie.remove(key, options)
 }
 
 export const cookie = {

@@ -3,6 +3,7 @@ import { InjectionKey, ref, Ref } from "vue";
 export const userForm = ref<IuserForm>({
   username: "",
   nickname: "",
+  headImg: "",
   password: "",
   roles: [] as number[],
   phone: "",

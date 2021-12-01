@@ -2,6 +2,7 @@ package com.example.controller;
 
 
 import com.example.entity.Statis;
+import com.example.output.FoodInfo;
 import com.example.service.StatisService;
 import com.example.util.result.Result;
 import com.example.util.result.ResultUtils;
@@ -47,6 +48,12 @@ public class StatisController {
     @GetMapping("/server")
     public Result<SysInfo> server() {
         return ResultUtils.query(SysUtil.getSysInfo());
+    }
+
+    @ApiOperation("查询餐品类型占比")
+    @GetMapping("/foodType")
+    public Result<List<FoodInfo>> selectFoodByType() {
+        return ResultUtils.query(statisService.selectByType());
     }
 }
 

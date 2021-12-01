@@ -34,7 +34,6 @@
         </div>
         <div class="statis2">
           <el-card><Pie /></el-card>
-          <el-card><Test /></el-card>
         </div>
       </div>
       <div class="footer text-center text-sm">

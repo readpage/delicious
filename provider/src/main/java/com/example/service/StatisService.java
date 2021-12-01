@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.entity.Statis;
+import com.example.output.FoodInfo;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface StatisService extends IService<Statis> {
     List<Statis> recent();
 
     Statis total();
+
+    List<FoodInfo> selectByType();
 }

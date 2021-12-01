@@ -11,6 +11,12 @@
       <el-form-item label="名称" prop="name">
         <el-input v-model="food.name" placeholder="请输入名称" clearable></el-input>
       </el-form-item>
+      <el-form-item label="原料" prop="material">
+        <el-input v-model="food.material" placeholder="请输入原料" clearable></el-input>
+      </el-form-item>
+      <el-form-item label="内容" prop="content">
+        <el-input v-model="food.content" placeholder="请输入内容" clearable></el-input>
+      </el-form-item>
       <el-form-item label="价格" prop="price">
         <el-input v-model="food.price" placeholder="请输入价格" clearable></el-input>
       </el-form-item>

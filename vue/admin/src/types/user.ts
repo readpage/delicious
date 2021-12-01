@@ -36,7 +36,7 @@ interface IuserForm {
   username: string
   nickname: string
   password?: string
-  // headImg: string
+  headImg: string
   phone: string
   email: string
   status: boolean

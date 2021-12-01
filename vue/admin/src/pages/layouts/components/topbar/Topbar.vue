@@ -5,27 +5,18 @@
     </div>
     <Breadcrumb />
     <div class="flex1"></div>
-    <ul class="topbar__tools">
-      <li>
-        <el-badge value="20">
-          <i class="el-icon-message-solid"></i>
-        </el-badge>
-      </li>
-      <li>
-        <i class="el-icon-s-open"></i>
-      </li>
-    </ul>
     <div class="topbar_user">
       <el-dropdown trigger="click" @command="onCommand">
         <span class="el-dropdown-link">
           <span class="name">{{ info.nickname || "未登录" }}</span>
-          <!-- <img class="avatar" :src="userInfo.headImg | default_avatar" alt /> -->
-          <el-avatar src="/api/upload/root/avatar.jpg"></el-avatar>
+          <el-avatar :src="state.user.info.headImg">
+            <img src="@/assets/img/avatar.png" alt="">
+          </el-avatar>
         </span>
 
         <template #dropdown>
           <el-dropdown-menu slot="dropdown" class="popper-dropdown-menu-user">
-            <el-dropdown-item command="my">个人中心</el-dropdown-item>
+            <el-dropdown-item command="home">首页</el-dropdown-item>
             <el-dropdown-item command="sign">登录/注册</el-dropdown-item>
             <el-dropdown-item command="exit">退出</el-dropdown-item>
           </el-dropdown-menu>
@@ -47,6 +38,9 @@ const router = useRouter()
 
 async function onCommand(name: string) {
   switch (name) {
+    case "home":
+      window.location.href = "http://food.f1dao.cn"
+      break
     case "sign":
       router.push("/sign")
       break

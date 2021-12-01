@@ -14,13 +14,14 @@ declare module "store" {
 }
 
 interface cookieApi {
-	expires?: number | Date;
+	expires?: number | Date
 	path?: string
+	domain?: string
 }
 declare module "js-cookie" {
-	export function set(key: string, value: any, { expires, path}?: cookieApi): void;
+	export function set(key: string, value: any, { expires, path, domain}?: cookieApi): void;
 	export function get(key: string): any;
-	export function remove(key: string): void;
+	export function remove(key: string, { expires, path, domain}?: cookieApi): void;
 }
 
 

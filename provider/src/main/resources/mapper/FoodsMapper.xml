@@ -20,4 +20,7 @@
         SELECT COUNT(0) FROM foods
         WHERE TO_DAYS(create_time)=TO_DAYS(NOW())
     </select>
+    <select id="selectByType" resultType="FoodInfo">
+        SELECT count(*) number, type FROM foods GROUP BY type
+    </select>
 </mapper>
