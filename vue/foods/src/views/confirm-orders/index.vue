@@ -11,7 +11,6 @@
             <div class="detail">
               <div class="item">
                 <div>{{item.name}}</div>
-                <div><span>一筒财富百国硬币+2021福字币（8克单银币）</span></div>
               </div>
               <div>
                 <span class="is-price" style="color: #000;">{{item.price}}</span>
