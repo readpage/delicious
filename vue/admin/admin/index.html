@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+    <!-- 导入ElementPlus样式 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus@1.1.0-beta.20/dist/index.css"/>
+    <!-- 导入 Vue 3 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.20"></script>
+    <!-- 导入ElementPlus组件库 -->
+    <script src="https://cdn.jsdelivr.net/npm/element-plus@1.1.0-beta.20"></script>
+    <!-- 导入vue-router -->
+    <script src="https://cdn.jsdelivr.net/npm/vue-router@4.0.10/dist/vue-router.global.min.js"></script>
+    <!-- 导入vuex -->
+    <script src="https://cdn.jsdelivr.net/npm/vuex@4.0.2/dist/vuex.global.min.js"></script>
+    <!-- 导入axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.24.0/dist/axios.min.js"></script>
+    <!-- 导入vue-echarts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-echarts@6.0.0"></script>
+    
+    <script src="/static/lottie/lottie-player.js"></script>
+    <style>
+      #loading {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: 2000;
+        background-color: #ffffff;
+      }
+      #loading .lottie-player {
+        position: relative;
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index.b0ad68c7.js"></script>
+    <link rel="modulepreload" href="/assets/vendor.84a7fb30.js">
+    <link rel="stylesheet" href="/assets/index.37927780.css">
+  </head>
+  <body>
+    <div id="loading"><lottie-player class="lottie-player" src="/static/lottie/food.json"  background="transparent"  speed="2.2"  style="width: 500px; height: 500px;" loop autoplay></lottie-player></div>
+    <div id="app"></div>
+    
+  </body>
+</html>

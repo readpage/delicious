@@ -1,0 +1,1 @@
+const t=Vue.createTextVNode("home"),c=Vue.defineComponent({setup(o){return Vue.ref("text-red-800"),(n,u)=>{const e=Vue.resolveComponent("el-button");return Vue.openBlock(),Vue.createBlock(e,{class:"text-red-600"},{default:Vue.withCtx(()=>[t]),_:1})}}});export{c as default};

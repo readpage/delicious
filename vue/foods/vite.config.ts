@@ -1,18 +1,14 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-// @ts-ignore
 import path from "path"
 import viteCompression from 'vite-plugin-compression'
-import Components from 'unplugin-vue-components/vite'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import externalGlobals from "rollup-plugin-external-globals"
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), 
+  plugins: [
+    vue(), 
     viteCompression(),
-    Components({
-      resolvers: [ElementPlusResolver()],
-    }),
   ],
   resolve: {
     alias: [
@@ -45,5 +41,17 @@ export default defineConfig({
     // 指定输出路径 (相对于 项目根目录).
     outDir: "foods",
     assetsDir: "assets",
+    rollupOptions: {
+      external: ['vue', 'ElementPlus', 'vue-router', 'vuex', 'axios'],
+      plugins: [
+        externalGlobals({
+          vue: "Vue",
+          'element-plus': "ElementPlus",
+          'vue-router': 'VueRouter',
+          vuex: 'Vuex',
+          axios: 'axios'
+        })
+      ]
+    }
   },
 })

@@ -25,11 +25,11 @@
     "typescript": "^4.3.2",
     "@vue/compiler-sfc": "^3.2.20",
     "sass": "^1.42.1",
+    "rollup-plugin-external-globals": "^0.6.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.16",
     "@tailwindcss/postcss7-compat": "^2.2.16",
     "autoprefixer": "^9.8.7",
     "postcss": "^7.0.38",
-    "unplugin-vue-components": "^0.15.6",
     "vite": "^2.4.4",
     "vite-plugin-compression": "^0.3.5",
     "vue-tsc": "^0.2.2"
