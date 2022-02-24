@@ -42,14 +42,20 @@ export default defineConfig({
     outDir: "admin",
     assetsDir: "assets",
     rollupOptions: {
-      external: ['vue', 'ElementPlus', 'vue-router', 'vuex', 'axios'],
+      // 如果您想过滤掉包导入，例如import {rollup} from 'rollup'
+      external: ['vue', 'element-plus', 'vue-router', 'vuex', 'axios', 'vue-echarts', 'echarts'],
+      //CDN引入的话，使用这个插件做配置。但是这里引入的文件要是遵循umd格式的，
+      //此项只会在打包的文件中使用，未打包状态下的dev模式中不会走这里
       plugins: [
+        //其中key就是你引入的时候的名字，value就是引入的那个第三方库的全局变量名字
         externalGlobals({
           vue: "Vue",
           'element-plus': "ElementPlus",
           'vue-router': 'VueRouter',
           vuex: 'Vuex',
           axios: 'axios',
+          'vue-echarts': 'VueECharts',
+          echarts: 'echarts'
         })
       ]
     }

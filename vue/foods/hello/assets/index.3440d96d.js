@@ -1,1 +1,0 @@
-const t=Vue.createTextVNode("test"),o=Vue.createTextVNode("hello"),l=Vue.defineComponent({setup(u){return(n,c)=>{const e=Vue.resolveComponent("el-button");return Vue.openBlock(),Vue.createElementBlock(Vue.Fragment,null,[Vue.createVNode(e,null,{default:Vue.withCtx(()=>[t]),_:1}),Vue.createVNode(e,{type:"success"},{default:Vue.withCtx(()=>[o]),_:1})],64)}}});export{l as default};

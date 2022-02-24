@@ -5,6 +5,8 @@ import router from './router'
 import { store, key } from './store'
 import "./assets/index.css"
 import ElementPlus from 'element-plus'
+import plugins from './plugins'
+
 
 
 createApp(App)
@@ -12,8 +14,7 @@ createApp(App)
   .use(store, key)
   .use(router)
   .use(modules)
-  // @ts-ignore
-  .component('v-chart', VueECharts)
+  .use(plugins)
   .mount('#app')
 
 store.dispatch("app/appLoad")

@@ -1,0 +1,1 @@
+import{C as e}from"./Card.cfc84659.js";const t=Vue.createElementVNode("iframe",{src:"/api/doc.html",height:"580",width:"100%",frameborder:"0"},null,-1),o=Vue.defineComponent({setup(r){return(_,a)=>(Vue.openBlock(),Vue.createBlock(e,null,{default:Vue.withCtx(()=>[t]),_:1}))}});var l=Object.freeze({__proto__:null,[Symbol.toStringTag]:"Module",default:o});export{l as _};

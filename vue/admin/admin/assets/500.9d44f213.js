@@ -1,1 +1,0 @@
-import{E as e}from"./ErrorPage.3b2b089e.js";import"./index.b0ad68c7.js";import"./vendor.84a7fb30.js";const n=Vue.defineComponent({setup(r){return(o,u)=>(Vue.openBlock(),Vue.createBlock(e,{code:"500",desc:"\u7CDF\u7CD5\uFF0C\u51FA\u4E86\u70B9\u95EE\u9898"}))}});export{n as default};

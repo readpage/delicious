@@ -22,7 +22,7 @@
       </el-menu>
     </div>
     <ul class="header__tools">
-      <li @click="router.push('cart')">
+      <li @click="router.push('/cart')">
         <el-badge :value="totalCount" type="danger">
           <i style="color: red; font-size: 20px" class="el-icon-shopping-cart-full"></i>
         </el-badge>

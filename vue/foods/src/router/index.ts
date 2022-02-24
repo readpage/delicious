@@ -94,6 +94,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, form, next) => {
+  document.title = to.name as string
   if (to.path == "/info" && !(cookie.get("f1dao-token"))) next({
     path: "/sign",
     query: { redirect: to.fullPath}
@@ -101,8 +102,5 @@ router.beforeEach((to, form, next) => {
   next()
 })
 
-router.afterEach(to => {
-  document.title = to.meta.title as string
-})
 
 export default router
