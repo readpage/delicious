@@ -1,1 +1,0 @@
-import{_ as t}from"./index.0962dd28.js";import"./vendor.1caa6517.js";const _={},o={class:"test"};function n(c,r){const e=Vue.resolveComponent("v-comment");return Vue.openBlock(),Vue.createElementBlock("div",o,[Vue.createVNode(e)])}var a=t(_,[["render",n],["__scopeId","data-v-c4e36ff2"]]);export{a as default};
