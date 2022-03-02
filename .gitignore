@@ -3,5 +3,6 @@
 *.iml
 target/
 out/
-jar/
+deploy/
 static/
+*.zip
