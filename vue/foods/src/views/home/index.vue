@@ -18,7 +18,7 @@
       </el-card> -->
       <FoodCard :data="item" v-for="item in foods" />
     </div>
-    <el-skeleton :loading="state.app.loading" animated :count="10" class="card-box" style="margin-top: 10px">
+    <el-skeleton :loading="app.loading" animated :count="10" class="card-box" style="margin-top: 10px">
       <template #template>
         <div style="height: 250px">
           <el-skeleton-item variant="image" style="height: 150px; width: 100%;" />
@@ -42,8 +42,10 @@ import { useStore } from "@/store"
 import { preLoad } from "@/util"
 import { onActivated, onMounted, reactive, ref, toRefs } from "vue"
 import FoodCard from "@/components/FoodCard.vue"
+import appStore from "@/store/appStore"
 
 const { state, commit } = useStore()
+const app = appStore()
 const data = reactive({
   num: 10,
   loadText: "加载更多",
@@ -85,7 +87,7 @@ const foods = ref<Ifood[]>([])
 // }
 
 function random() {
-  commit("app/showLoading")
+  app.showLoading()
   return Afood.random({urlParam: `/${data.num}`}).then(res => {
     res.data.forEach((item: any) => {
       foods.value.push(item)
@@ -95,7 +97,7 @@ function random() {
 random()
 
 function onLoad() {
-  commit("app/btnLoading")
+  app.showBtnLoading()
   data.loadText = "正在加载..."
   random().then(res => {
     data.loadText = "加载更多"

@@ -42,14 +42,17 @@ export default defineConfig({
     outDir: "foods",
     assetsDir: "assets",
     rollupOptions: {
-      external: ['vue', 'ElementPlus', 'vue-router', 'vuex', 'axios'],
       plugins: [
+        //此项只会在打包的文件中使用，未打包状态下的dev模式中不会走这里
         externalGlobals({
+          // 如果您想过滤掉包导入，例如import ElementPlus from 'element-plus'
+          //其中key就是你引入的时候的名字，value就是引入的那个第三方库的全局变量名字
           vue: "Vue",
-          'element-plus': "ElementPlus",
           'vue-router': 'VueRouter',
-          vuex: 'Vuex',
-          axios: 'axios'
+          axios: 'axios',
+          pinia: 'Pinia',
+          'element-plus': "ElementPlus",
+          'element-plus/dist/index.css': 'element-plus/dist/index.css',
         })
       ]
     }

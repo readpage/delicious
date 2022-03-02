@@ -1,12 +1,15 @@
 module.exports = {
   mode: "jit",
-  purge: ["./index.html", "./src/**/*.{vue,ts}"],
-  darkMode: false, // or 'media' or 'class'
+  // darkMode: false, // or 'media' or 'class'
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,vue}"
+  ],
   theme: {
     extend: {},
   },
-  variants: {
-    extend: {},
-  },
   plugins: [],
+  corePlugins: {
+   preflight: false,
+  }
 }

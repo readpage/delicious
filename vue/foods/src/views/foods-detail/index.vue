@@ -136,9 +136,12 @@ import { useRoute, useRouter } from "vue-router";
 import Drawer from "../components/Drawer.vue";
 import type { DrawerApi } from "../components/Drawer.vue";
 import FoodCard from "@/components/FoodCard.vue"
+import appStore from "@/store/appStore";
+import { storeToRefs } from "pinia";
 
 const { state, commit } = useStore();
-const { loading } = toRefs(state.app)
+const app = appStore()
+const { loading } = storeToRefs(app)
 const router = useRouter();
 const route = useRoute();
 
@@ -156,7 +159,7 @@ watch(
   () => route.params.id,
   (val) => {
     if (val) {
-      commit("app/showLoading");
+      app.showLoading()
       if (scrollbar.value) {
         scrollbar.value.setScrollTop(0);
       }
@@ -170,10 +173,10 @@ watch(
   { immediate: true }
 );
 
-commit("app/otherLoading");
+app.showOtherLoading()
 Afood.random({ urlParam: "/10" }).then((res) => {
   data.foods = res.data;
-  commit("app/hideOtherLoading");
+  app.hideOtherLoading()
 });
 
 const label = ref([

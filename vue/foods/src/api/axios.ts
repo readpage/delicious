@@ -4,6 +4,8 @@ import { store } from "@/store";
 import router from "@/router";
 import Nprogress from "nprogress";
 import "nprogress/nprogress.css";
+import appStore from "../store/appStore";
+
 
 const service = axios.create({
   baseURL: "/api"
@@ -29,6 +31,7 @@ service.interceptors.request.use(config => {
 })
 
 service.interceptors.response.use(response  => {
+  const app = appStore()
   num-- 
   const res = response.data
   if (Math.trunc(res.code/100) == 2) {
@@ -43,7 +46,7 @@ service.interceptors.response.use(response  => {
         ElMessage.success(res.msg)
     }
     if (num <= 0) {
-      store.commit("app/hideLoading")
+      app.hideLoading()
     }
     return response
   } else {
@@ -67,14 +70,15 @@ service.interceptors.response.use(response  => {
       default:
         ElMessage.warning(res.msg)
     }
-    store.commit("app/hideLoading")
-    store.commit("app/hideOtherLoading")
+    app.hideLoading()
+    app.hideOtherLoading()
     throw response
   }
 },error => {
+  const app = appStore()
   num--
-  store.commit("app/hideLoading")
-  store.commit("app/hideOtherLoading")
+  app.hideLoading()
+  app.hideOtherLoading()
   router.push("/500")
   return Promise.reject(error)
 })
