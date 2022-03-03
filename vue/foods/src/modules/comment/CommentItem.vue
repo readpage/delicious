@@ -27,8 +27,9 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "@/store"
-import { nextTick, onMounted, reactive, ref, toRefs } from "vue"
+import userStore from "@/store/userStore"
+import { storeToRefs } from "pinia"
+import { nextTick, onMounted, reactive, ref } from "vue"
 import Fold from "./Fold.vue"
 import ReplyBox from "./ReplyBox.vue"
 
@@ -37,8 +38,8 @@ interface propsApi {
 }
 const props = withDefaults(defineProps<propsApi>(), {})
 
-const { state, commit } = useStore()
-const { parentId } = toRefs(state.user)
+const user = userStore()
+const { parentId } = storeToRefs(user)
 
 const obj = reactive({
   ifOver: false, // 文本是否超出三行，默认否
@@ -53,7 +54,7 @@ function isOver(val: any) {
 
 function onComment(username: any) {
   let id = props.comment.id as any
-  commit('user/setParentId', id)
+  user.setParentId(id)
   nextTick(() => {
     let commentBox = document.getElementById(id)
     

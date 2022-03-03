@@ -12,17 +12,18 @@ import { ref, toRefs } from "vue";
 import CommentItem from "./CommentItem.vue";
 import { Acomment } from "@/api";
 import CommentBox from "./CommentBox.vue";
-import { useStore } from "@/store";
 import { useRouter } from "vue-router";
 import { Vtoast } from "../toast";
+import userStore from "@/store/userStore";
+import { storeToRefs } from "pinia";
 
 interface propsApi {
   fId: number
 }
 const props = defineProps<propsApi>()
 
-const { state, commit } = useStore()
-const { userInfo } = toRefs(state.user)
+const store = userStore()
+const { userInfo } = storeToRefs(store)
 const router = useRouter()
 
 const comments = ref()

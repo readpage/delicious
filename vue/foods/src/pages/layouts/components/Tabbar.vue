@@ -14,14 +14,14 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "@/store"
+import cartStore from "@/store/cartStore"
 import { computed, ref, watch } from "vue"
 import { useRoute } from "vue-router"
 
 const route = useRoute()
-const { getters } = useStore()
+const cart = cartStore()
 
-const totalCount = computed(() => getters["cart/cTotalCount"])
+const totalCount = cart.cTotalCount
 const num = ref(1)
 const tab = ref([
   {

@@ -67,15 +67,17 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "@/store"
-import cart from "@/store/modules/cart"
+import cartStore from "@/store/cartStore"
+import userStore from "@/store/userStore"
+import { storeToRefs } from "pinia"
 import { computed, reactive, ref, watch, toRefs, watchEffect } from "vue"
 import { onBeforeRouteLeave, useRouter } from "vue-router"
 
+const cart = cartStore()
+const user = userStore()
 const router = useRouter()
-const { state, commit } = useStore()
-const { carts } = toRefs(state.cart)
 
+const { carts } = storeToRefs(cart)
 
 const data = reactive({
   checkAll: true,
@@ -91,7 +93,7 @@ const foods = computed(() => {
   carts.value.forEach(item => item.btn = false)
   return carts
 })
-const innerHeight = computed(() => state.user.browser.innerHeight)
+const innerHeight = computed(() => user.browser.innerHeight)
 
 watch(() => carts.value.length, val => {
   data.checked = carts.value.map(item => item.id)
@@ -115,16 +117,16 @@ function handleCheckedCitiesChange(val: number[])  {
 function buy() {
   let foods = data.checked.map(id => {
     return carts.value.find(item => item.id == id)
-  })
+  }) as any[]
   
-  commit("cart/setFoods", foods)
+  cart.setFoods(foods)
   router.push("/confirm-orders")
 }
 function remove() {
-  commit("cart/remCart", data.checked)
+  cart.remCart(data.checked)
 }
 function onCount(val: Ifood) {
-  commit("cart/updCart", val)
+  cart.updCart(val)
 }
 function cTotalPrice(ids: number[]) {
   let total = 0;

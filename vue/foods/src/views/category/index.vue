@@ -22,15 +22,15 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "@/store";
+import userStore from "@/store/userStore";
 import { computed, ref } from "vue"
 import { useRoute } from "vue-router";
 
-const { state } = useStore()
+const user = userStore()
 const route = useRoute()
 
 
-const innerHeight = computed(() => state.user.browser.innerHeight)
+const innerHeight = computed(() => user.browser.innerHeight)
 const menu = ref([
   {
     path: "/category/1",

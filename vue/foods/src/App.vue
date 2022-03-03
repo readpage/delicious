@@ -12,25 +12,27 @@
 import { onMounted } from "vue";
 import { ElConfigProvider } from "element-plus";
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
-import { useStore } from "./store";
 import { isEmpty } from "./util";
 import { closeLoad } from "./hooks/useUser";
+import userStore from "./store/userStore";
+import appStore from "./store/appStore";
 
 const locale = zhCn;
-const { commit, state, dispatch} = useStore()
+const user = userStore()
+const app = appStore()
 
 
 function init() {
-  let token = state.user.token
+  let token = user.token
   if (isEmpty(token)) {
-    dispatch("user/userRemove")
+    user.userRemove()
   }
 }
 init()
 window.addEventListener("resize", () => {
-  commit("user/setBrowser")
+  user.setBrowser()
 })
-dispatch("app/appLoad")
+// app.appLoad()
 
 onMounted(() => {
   closeLoad()

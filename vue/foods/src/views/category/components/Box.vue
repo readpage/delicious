@@ -19,10 +19,12 @@ import { computed, onActivated, onMounted, reactive, ref, toRefs, watch } from "
 import { useRoute } from "vue-router"
 import FoodCard from "@/components/FoodCard.vue"
 import { Afood } from "@/api"
-import { useStore } from "@/store"
+import appStore from "@/store/appStore"
+import userStore from "@/store/userStore"
 
 const route = useRoute()
-const { commit, state } = useStore()
+const app = appStore()
+const user = userStore()
 const title = reactive([
   {
     id: 1,
@@ -100,7 +102,7 @@ function loadMore() {
 }
 
 function page() {
-  commit("app/showLoading");
+  app.showLoading()
   return Afood.page({urlParam: `/1/${obj.count}`, type: data.value.title}).then(res => {
     obj.foods = res.data.list
     obj.total = res.data.total
@@ -108,7 +110,7 @@ function page() {
 }
 watch(() => route.params.type, val => {
   if (val) {
-    if (state.user.isMini) {
+    if (user.isMini) {
       obj.count = 3
     } else {
       obj.count = 20

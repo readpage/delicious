@@ -37,7 +37,8 @@
 
 <script setup lang="ts">
 import { Acomment } from "@/api"
-import { useStore } from "@/store"
+import userStore from "@/store/userStore";
+import { storeToRefs } from "pinia";
 import { nextTick, reactive, ref, toRefs, watch } from "vue"
 import { useRouter } from "vue-router"
 import { Vtoast } from "../toast";
@@ -47,8 +48,8 @@ interface propsApi {
   id: number
 }
 const props = withDefaults(defineProps<propsApi>(), {})
-const {state} = useStore()
-const {parentId, userInfo} = toRefs(state.user)
+const user = userStore()
+const {parentId, userInfo} = storeToRefs(user)
 
 const router = useRouter()
 

@@ -32,7 +32,7 @@
       <el-dropdown trigger="click" @command="onCommand">
         <span class="el-dropdown-link">
           <span class="name">{{ username || "未登录" }}</span>
-          <el-avatar :src="state.user.userInfo.headImg">
+          <el-avatar :src="user.userInfo.headImg">
             <img src="@/assets/img/avatar.png" alt="">
           </el-avatar>
         </span>
@@ -52,20 +52,23 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "@/store";
+import cartStore from "@/store/cartStore";
+import userStore from "@/store/userStore";
 import { computed, ref, toRefs, watch } from "vue"
 import { useRoute, useRouter } from "vue-router";
 
-const { state, dispatch, getters } = useStore()
+const user = userStore()
+const cart = cartStore()
 const router = useRouter()
 
 const username = computed(() => {
-  let nickname = state.user.userInfo.nickname
-  if (!nickname) dispatch("user/userInfo")
+  let nickname = user.userInfo.nickname
+  if (!nickname) user.setUserInfo()
   return nickname
 })
 
-const totalCount = computed(() => getters["cart/cTotalCount"])
+
+const totalCount = computed(() => cart.cTotalCount)
 
 async function onCommand(name: string) {
   switch (name) {
@@ -79,7 +82,7 @@ async function onCommand(name: string) {
       router.push("/sign")
       break
     case "exit":
-      await dispatch("user/userLogout", state.user.token)
+      user.userLogout(user.token)
       router.push("/sign")
       break
   }

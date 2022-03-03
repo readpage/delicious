@@ -5,7 +5,7 @@
     </div>
     <el-scrollbar>
       <div class="container">
-        <el-card :body-style="{ padding: '10px'}" v-for="item in state.cart.foods" :key="item.id">
+        <el-card :body-style="{ padding: '10px'}" v-for="item in cart.foods" :key="item.id">
           <div class="foods">
             <el-image :src="item.img" fit="fill"></el-image>
             <div class="detail">
@@ -39,27 +39,29 @@
 
 <script setup lang="ts">
 import { Aorders } from "@/api";
-import { useStore } from "@/store";
+import cartStore from "@/store/cartStore";
+import userStore from "@/store/userStore";
 import { computed } from "vue"
 import { useRouter } from "vue-router";
 
-const { state, getters, commit } = useStore()
+const cart = cartStore()
+const user = userStore()
 const router = useRouter()
 
-const totalPrice = computed(() => getters["cart/fTotalPrice"])
+const totalPrice = cart.cTotalCount
 
 function submit() {
-  let uid = state.user.userInfo.id
+  let uid = user.userInfo.id
   if (uid) {
-    let orders = state.cart.foods.map(v => {
+    let orders = cart.foods.map(v => {
       return {"fid": v.id, "count": v.buyCount}
     })
     const data = {
-      dNumber: state.user.dNumber,
+      dNumber: user.dNumber,
       ordersFoods: orders
     }
     Aorders.save({urlParam: `/${uid}`, data: data}).then(res => {
-      commit("cart/clearAllCart")
+      cart.clearAllCart()
       router.push("/orders")
     })
   } else {

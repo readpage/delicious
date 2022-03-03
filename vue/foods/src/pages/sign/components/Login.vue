@@ -26,8 +26,8 @@
 
 <script setup lang="ts">
 import { Alogin } from "@/api"
-import { useStore } from "@/store"
 import appStore from "@/store/appStore"
+import userStore from "@/store/userStore"
 import { ElLoading, ElMessage } from "element-plus"
 import { reactive, ref } from "vue"
 import { useRoute, useRouter } from "vue-router"
@@ -41,8 +41,8 @@ type userType = keyof typeof user
 const userRef = ref()
 const router = useRouter()
 const route = useRoute()
-const { state, commit, dispatch } = useStore()
 const app = appStore()
+const userState = userStore()
 
 const rules = reactive({
   username: {
@@ -64,8 +64,8 @@ function login() {
       })
       app.showOtherLoading()
       Alogin(form).then(async res => {
-        commit("user/setToken", res.data)
-        dispatch("user/userInfo")
+        userState.setToken(res.data)
+        userState.setUserInfo()
         let redirect = route.query.redirect as string
         if (redirect) {
           router.push(redirect)

@@ -5,10 +5,10 @@
         <div class="card-header">
           <div class="item">
             <el-space :size="15">
-              <el-avatar :src="state.user.userInfo.headImg">
+              <el-avatar :src="user.userInfo.headImg">
                 <img src="@/assets/img/avatar.png" alt="">
               </el-avatar>
-              <span style="font-size: 23px">{{userInfo.nickname || "用户未登录"}}</span>
+              <span style="font-size: 23px">{{user.userInfo.nickname || "用户未登录"}}</span>
             </el-space>
           </div>
           <div class="setting">
@@ -87,7 +87,7 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "@/store";
+import userStore from "@/store/userStore";
 import { ElMessageBox } from "element-plus";
 import { reactive, ref, toRefs } from "vue"
 import { useRouter } from "vue-router";
@@ -116,13 +116,12 @@ const other = ref([
   }
 ])
 
-const { state, dispatch } = useStore()
-const { userInfo } = toRefs(state.user)
+const user = userStore()
 const router = useRouter()
 
 function exit() {
   ElMessageBox.confirm("你是否确定退出当前账号?", {customClass: "w-5/6"}).then(async () => {
-    await dispatch("user/userLogout", state.user.token)
+    await user.userLogout(user.token)
     router.push("/sign")
   })
 }

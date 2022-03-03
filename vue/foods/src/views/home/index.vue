@@ -32,19 +32,17 @@
     </el-skeleton>
   </div>
   <div class="change flex justify-center">
-    <el-button @click="onLoad" type="text" :loading="state.app.btnLoading">{{loadText}}</el-button>
+    <el-button @click="onLoad" type="text" :loading="app.btnLoading">{{loadText}}</el-button>
   </div>
 </template>
 
 <script setup lang="ts">
 import { Afood } from "@/api"
-import { useStore } from "@/store"
 import { preLoad } from "@/util"
 import { onActivated, onMounted, reactive, ref, toRefs } from "vue"
 import FoodCard from "@/components/FoodCard.vue"
 import appStore from "@/store/appStore"
 
-const { state, commit } = useStore()
 const app = appStore()
 const data = reactive({
   num: 10,

@@ -130,7 +130,6 @@
 
 <script setup lang="ts">
 import { Afood } from "@/api";
-import { useStore } from "@/store";
 import { computed, reactive, ref, toRefs, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import Drawer from "../components/Drawer.vue";
@@ -139,7 +138,6 @@ import FoodCard from "@/components/FoodCard.vue"
 import appStore from "@/store/appStore";
 import { storeToRefs } from "pinia";
 
-const { state, commit } = useStore();
 const app = appStore()
 const { loading } = storeToRefs(app)
 const router = useRouter();

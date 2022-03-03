@@ -6,7 +6,7 @@ import { store, key } from './store'
 import "./assets/index.css"
 import ElementPlus from 'element-plus'
 import plugins from './plugins'
-
+import 'element-plus/dist/index.css'
 
 
 createApp(App)

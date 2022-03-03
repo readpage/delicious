@@ -32,7 +32,6 @@
 
 <script setup lang="ts">
 import { Aorders } from "@/api";
-import { useStore } from "@/store";
 import { onActivated, ref } from "vue"
 
 const orders = ref([] as Iorders[])

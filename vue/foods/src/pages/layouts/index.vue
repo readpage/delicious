@@ -1,6 +1,6 @@
 <template>
   <div class="box-container">
-    <div class="header" v-if ="!state.user.isMini">
+    <div class="header" v-if ="!user.isMini">
       <Header />
     </div>
     <template v-else>
@@ -30,7 +30,7 @@
         </template>
       </template>
     <el-scrollbar>
-      <div class="layer" :class="{ layer2: route.path=='/cart'&&state.user.isMini }">
+      <div class="layer" :class="{ layer2: route.path=='/cart'&&user.isMini }">
         <router-view v-slot="{ Component }">
           <keep-alive max="10">
             <component :is="Component" />
@@ -44,21 +44,21 @@
         </div>
       </template>
     </el-scrollbar>
-    <template v-if="state.user.isMini">
+    <template v-if="user.isMini">
       <Tabbar />
     </template>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useStore } from "@/store";
+import userStore from "@/store/userStore";
 import { computed, ref } from "vue"
 import { onBeforeRouteUpdate, useRoute, useRouter } from "vue-router";
 import Footer from "./components/Footer.vue";
 import Header from "./components/Header.vue";
 import Tabbar from "./components/Tabbar.vue";
 
-const { state, dispatch } = useStore()
+const user = userStore()
 const route = useRoute()
 const router = useRouter()
 const drawer = ref(false)

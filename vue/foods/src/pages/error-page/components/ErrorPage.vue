@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "@/store";
+import userStore from "@/store/userStore";
 import { ref, toRefs, computed } from "vue"
 import { useRoute, useRouter } from "vue-router";
 
@@ -26,8 +26,8 @@ const props = defineProps({
   desc: String,
 })
 const { code, desc } = toRefs(props)
-const { state } = useStore()
-const token = computed(() => state.user.token)
+const user = userStore()
+const token = computed(() => user.token)
 const route = useRoute()
 const router = useRouter()
 

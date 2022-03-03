@@ -12,7 +12,7 @@ const Afood = {
 }
 
 const Auser = {
-  info: apiAxios("/user/info"),
+  info: apiAxios<Iuser>("/user/info"),
   add: apiAxios("/user/save", "post"),
   isUser: apiAxios("/user/selectIsUser"),
   auto: apiAxios("/user/auto")

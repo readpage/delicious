@@ -19,21 +19,21 @@
 <script setup lang="ts">
 import { Auser } from "@/api";
 import router from "@/router";
-import { useStore } from "@/store";
+import userStore from "@/store/userStore";
 import { computed } from "vue"
 import { useRoute } from "vue-router";
 
 const route = useRoute()
-const { state, commit, dispatch} = useStore()
+const user = userStore()
 
 function submit() {
-  commit("user/setDNumber", route.params.desk)
-  if (state.user.token) {
+  user.setDNumber(Number(route.params.desk))
+  if (user.token) {
     router.push("/")
   } else {
     Auser.auto().then(res => {
-      commit("user/setToken", res.data)
-      dispatch("user/userInfo")
+      user.setToken(res.data)
+      user.setUserInfo()
       router.push("/")
     })
   }

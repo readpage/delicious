@@ -1,10 +1,10 @@
 import axios from "axios"
 import { ElMessage, ElMessageBox } from "element-plus"
-import { store } from "@/store";
 import router from "@/router";
 import Nprogress from "nprogress";
 import "nprogress/nprogress.css";
 import appStore from "../store/appStore";
+import userStore from "@/store/userStore";
 
 
 const service = axios.create({
@@ -20,7 +20,8 @@ service.interceptors.request.use(config => {
   if (num++ == 0) {
     Nprogress.start()
   }
-  const token = store.state.user.token
+  
+  const token = userStore().token
   if (token) {
     config.headers.Authorization = token["token_type"] + " " +token["access_token"]
   }
@@ -86,10 +87,11 @@ service.interceptors.response.use(response  => {
 
 
 function doRequest(res: any):Promise<any> {
+  const store = userStore()
   const config = res.config
   if (!isRefreshing) {
     isRefreshing = true
-    return store.dispatch("user/refreshToken", store.state.user.token).then(res => {
+    return store.refreshToken(store.token).then(res => {
       retryRequests.forEach(item => item(res.data))
       retryRequests = []
       return service(config)
@@ -108,15 +110,17 @@ function doRequest(res: any):Promise<any> {
 }
 
 function expire(msg: string) {
+  const store = userStore()
   ElMessageBox.confirm(msg, "提示", {
     confirmButtonText: "确定",
     cancelButtonText: "取消",
     type: "warning"
   }).then(() => {
-    store.dispatch("user/remUser")
+
+    store.remUser()
     router.push("/sign")
   }).catch(() => {
-    store.dispatch("user/remUser")
+    store.remUser()
     ElMessage.info("已取消登录!")
   })
 }

@@ -31,7 +31,7 @@
         </el-scrollbar>
       </div>
       <div class="buy__footer">
-        <el-button v-if="type == 0" size="small" type="info" style="width: 90%" @click="cart">确定</el-button>
+        <el-button v-if="type == 0" size="small" type="info" style="width: 90%" @click="setCart">确定</el-button>
         <el-button v-else size="small" type="info" style="width: 90%" @click="buy">立即购买</el-button>
       </div>
     </div>
@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import { Vtoast } from "@/modules/toast";
-import { useStore } from "@/store";
+import cartStore from "@/store/cartStore";
 import { ElMessage } from "element-plus";
 import { ref, reactive, computed } from "vue"
 import { onBeforeRouteLeave, useRouter } from "vue-router";
@@ -52,7 +52,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {})
 
 const router = useRouter()
-const { commit } = useStore()
+const cart = cartStore()
 
 const drawer = ref(false)
 
@@ -76,14 +76,14 @@ onBeforeRouteLeave(() => {
 
 const emit = defineEmits(["onSelect"])
 
-function cart() {
-  commit("cart/addCart", props.food)
+function setCart() {
+  cart.addCart(props.food)
   Vtoast({message: "添加购物车成功"})
   drawer.value = false
 }
 
 function buy() {
-  commit("cart/setFoods", [props.food])
+  cart.setFoods([props.food])
   router.push("/confirm-orders")
 }
 

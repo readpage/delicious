@@ -15,10 +15,10 @@
 <script setup lang="ts">
 import { Afood } from "@/api";
 import FoodCard2 from "@/components/FoodCard2.vue";
-import { useStore } from "@/store";
+import userStore from "@/store/userStore";
 import { computed, onMounted, reactive, ref } from "vue"
 
-const { state } = useStore()
+const user = userStore()
 const obj = reactive({
   count: 10,
   total: 20,
@@ -28,7 +28,7 @@ const obj = reactive({
 const scrollbar = ref()
 const scroll = ref()
 
-const innerHeight = computed(() => state.user.browser.innerHeight)
+const innerHeight = computed(() => user.browser.innerHeight)
 
 onMounted(() => {
   scrollbar.value.wrap.addEventListener("scroll", onScroll)
