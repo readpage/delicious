@@ -19,7 +19,7 @@ export default {
   },
   xAxis: {
     type: 'category',
-    data: [""],
+    data: [],
   },
   yAxis: {
     type: 'value',
@@ -28,7 +28,7 @@ export default {
     }
   },
   series: {
-    data: [0],
+    data: [],
     type: 'line',
     markPoint: {
       data: [

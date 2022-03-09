@@ -1,7 +1,7 @@
 <template>
   <div class="page-layout" :class="{ collapse: collapse }">
     <!-- 遮盖层 -->
-    <div id="overlay" class="page-layout__mask" @click="commit('user/updCollapse', true)"></div>
+    <div id="overlay" class="page-layout__mask" @click="user.updCollapse(true)"></div>
     <!-- 侧边栏 -->
     <div class="page-layout__left">
       <Slider />
@@ -29,17 +29,17 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "@/store";
+import userStore from "@/store/userStore";
 import { computed, ref, toRefs } from "vue";
 import { onBeforeRouteUpdate, useRoute } from "vue-router";
 import Slider from "./components/slider/Slider.vue";
 import Tags from "./components/Tags.vue";
 import Topbar from "./components/topbar/Topbar.vue";
 
-const { state, commit, getters } = useStore();
+const user = userStore()
 const route = useRoute()
 
-const collapse = computed(() => getters["user/collapse"])
+const collapse = computed(() => user.collapse)
 const transitionName = ref("slide-fade")
 
 </script>
@@ -141,7 +141,7 @@ const transitionName = ref("slide-fade")
 }
 
 .slide-fade-leave-active {
-  transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 
 .slide-fade-enter-from,

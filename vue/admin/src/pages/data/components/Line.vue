@@ -1,6 +1,6 @@
 <template>
   <div class="line h-72">
-    <v-chart :option="option" :loading="loading" autoresize></v-chart>
+    <v-chart ref="chart" :option="line" :loading="loading" autoresize></v-chart>
   </div>
 </template>
 
@@ -18,12 +18,17 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const option = ref()
+const chart = ref()
 
 watch(() => props.data, val => {
-  line.series.data = val.uv
-  line.xAxis.data = val.date
-  option.value = line
+  chart.value.setOption({
+    xAxis: {
+      data: val.date
+    },
+    series: {
+      data:  val.uv
+    }
+  })
 }, {deep: true})
 
 </script>

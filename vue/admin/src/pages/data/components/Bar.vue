@@ -1,6 +1,6 @@
 <template>
   <div class="bar h-72">
-    <v-chart :loading="loading" :option="option" autoresize></v-chart>
+    <v-chart ref="chart" :loading="loading" :option="bar" autoresize></v-chart>
   </div>
 </template>
 
@@ -14,8 +14,8 @@ interface Props {
 }
 const props = defineProps<Props>()
 const recent = inject(IrecentKey, recentForm)
+const chart = ref()
 
-const option = ref()
 const bar = {
   title: {
     text: "最近成交量",
@@ -41,20 +41,25 @@ const bar = {
     data: ["销量"],
   },
   xAxis: {
-    data: ["0"],
+    data: [],
   },
   yAxis: {},
   series: {
     name: "销量",
     type: "line",
-    data: [0],
+    data: [],
   },
 }
 
 watch(() => recent.value, val => {
-  bar.series.data = val.salesCount
-  bar.xAxis.data = val.date
-  option.value = bar
+  chart.value.setOption({
+    xAxis: {
+      data: val.date
+    },
+    series: {
+      data: val.salesCount
+    }
+  })
 }, {deep: true})
 
 </script>

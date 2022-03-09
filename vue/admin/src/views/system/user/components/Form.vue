@@ -70,7 +70,7 @@
       </el-row>
     </el-form>
     <template #footer>
-      <el-button type="primary" size="small" :loading="state.user.btnLoading" @click="submit">确定</el-button>
+      <el-button type="primary" size="small" :loading="app.btnLoading" @click="submit">确定</el-button>
       <el-button size="small" @click="visible=false">取消</el-button>
     </template>
   </el-dialog>
@@ -82,14 +82,14 @@ import { IroleKey, IuserFormKey, role, userForm } from "@/symbols";
 import { Auser } from "@/api";
 import { ElMessageBox } from "element-plus";
 import type { Ref } from "vue"
-import { useStore } from "@/store";
+import appStore from "@/store/appStore";
 
 const props = defineProps({
   msg: String,
 })
 
 
-const { state, commit } = useStore()
+const app = appStore()
 const visible = ref(false)
 const roles = inject(IroleKey, role)
 const data = inject(IuserFormKey, userForm)
@@ -103,7 +103,7 @@ const checkUsername: Ivalidate = (rule, value, callback) => {
   }
   
 
-  commit("user/btnLoading")
+  app.showBtnLoading()
   Auser.isUser({username: value}).then(res => {
     if (res.data == true) {
       callback("用户名已经存在😂")

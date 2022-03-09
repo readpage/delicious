@@ -1,9 +1,10 @@
 import axios from "axios"
 import { ElMessage, ElMessageBox } from "element-plus"
-import { store } from "@/store";
 import router from "@/router";
 import Nprogress from "nprogress";
 import "nprogress/nprogress.css";
+import appStore from "@/store/appStore";
+import userStore from "@/store/userStore";
 
 const service = axios.create({
   baseURL: "/api"
@@ -18,7 +19,7 @@ service.interceptors.request.use(config => {
   if (num++ == 0) {
     Nprogress.start()
   }
-  const token = store.state.user.token
+  const token = userStore().token
   if (token) {
     config.headers.Authorization = token["token_type"] + " " +token["access_token"]
   }
@@ -29,6 +30,7 @@ service.interceptors.request.use(config => {
 })
 
 service.interceptors.response.use(response  => {
+  const app = appStore()
   num-- 
   const res = response.data
   if (Math.trunc(res.code/100) == 2) {
@@ -42,7 +44,7 @@ service.interceptors.response.use(response  => {
         ElMessage.success(res.msg)
     }
     if (num <= 0) {
-      store.commit("user/hideLoading")
+      app.hideLoading()
     }
     return response
   } else {
@@ -63,15 +65,15 @@ service.interceptors.response.use(response  => {
       default:
         ElMessage.warning(res.msg)
     }
-    store.commit("user/hideLoading")
-    store.commit("app/hideOtherLoading")
-    
+    app.hideLoading()
+    app.hideOtherLoading()
     throw response
   }
 },error => {
+  const app = appStore()
   num--
-  store.commit("user/hideLoading")
-  store.commit("app/hideOtherLoading")
+  app.hideLoading()
+  app.hideOtherLoading()
   router.push("/500")
   return Promise.reject(error)
 })
@@ -79,15 +81,17 @@ service.interceptors.response.use(response  => {
 
 
 function doRequest(res: any):Promise<any> {
+  const user = userStore()
+  const app = appStore()
   const config = res.config
   if (!isRefreshing) {
     isRefreshing = true
-    return store.dispatch("user/refreshToken", store.state.user.token).then(res => {
+    return  user.refreshToken(user.token).then(res => {
       retryRequests.forEach(item => item(res.data))
       retryRequests = []
       return service(config)
     }).catch(err => {
-      store.commit("app/hideAppLoading")
+      app.hideOtherLoading()
     }).finally(() => {
       isRefreshing = false
     })
@@ -101,15 +105,16 @@ function doRequest(res: any):Promise<any> {
 }
 
 function expire(msg: string) {
+  const user = userStore()
   ElMessageBox.confirm(msg, "提示", {
     confirmButtonText: "确定",
     cancelButtonText: "取消",
     type: "warning"
   }).then(() => {
-    store.dispatch("user/userRemove")
+    user.userRemove()
     router.push("/sign")
   }).catch(() => {
-    store.dispatch("user/userRemove")
+    user.userRemove()
     ElMessage.info("已取消登录!")
   })
 }

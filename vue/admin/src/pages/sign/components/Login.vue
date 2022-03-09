@@ -16,7 +16,7 @@
       </el-form-item>
       <el-form-item>
         <el-space :size="20">
-          <el-button size="mini" :loading="state.app.otherLoading" type="primary" @click="login">登录</el-button>
+          <el-button size="mini" :loading="app.otherLoading" type="primary" @click="login">登录</el-button>
           <el-button size="mini" @click="reset">重置</el-button>
         </el-space>
       </el-form-item>
@@ -26,7 +26,8 @@
 
 <script setup lang="ts">
 import { Alogin } from "@/api"
-import { useStore } from "@/store"
+import appStore from "@/store/appStore"
+import userStore from "@/store/userStore"
 import { ElLoading, ElMessage } from "element-plus"
 import { reactive, ref } from "vue"
 import { useRoute, useRouter } from "vue-router"
@@ -40,7 +41,8 @@ type userType = keyof typeof user
 const userRef = ref()
 const router = useRouter()
 const route = useRoute()
-const { state, commit, dispatch } = useStore()
+const app = appStore()
+const store = userStore()
 
 const rules = reactive({
   username: {
@@ -60,15 +62,15 @@ function login() {
       Object.keys(user).forEach(key => {
         form.append(key, user[key as userType])
       })
-      commit("app/otherLoading")
+      app.showOtherLoading()
       Alogin(form).then(async res => {
-        commit("user/setToken", res.data)
-        await dispatch("app/appLoad")
+        store.setToken(res.data)
+        await app.appLoad()
         router.push("/")
         reset()
         ElMessage.success(res.msg)
         setTimeout(() => {
-          commit("app/hideOtherLoading")
+          app.hideOtherLoading()
         }, 1000);
       })
     }

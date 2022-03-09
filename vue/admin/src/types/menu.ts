@@ -32,7 +32,7 @@ interface ImenuForm {
 }
 
 interface Itags {
-  name: string
-  title: string
+  name?: string
+  title?: string
   path: string
 }

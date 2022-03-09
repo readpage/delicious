@@ -1,6 +1,6 @@
 <template>
   <div class="topbar">
-    <div class="topbar_collapse" @click="commit('user/updCollapse', !collapse)">
+    <div class="topbar_collapse" @click="user.updCollapse(!collapse)">
       <i :class="[collapse ? 'el-icon-s-unfold' : 'el-icon-s-fold']"></i>
     </div>
     <Breadcrumb />
@@ -9,7 +9,7 @@
       <el-dropdown trigger="click" @command="onCommand">
         <span class="el-dropdown-link">
           <span class="name">{{ info.nickname || "未登录" }}</span>
-          <el-avatar :src="state.user.info.headImg">
+          <el-avatar :src="info.headImg">
             <img src="@/assets/img/avatar.png" alt="">
           </el-avatar>
         </span>
@@ -27,13 +27,14 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "@/store";
+import userStore from "@/store/userStore";
+import { storeToRefs } from "pinia";
 import { toRefs } from "vue";
 import { useRouter } from "vue-router";
 import Breadcrumb from "./components/Breadcrumb.vue";
 
-const { state, commit, dispatch } = useStore();
-const { collapse, info } = toRefs(state.user);
+const user = userStore()
+const { collapse, info} = storeToRefs(user)
 const router = useRouter()
 
 async function onCommand(name: string) {
@@ -45,7 +46,7 @@ async function onCommand(name: string) {
       router.push("/sign")
       break
     case "exit":
-      await dispatch("user/userLogout", state.user.token)
+      user.userLogout(user.token)
       router.push("/sign")
       break
       

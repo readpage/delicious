@@ -5,7 +5,7 @@
 
 <script setup lang="ts">
 import { Auser } from "@/api"
-import { useStore } from "@/store"
+import appStore from "@/store/appStore"
 import { inject, ref } from "vue"
 import Form from "./Form.vue"
 
@@ -17,7 +17,7 @@ const props = defineProps({
 })
 const reload = inject<Function>("reload", Function)
 
-const { commit } = useStore()
+const app = appStore()
 
 const form = ref()
 const emit = defineEmits(["open"])
@@ -33,7 +33,7 @@ function submit(val: IuserForm) {
     return {"id": item}
   })
   data.roles = roles
-  commit("user/btnLoading")
+  app.showBtnLoading()
   Auser.update(data).then((res: any) => {
     form.value.visible = false
     reload()

@@ -4,10 +4,10 @@
 
 <script setup lang="ts">
 import { Auser } from "@/api"
-import { useStore } from "@/store"
 import { ElMessageBox } from "element-plus"
 import { inject, ref } from "vue"
 import type { Ref } from "vue"
+import appStore from "@/store/appStore"
 
 const props = defineProps({
   disable: Boolean,
@@ -16,14 +16,14 @@ const props = defineProps({
 
 const uids = inject<Ref<number[]>>("uids", ref<number[]>([]))
 const reload = inject<Function>("reload", Function)
-const { commit } = useStore()
+const app = appStore()
 
 const emit = defineEmits(["onDelete"])
 function onDelete() {
   ElMessageBox.confirm("确认删除?")
   .then(() => {
     emit("onDelete")
-    commit("user/btnLoading")
+    app.showBtnLoading()
     Auser.del({urlParam: `/${uids.value}`}).then(res => {
       reload()
     })

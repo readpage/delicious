@@ -1,6 +1,6 @@
 <template>
   <div class="pie h-72">
-    <v-chart :option="option" autoresize></v-chart>
+    <v-chart ref="chart" :loading="loading" :option="pie" autoresize></v-chart>
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 import { Astatis } from "@/api";
 import { ref } from "vue"
 
-const option = ref({
+const pie = {
     title: {
         text: '餐品分类占比',
         left: 'center'
@@ -32,14 +32,21 @@ const option = ref({
             }
         }
     }
-})
+}
+const chart = ref()
+const loading = ref(true)
 
 
 Astatis.foodType().then(res => {
     const list = res.data.map((item: any) => {
         return {name: item.type, value: item.number}
     })
-    option.value.series.data = list
+    loading.value = false
+    chart.value.setOption({
+        series: {
+            data: list
+        }
+    })
 })
 
 </script>

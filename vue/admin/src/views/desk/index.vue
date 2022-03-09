@@ -14,14 +14,14 @@
       <div class="space-x-2.5 mb-2.5">
         <el-button size="mini" icon="el-icon-plus" type="primary" @click="openForm()">新增</el-button>
         <el-button size="mini" icon="el-icon-edit" type="success" @click="openForm(obj.selections[0])" :disabled="obj.editDisabled">修改</el-button>
-        <el-button size="mini" icon="el-icon-delete" type="danger" :loading="state.user.btnLoading" @click="remove(obj.selections)" :disabled="obj.deleteDisabled">删除</el-button>
+        <el-button size="mini" icon="el-icon-delete" type="danger" :loading="app.btnLoading" @click="remove(obj.selections)" :disabled="obj.deleteDisabled">删除</el-button>
       </div>
       <div>
         <el-tooltip :content="param.visible ? '隐藏搜索': '显示搜索'" placement="top"><el-button size="mini" icon="el-icon-search" @click="param.visible = !param.visible" circle></el-button></el-tooltip>
         <el-tooltip content="刷新" placement="top"><el-button size="mini" icon="el-icon-refresh" circle @click="tableRef.reload"></el-button></el-tooltip>
       </div>
     </div>
-    <v-table ref="tableRef" :loading="state.user.loading"
+    <v-table ref="tableRef" :loading="app.loading"
       :table="table"
       @page="page"
       @onSelection="onSelection">
@@ -29,7 +29,7 @@
         <template #default="scope">
           <el-space>
             <el-button size="mini" type="primary" icon="el-icon-edit" @click="openForm(scope.row)"></el-button>
-            <el-button size="mini" type="danger" icon="el-icon-delete" :loading="state.user.btnLoading" @click="remove([scope.row])"></el-button>
+            <el-button size="mini" type="danger" icon="el-icon-delete" :loading="app.btnLoading" @click="remove([scope.row])"></el-button>
           </el-space>
         </template>
       </el-table-column>
@@ -41,15 +41,15 @@
 <script setup lang="ts">
 import { Adesk } from "@/api";
 import type { Itable, tableApi } from "@/modules/table/index.vue";
-import { useStore } from "@/store";
 import { reactive, ref, toRefs, watch } from "vue"
 import Card from "../components/Card.vue";
 import Form from "./components/Form.vue";
 import type { formApi } from "./components/Form.vue";
 import { isEmpty } from "lodash";
 import { ElMessageBox } from "element-plus";
+import appStore from "@/store/appStore";
 
-const { state, commit } = useStore()
+const app = appStore()
 const param = reactive({
   number: "",
   visible: true
@@ -107,7 +107,7 @@ function reset() {
 }
 
 function page(pageNum: number, pageSize: number) {
-  commit("user/showLoading")
+  app.showLoading()
   Adesk.page({urlParam: `/${pageNum}/${pageSize}`, number: param.number}).then(res => {
     table.data = res.data.list
     table.total = res.data.total
@@ -139,7 +139,7 @@ async function submit(val: Idesk) {
 
 function remove(val: Idesk[]) {
   ElMessageBox.confirm("确认删除?").then(() => {
-    commit("user/btnLoading")
+    app.showBtnLoading()
     let ids = val.map(item => item.id)
     Adesk.remove(ids).then(res => {
       tableRef.value.reload()

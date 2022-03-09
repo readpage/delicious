@@ -5,7 +5,7 @@
 
 <script setup lang="ts">
 import { Auser } from "@/api"
-import { useStore } from "@/store"
+import appStore from "@/store/appStore"
 import { IuserFormKey, userForm } from "@/symbols"
 import { inject, provide, ref } from "vue"
 import Form from "./Form.vue"
@@ -16,7 +16,7 @@ function open() {
   form.value.visible = true
 }
 
-const { commit } = useStore()
+const app = appStore()
 function submit(val: IuserForm) {
   let data = Object.assign({}, val) as any
   const roles = val.roles.map((item) => {
@@ -24,7 +24,7 @@ function submit(val: IuserForm) {
   })
   data.roles = roles
   
-  commit("user/btnLoading")
+  app.showBtnLoading()
   Auser.add(data).then(res => {
     form.value.visible = false
     reload()

@@ -6,7 +6,7 @@
       <template v-if="token">
         <div class="router">
           <el-select v-model="url" size="small" prefix-icon="el-icon-search">
-            <el-option v-for="(item, index) in state.menu.routes"
+            <el-option v-for="(item, index) in menu.routes"
               :key="index" :value="item.path"
             >
             <span style="float: left">{{item.meta.title}}</span>
@@ -35,7 +35,8 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "@/store";
+import menuStore from "@/store/menuStore";
+import userStore from "@/store/userStore";
 import { computed, ref, toRefs } from "vue"
 import { useRoute, useRouter } from "vue-router";
 
@@ -44,8 +45,9 @@ const props = defineProps({
   desc: String,
 })
 const { code, desc } = toRefs(props)
-const { state } = useStore()
-const token = computed(() => state.user.token)
+const user = userStore()
+const menu = menuStore()
+const token = computed(() => user.token)
 const router = useRouter()
 
 const url = ref<string>("")

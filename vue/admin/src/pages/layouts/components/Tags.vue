@@ -43,30 +43,30 @@
 </template>
 
 <script setup lang="ts">
-import {} from "vue";
+import { computed } from "vue";
 import { onBeforeRouteUpdate, useRoute, useRouter } from "vue-router";
 import type { RouteLocationNormalizedLoaded } from "vue-router";
-import { useStore } from "@/store";
+import menuStore from "@/store/menuStore";
 
 const route = useRoute();
 const router = useRouter();
 
-const { state, commit } = useStore();
-const tagsList = state.menu.tagsList;
+const menu = menuStore()
+const tagsList = computed(() => menu.tagsList)
 
 function isActive(path: string) {
   return path == route.fullPath;
 }
 function setTags(route: RouteLocationNormalizedLoaded) {
-  const isExist = tagsList.some((item) => {
+  const isExist = tagsList.value.some((item) => {
     return item.path == route.fullPath;
   });
   if (!isExist) {
-    commit("menu/setTagsItem", {
-      name: route.name,
-      title: route.meta.title,
+    menu.setTagsItem({
+      name: route.name as string,
+      title: route.meta.title as string,
       path: route.fullPath,
-    });
+    })
   }
 }
 setTags(route);
@@ -74,9 +74,9 @@ onBeforeRouteUpdate((to) => {
   setTags(to);
 });
 function handleClose(index: number) {
-  const item = tagsList[index + 1] || tagsList[index - 1];
+  const item = tagsList.value[index + 1] || tagsList.value[index - 1];
 
-  commit("menu/delTagsItem", index);
+  menu.delTagsItem(index)
   if (item) {
     router.push(item.path);
   } else {
@@ -94,14 +94,14 @@ function handleTags(command: string) {
   }
 }
 function closeAll() {
-  commit("menu/clearTags")
+  menu.clearTags()
   router.push("/")
 }
 
 function closeOther() {
-  const curItem = tagsList.find(item => item.path == route.fullPath)
+  const curItem = tagsList.value.find(item => item.path == route.fullPath)
   if (curItem) {
-    commit("menu/clearTagsOther", curItem)
+    menu.clearTagsOther(curItem)
   }
 }
 </script>

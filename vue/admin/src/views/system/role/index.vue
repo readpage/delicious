@@ -13,7 +13,7 @@
           max-height="500"
           ref="tableRef"
           @selection-change="handleSelectionChange"
-          v-loading="state.user.loading"
+          v-loading="app.loading"
           element-loading-text="拼命加载中"
           element-loading-spinner="el-icon-loading">
           <el-table-column type="selection" width="50"></el-table-column>
@@ -45,7 +45,7 @@
 
 <script setup lang="ts">
 import { Amenu, Arole } from "@/api";
-import { useStore } from "@/store";
+import appStore from "@/store/appStore";
 import { ImenuKey, IroleFormKey, roleForm }from "@/symbols";
 import { deepTree } from "@/util";
 import { ElMessageBox } from "element-plus";
@@ -54,7 +54,7 @@ import Add from "./components/Add.vue";
 import Edit from "./components/Edit.vue";
 
 
-const { state, commit } = useStore()
+const app = appStore()
 
 const table = reactive({
   total: 0,
@@ -87,7 +87,7 @@ function onUpdate(val: any) {
   const temp = JSON.parse(JSON.stringify(val))
   roleForm.value.role = temp
 
-  commit("user/btnLoading")
+  app.showBtnLoading()
   Arole.perm({urlParam: `/${temp.id}`}).then(res => {
     // let list = res.data.map((item: any) => {
     //   return item.mid
@@ -114,7 +114,7 @@ function onUpdate(val: any) {
 const menu = ref<Imenu[]>([])
 provide(ImenuKey, menu)
 function page() {
-  commit("user/showLoading")
+  app.showLoading()
   Arole.page({urlParam: `/${table.pageNum}/${table.pageSize}`}).then(res => {
     table.role = res.data.list
     table.total = res.data.total
@@ -140,7 +140,7 @@ function onDelete(val: Irole[]) {
     let ids = val.map(item => {
       return item.id
     })
-    commit("user/btnLoading")
+    app.showBtnLoading()
     Arole.del({urlParam: `/${ids}`}).then(res => {
       reload()
     })

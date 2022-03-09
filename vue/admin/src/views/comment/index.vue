@@ -1,8 +1,8 @@
 <template>
   <Card>
     <el-form v-show="param.visible" :model="param" ref="paramRef" :inline="true">
-      <el-form-item label="用户昵称" prop="username">
-        <el-input size="mini" v-model="param.username" placeholder="请输入用户昵称" clearable></el-input>
+      <el-form-item label="用户昵称" prop="appname">
+        <el-input size="mini" v-model="param.appname" placeholder="请输入用户昵称" clearable></el-input>
       </el-form-item>
       <el-form-item label="类型" prop="state">
         <el-select v-model="param.state" size="mini" placeholder="请选择类型" clearable>
@@ -33,16 +33,16 @@
     </div>
     <v-table ref="tableRef"
       :table="table"
-      :loading="state.user.loading"
+      :loading="app.loading"
       @page="page"
       @onSelection="onSelection">
       <template #state="scope">
-        <el-switch v-model="scope.row.state" @click.native="onSwitch(scope.row)" :loading="state.user.btnLoading" />
+        <el-switch v-model="scope.row.state" @click.native="onSwitch(scope.row)" :loading="app.btnLoading" />
       </template>
       <el-table-column label="操作" fixed="right" width="135">
         <template #default="scope">
           <el-space>
-            <v-btn name="delete" :loading="state.user.btnLoading" @click="remove([scope.row])"></v-btn>
+            <v-btn name="delete" :loading="app.btnLoading" @click="remove([scope.row])"></v-btn>
           </el-space>
         </template>
       </el-table-column>
@@ -53,16 +53,16 @@
 <script setup lang="ts">
 import { Acomment } from "@/api";
 import type { Itable, tableApi } from "@/modules/table/index.vue";
-import { useStore } from "@/store";
+import appStore from "@/store/appStore";
 import { ElMessageBox } from "element-plus";
 import { nextTick, reactive, ref } from "vue"
 import Card from "../components/Card.vue";
 
-const { state, commit } = useStore()
+const app = appStore()
 
 const param = reactive({
   visible: true,
-  username: "",
+  appname: "",
   state: null,
   options: [
     {
@@ -84,7 +84,7 @@ const table = reactive<Itable>({
     },
     {
       label: "用户昵称",
-      prop: "username"
+      prop: "appname"
     },
     {
       label: "内容",
@@ -120,17 +120,17 @@ const obj = reactive({
 const tableRef = ref({} as tableApi)
 
 function page(pageNum: number, pageSize: number) {
-  commit("user/showLoading")
-  Acomment.page({urlParam: `/${pageNum}/${pageSize}`, state: param.state, username: param.username}).then(res => {
+  app.showLoading()
+  Acomment.page({urlParam: `/${pageNum}/${pageSize}`, state: param.state, appname: param.appname}).then(res => {
     table.data = res.data.list
     table.total = res.data.total
   })
 }
 
 function onSwitch(val: any) {
-  let message = "你确定要" + (val.state ? "启用" : "警用") + val.username + "用户评论吗?"
+  let message = "你确定要" + (val.state ? "启用" : "警用") + val.appname + "用户评论吗?"
   ElMessageBox.confirm(message).then(res => {
-    commit("user/btnLoading")
+    app.showBtnLoading()
     Acomment.update({state: val.state, id: val.id}).catch(() => {
       val.state = !val.state
     })
@@ -160,7 +160,7 @@ function onSelection(val: any) {
 
 function remove(val: Icomment[]) {
   ElMessageBox.confirm("确认删除?").then(() => {
-    commit("user/btnLoading")
+    app.showLoading()
     let ids = val.map(item => item.id)
     Acomment.remove(ids).then(res => {
       tableRef.value.reload()

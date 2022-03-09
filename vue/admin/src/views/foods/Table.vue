@@ -26,7 +26,7 @@
           @click="openForm(data.multipleSelection[0])" :disabled="data.editDisabled">
           修改
         </el-button>
-        <el-button size="mini" type="danger" icon="el-icon-delete" :loading="state.user.btnLoading" 
+        <el-button size="mini" type="danger" icon="el-icon-delete" :loading="app.btnLoading" 
           @click="remove(data.multipleSelection)" :disabled="data.deleteDisabled">
           删除
         </el-button>
@@ -46,7 +46,7 @@
       :header-cell-style="{ background: '#f5f7fa', color: '#606266' }"
       max-height="500"
       @selection-change="handleSelectionChange"
-      v-loading="state.user.loading"
+      v-loading="app.loading"
       element-loading-text="拼命加载中"
       element-loading-spinner="el-icon-loading">
       <el-table-column type="selection" width="50"></el-table-column>
@@ -66,7 +66,7 @@
         <template #default="scope">
           <el-space>
             <el-button size="mini" type="primary" icon="el-icon-edit" @click="openForm(scope.row)"></el-button>
-            <el-button size="mini" type="danger" icon="el-icon-delete" :loading="state.user.btnLoading" @click="remove([scope.row])"></el-button>
+            <el-button size="mini" type="danger" icon="el-icon-delete" :loading="app.btnLoading" @click="remove([scope.row])"></el-button>
           </el-space>
         </template>
       </el-table-column>
@@ -84,12 +84,12 @@
 
 <script setup lang="ts">
 import { Afood } from "@/api"
-import { useStore } from "@/store"
+import appStore from "@/store/appStore"
 import { ElMessageBox } from "element-plus"
 import { reactive, ref } from "vue"
 import Form from "./Form.vue"
 
-const { state, commit } = useStore()
+const app = appStore()
 
 interface Props {
   foods: Ifood[],
@@ -165,7 +165,7 @@ function closeForm() {
 }
 
 function save() {
-  commit("user/btnLoading")
+  app.showBtnLoading()
   emit("save", data.food)
 }
 function remove(val: Ifood[]) {
@@ -174,7 +174,7 @@ function remove(val: Ifood[]) {
     let ids = val.map(item => {
       return item.id
     })
-    commit("user/btnLoading")
+    app.showBtnLoading()
     emit("remove", ids)
   })
 }

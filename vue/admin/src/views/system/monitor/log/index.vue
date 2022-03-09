@@ -4,12 +4,12 @@
       <div class="role">
         <el-space :size="10">
           <el-button size="mini" icon="el-icon-refresh" @click="reload">刷新</el-button>
-          <el-button size="mini" type="warning" icon="el-icon-delete" :loading="state.user.btnLoading" @click="clearAll">清空</el-button>
+          <el-button size="mini" type="warning" icon="el-icon-delete" :loading="app.btnLoading" @click="clearAll">清空</el-button>
         </el-space>
         <el-table :data="table.logInfo" stripe
           :header-cell-style="{ background: '#f5f7fa', color: '#606266' }"
           max-height="500"
-          v-loading="state.user.loading"
+          v-loading="app.loading"
           element-loading-text="拼命加载中"
           element-loading-spinner="el-icon-loading">
           <el-table-column type="selection" width="50"></el-table-column>
@@ -41,12 +41,12 @@
 
 <script setup lang="ts">
 import { Alog } from "@/api";
-import { useStore } from "@/store";
+import appStore from "@/store/appStore";
 import { ElMessageBox } from "element-plus";
 import { onMounted, reactive, ref } from "vue"
 import Detail from "./components/Detail.vue";
 
-const { state, commit } = useStore()
+const app = appStore()
 
 const table = reactive({
   total: 0,
@@ -69,7 +69,7 @@ function open(val: any) {
 }
 
 function reload() {
-  commit("user/showLoading")
+  app.showLoading()
   Alog.page({urlParam: `/${table.pageNum}/${table.pageSize}`}).then(res => {
     table.logInfo = res.data.list
     table.total = res.data.total
@@ -80,7 +80,7 @@ reload()
 
 function clearAll() {
   ElMessageBox.confirm("确定清空?").then(() => {
-    commit("user/btnLoading")
+    app.showBtnLoading()
     Alog.clearAll().then(res => {
       reload()
     })

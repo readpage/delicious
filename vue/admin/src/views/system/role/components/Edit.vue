@@ -5,7 +5,7 @@
 
 <script setup lang="ts">
 import { Arole } from "@/api"
-import { useStore } from "@/store"
+import appStore from "@/store/appStore"
 import { role } from "@/symbols"
 import { isEmpty } from "lodash"
 import { inject, ref } from "vue"
@@ -16,7 +16,8 @@ const props = defineProps({
   msg: String,
   disabled: Boolean,
 })
-const { commit } = useStore()
+
+const app = appStore()
 const reload = inject<Function>("reload", Function)
 
 const form = ref()
@@ -27,7 +28,7 @@ function onUpdate() {
 }
 
 function submit(val: IroleForm) {
-  commit("user/btnLoading")
+  app.showBtnLoading()
   Arole.update({urlParam: `/${val.menuIdList}`, data: val.role}).then(res => {
     form.value.visible = false
     reload()

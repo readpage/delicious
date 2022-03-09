@@ -15,7 +15,7 @@
         <el-input v-model="keyword" placeholder="输入关键字进行过滤" size="small" clearable></el-input>
         <div class="scrollbar">
           <el-tree :data="menu"
-            v-loading="state.user.btnLoading"
+            v-loading="app.btnLoading"
             element-loading-text="拼命加载中"
             element-loading-spinner="el-icon-loading"
             ref="treeRef"
@@ -32,7 +32,7 @@
       </el-form-item>
     </el-form>
     <template #footer>
-      <el-button type="primary" size="small" :loading="state.user.btnLoading" @click="submit">确定</el-button>
+      <el-button type="primary" size="small" :loading="app.btnLoading" @click="submit">确定</el-button>
       <el-button size="small" @click="visible=false">取消</el-button>
     </template>
   </el-dialog>
@@ -40,11 +40,11 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "@/store"
 import { ImenuKey, IroleFormKey, roleForm } from "@/symbols"
 import { ElMessageBox } from "element-plus"
 import { inject, reactive, ref, toRefs, watch } from "vue"
 import type { Ref } from "vue"
+import appStore from "@/store/appStore"
 
 // props
 const props = defineProps({
@@ -54,7 +54,7 @@ const props = defineProps({
 
 
 // store
-const { state } = useStore()
+const app = appStore()
 // inject
 const menu = inject(ImenuKey)
 const data = inject(IroleFormKey, roleForm)

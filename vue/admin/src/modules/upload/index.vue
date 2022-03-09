@@ -23,8 +23,9 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "@/store";
+import userStore from "@/store/userStore";
 import { ElMessage, ElMessageBox } from "element-plus";
+import { storeToRefs } from "pinia";
 import { computed, onMounted, reactive, ref, watch, watchEffect } from "vue";
 
 interface Props {
@@ -33,7 +34,8 @@ interface Props {
 }
 const props = defineProps<Props>();
 
-const { getters } = useStore()
+const user = userStore()
+const token = user.token
 
 const data = reactive({
   dialogImg: "",
@@ -44,7 +46,6 @@ const disabled = computed(() => props.fileList.length)
 const headers = reactive({
   Authorization: "",
 });
-const token = getters["user/token"]
 if (token) {
   headers.Authorization = token["token_type"] + " " + token["access_token"];
 }

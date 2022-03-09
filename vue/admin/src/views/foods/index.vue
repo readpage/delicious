@@ -8,12 +8,12 @@
 
 <script setup lang="ts">
 import { Afood } from "@/api";
-import { useStore } from "@/store";
 import { reactive, ref } from "vue"
 import Table from "./Table.vue";
 import type {Api} from "./Table.vue";
+import appStore from "@/store/appStore";
 
-const { state, commit } = useStore()
+const app = appStore()
 
 const data = reactive({
   foods: [] as Ifood[],
@@ -22,7 +22,7 @@ const data = reactive({
 const tableRef = ref<Api>()
 
 function page({pageNum, pageSize}: any) {
-  commit("user/showLoading")
+  app.showLoading()
   Afood.page({urlParam: `/${pageNum}/${pageSize}`}).then(res => {
     data.foods = res.data.list
     data.total = res.data.total
@@ -48,7 +48,7 @@ function remove(val: any) {
 }
 
 function param(val: any) {
-  commit("user/showLoading")
+  app.showLoading()
   Afood.page({urlParam: "/1/5", name: val.name, type: val.type}).then(res => {
     data.foods = res.data.list
     data.total = res.data.total

@@ -16,7 +16,7 @@
     <div class="flex justify-between">
       <div class="space-x-2.5 mb-2.5">
         <el-button size="mini" icon="el-icon-refresh" @click="tableRef.reload">刷新</el-button>
-        <el-button size="mini" icon="el-icon-delete" type="danger" :loading="state.user.btnLoading" @click="remove(obj.selections)" :disabled="obj.deleteDisabled">删除</el-button>
+        <el-button size="mini" icon="el-icon-delete" type="danger" :loading="app.btnLoading" @click="remove(obj.selections)" :disabled="obj.deleteDisabled">删除</el-button>
       </div>
       <div>
         <el-tooltip placement="top" :content="param.visible ? '隐藏搜索' : '显示搜索' ">
@@ -27,7 +27,7 @@
         </el-tooltip>
       </div>
     </div>
-    <v-table :table="table" :loading="state.user.loading"
+    <v-table :table="table" :loading="app.loading"
       ref="tableRef"
       @page="page"
       @onSelection="onSelection">
@@ -46,7 +46,7 @@
             <el-button type="info" size="mini" @click="openDetail(scope.row)">
               <i class="el-icon-view"></i>
             </el-button>
-            <el-button size="mini" type="danger" :loading="state.user.btnLoading" @click="remove([scope.row])" icon="el-icon-delete"></el-button>
+            <el-button size="mini" type="danger" :loading="app.btnLoading" @click="remove([scope.row])" icon="el-icon-delete"></el-button>
           </el-space>
         </template>
       </el-table-column>
@@ -61,15 +61,15 @@
 <script setup lang="ts">
 import { Aorders, Auser } from "@/api";
 import type { Itable, tableApi } from "@/modules/table/index.vue";
-import { useStore } from "@/store";
 import { reactive, ref, toRefs } from "vue"
 import Card from "../components/Card.vue";
 import Detail from "./Detail.vue";
 import type { detailApi } from "./Detail.vue";
 import { ElMessageBox } from "element-plus";
+import appStore from "@/store/appStore";
 
 
-const { state, commit } = useStore()
+const app = appStore()
 
 const table = reactive<Itable>({
   total: 0,
@@ -122,7 +122,7 @@ function reset() {
 }
 
 function page(pageNum: number, pageSize: number) {
-  commit("user/showLoading")
+  app.showLoading()
   Aorders.page({urlParam: `/${pageNum}/${pageSize}`, uid: param.uid, number: param.number}).then(res => {
     table.total = res.data.total
     table.data = res.data.list
@@ -145,7 +145,7 @@ function openDetail(val: any) {
 function remove(val: Iorders[]) {
   ElMessageBox.confirm("确认删除?").then(() => {
     let ids = val.map(item => item.id)
-    commit("user/btnLoading")
+    app.showBtnLoading()
     Aorders.remove(ids).then(res => {
       tableRef.value.reload()
     })

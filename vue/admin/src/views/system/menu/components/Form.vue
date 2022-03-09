@@ -32,14 +32,14 @@
       </el-form-item>
     </el-form>
     <template #footer>
-      <el-button type="primary" size="mini" :loading="state.user.btnLoading" @click="submit">确定</el-button>
+      <el-button type="primary" size="mini" :loading="app.btnLoading" @click="submit">确定</el-button>
       <el-button size="mini" @click="visible=false">取消</el-button>
     </template>
   </el-dialog>
 </template>
 
 <script setup lang="ts">
-import { useStore } from "@/store"
+import appStore from "@/store/appStore"
 import { menuForm, menuFormKey } from "@/symbols/menu"
 import { ElMessageBox } from "element-plus"
 import { inject, reactive, ref, toRefs } from "vue"
@@ -53,7 +53,7 @@ const props = defineProps({
 
 const form = inject(menuFormKey, menuForm)
 
-const { state, commit } = useStore()
+const app = appStore()
 
 const visible = ref(false)
 
@@ -91,7 +91,7 @@ const emit = defineEmits(["submit"])
 function submit() {
   formRef.value.validate((valid: any) => {
     if (valid) {
-      commit("user/btnLoading")
+      app.showBtnLoading()
       emit("submit", form.value)
     }
   })

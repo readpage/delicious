@@ -23,37 +23,40 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "@/store";
 import { getBrowser } from "@/util";
 import type { browserType } from "@/util";
 import { computed, onMounted, reactive, ref, toRefs, watchEffect } from "vue"
 import MenuTree from "./components/MenuTree.vue";
+import userStore from "@/store/userStore";
+import { storeToRefs } from "pinia";
+import menuStore from "@/store/menuStore";
 
-const { state, commit, getters } = useStore()
+const user = userStore()
+const menuState = menuStore()
+const { browser, collapse } = storeToRefs(user)
 
 const lock = {
 	collapse: null,
 };
-const menu = computed(() => state.menu.menu)
-const browser = computed<browserType>(() => getters["user/browser"])
-const collapse = computed(() => getters["user/collapse"])
+
+const menu = computed(() => menuState.menu)
 
 function before () {
   window.open('http://food.f1dao.cn')
 }
 function resize() {
   window.addEventListener("resize", () => {
-    commit("user/setBrowser")
+    user.setBrowser()
     if (browser.value.isMini) {
       
       
-      if (lock.collapse == null) {
-        lock.collapse = collapse.value
-        commit("user/updCollapse", true)
+      if (lock.collapse == null && collapse.value != null) {
+        lock.collapse = collapse.value as any
+        user.updCollapse(true)
       }
     } else {
       if (lock.collapse != null) {
-        commit("user/updCollapse", lock.collapse)
+        user.updCollapse(lock.collapse as any)
         lock.collapse = null
       }
     }

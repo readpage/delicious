@@ -7,13 +7,13 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "@lottiefiles/lottie-player": "^1.4.1",
+    "@lottiefiles/lottie-player": "^1.3.1",
     "axios": "^0.21.1",
     "dayjs": "^1.10.7",
     "element-plus": "^1.1.0-beta.20",
     "js-cookie": "^3.0.1",
     "nprogress": "^0.2.0",
-    "pinia": "^2.0.3",
+    "pinia": "^2.0.11",
     "store": "^2.0.12",
     "vue": "^3.2.20",
     "vue-router": "^4.0.10"

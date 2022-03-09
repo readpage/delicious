@@ -22,18 +22,18 @@
 
 <script setup lang="ts">
 import { Astatis } from "@/api";
-import { useStore } from "@/store";
+import userStore from "@/store/userStore";
 import { isEmpty } from "lodash";
 import { computed, reactive, ref, toRefs, watchEffect } from "vue"
-
-const { state } = useStore()
 
 const data = reactive({
   cpu: [{}],
   mem: [{}],
 })
 
-const sysInfo = computed(() => state.user.sys)  
+const user = userStore()
+
+const sysInfo = computed(() => user.sys)  
 
 watchEffect(() => {
   let sys = sysInfo.value

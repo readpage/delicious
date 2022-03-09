@@ -1,3 +1,5 @@
+import { isEmpty } from 'lodash';
+import menuStore from "@/store/menuStore";
 import { cookie } from "@/util";
 import { createRouter, createWebHistory } from "vue-router"
 
@@ -56,6 +58,10 @@ export async function setRoutes(val: Imenu[]) {
 }
 
 router.beforeEach((to, form, next) => {
+  const menu = menuStore()
+  if (!isEmpty(menu.routes)) {
+    document.title = to.meta.title as string
+  }
   if (!(cookie.get("f1dao-token") || to.path == "/sign") ) {
     next("/sign")
   }
@@ -64,10 +70,6 @@ router.beforeEach((to, form, next) => {
     overlay.click()
   }
   next()
-})
-
-router.afterEach(to => {
-  document.title = to.meta.title as string
 })
 
 export default router;

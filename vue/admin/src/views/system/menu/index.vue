@@ -9,7 +9,7 @@
         <el-table :data="treeList" ref="tableRef" row-key="id" stripe
           max-height="500"
           @expand-change="expandChange"
-          v-loading="state.user.loading"
+          v-loading="app.loading"
           element-loading-text="拼命加载中"
           element-loading-spinner="el-icon-loading"
         >
@@ -33,7 +33,7 @@
             <template #default="scope">
               <el-space>
                 <Edit @onUpdate="onUpdate(scope.row)" />
-                <el-button type="danger" size="mini" :loading="state.user.btnLoading" icon="el-icon-delete" @click="onDelete(scope.row)"></el-button>
+                <el-button type="danger" size="mini" :loading="app.btnLoading" icon="el-icon-delete" @click="onDelete(scope.row)"></el-button>
               </el-space>
             </template>
           </el-table-column>
@@ -45,7 +45,7 @@
 
 <script setup lang="ts">
 import { Amenu } from "@/api";
-import { useStore } from "@/store";
+import appStore from "@/store/appStore";
 import { ImenuKey } from "@/symbols";
 import { menuFormKey } from "@/symbols/menu";
 import { deepTree } from "@/util";
@@ -54,7 +54,7 @@ import { computed, onMounted, provide, reactive, ref } from "vue";
 import Add from "./components/Add.vue";
 import Edit from "./components/Edit.vue";
 
-const { state, commit } = useStore()
+const app = appStore()
 
 const table = reactive({
   editDisabled: true,
@@ -66,7 +66,7 @@ const treeList = ref<Imenu[]>([])
 
 provide(ImenuKey, menu)
 function reload() {
-  commit("user/showLoading")
+  app.showLoading()
   Amenu.list().then(res => {
     treeList.value = deepTree(res.data);
     menu.value = res.data
@@ -111,7 +111,7 @@ function expandChange(row: Imenu, expanded: boolean) {
 function onDelete(val: Imenu) {
   ElMessageBox.confirm("确定删除")
   .then(() => {
-    commit("user/btnLoading")
+    app.showBtnLoading()
     Amenu.del({urlParam: `/${val.id}`}).then(res => {
       reload()
     })

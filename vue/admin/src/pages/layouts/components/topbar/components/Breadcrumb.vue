@@ -19,11 +19,14 @@
 import { computed, ref, watch } from "vue";
 import { onBeforeRouteUpdate, useRoute } from "vue-router";
 import type { RouteRecordNormalized } from "vue-router";
-import { useStore } from "@/store";
 import _, { isEmpty } from "lodash";
+import menuStore from "@/store/menuStore";
+import userStore from "@/store/userStore";
 
 const route = useRoute();
-const { state } = useStore();
+const menu = menuStore()
+const user = userStore()
+
 const list = ref<Imenu[]>([]);
 
 watch(
@@ -46,7 +49,7 @@ watch(
       }
     };
 
-    list.value = _(state.menu.menu)
+    list.value = _(menu.menu)
       .map(deep)
       .filter(Boolean)
       .flattenDeep()
@@ -59,7 +62,7 @@ watch(
   { immediate: true }
 );
 
-const browser = computed(() => state.user.browser);
+const browser = computed(() => user.browser);
 const lastName = computed(() => {
   const data = _.last(list.value);
   if (data) {

@@ -12,6 +12,10 @@
 import { } from "vue";
 import { ElConfigProvider } from "element-plus";
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
+import appStore from "./store/appStore";
+
+const app = appStore()
+app.appLoad()
 
 const locale = zhCn;
 </script>

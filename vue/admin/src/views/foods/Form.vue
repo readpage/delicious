@@ -22,14 +22,14 @@
       </el-form-item>
     </el-form>
     <template #footer>
-      <el-button type="primary" size="small" :loading="state.user.btnLoading" @click="submit">确定</el-button>
+      <el-button type="primary" size="small" :loading="app.btnLoading" @click="submit">确定</el-button>
       <el-button size="small" @click="visible=false">取消</el-button>
     </template>
   </el-dialog>
 </template>
 
 <script setup lang="ts">
-import { useStore } from "@/store"
+import appStore from "@/store/appStore"
 import { ElMessageBox } from "element-plus"
 import { computed, mergeProps, onMounted, reactive, ref, watchEffect } from "vue"
 
@@ -41,7 +41,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {})
 
-const { state } = useStore()
+const app = appStore()
 
 const formRef = ref()
 const uploadRef = ref()

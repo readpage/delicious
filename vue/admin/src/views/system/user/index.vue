@@ -16,7 +16,7 @@
           <div class="space-x-2.5 mb-2.5">
             <Add />
           <Edit :disabled="editDisabled" type="success" icon="el-icon-edit" msg="修改" @open="open(multipleSelection[0])" />
-          <Delete :disabled="deleteDisabled" :loading="state.user.btnLoading" msg="删除" @onDelete="onDelete(multipleSelection)" />
+          <Delete :disabled="deleteDisabled" :loading="app.btnLoading" msg="删除" @onDelete="onDelete(multipleSelection)" />
           </div>
           <div>
             <el-tooltip :content="param.visible ? '隐藏搜索' : '显示搜索'" placement="top">
@@ -35,7 +35,7 @@
           @expand-change="expandChange"
           row-key="id"
           :expand-row-keys="expands"
-          v-loading="state.user.loading"
+          v-loading="app.loading"
           element-loading-text="拼命加载中"
           element-loading-spinner="el-icon-loading">
           <el-table-column type="selection" width="50"></el-table-column>
@@ -84,7 +84,7 @@
           </el-table-column>
           <el-table-column label="状态" prop="status" width="80">
             <template #default="scope">
-              <el-switch v-model="scope.row.status" :loading="state.user.btnLoading" />
+              <el-switch v-model="scope.row.status" :loading="app.btnLoading" />
             </template>
           </el-table-column>
           <el-table-column label="创建时间" prop="createTime" width="160"></el-table-column>
@@ -93,7 +93,7 @@
             <template #default="scope">
               <el-space>
                 <Edit :disabled="false" type="primary" icon="el-icon-edit" @open="open(scope.row)" />
-                <Delete :loading="state.user.btnLoading" @onDelete="onDelete([scope.row])" />
+                <Delete :loading="app.btnLoading" @onDelete="onDelete([scope.row])" />
               </el-space>
             </template>
           </el-table-column>
@@ -112,14 +112,14 @@
 
 <script setup lang="ts">
 import { Arole, Auser } from "@/api";
-import { useStore } from "@/store";
+import appStore from "@/store/appStore";
 import { IroleKey, IuserFormKey } from "@/symbols";
 import { inject, onMounted, provide, reactive, ref } from "vue"
 import Add from "./components/Add.vue";
 import Delete from "./components/Delete.vue";
 import Edit from "./components/Edit.vue";
 
-const { state, commit } = useStore()
+const app = appStore()
 const table = reactive({
   total: 0,
   pageSize: 5,
@@ -137,7 +137,7 @@ const deleteDisabled = ref(true)
 const paramRef = ref()
 
 function search() {
-  commit("user/showLoading")
+  app.showLoading()
   Auser.page({urlParam: `/${table.pageNum}/${table.pageSize}`, nickname: param.nickname}).then(res => {
     table.user = res.data.list
     table.total = res.data.total
@@ -160,7 +160,7 @@ function handleCurrentChange(val: number) {
 const roles = ref<Irole[]>()
 provide(IroleKey, roles)
 function page() {
-  commit("user/showLoading")
+  app.showLoading()
   Auser.page({urlParam: `/${table.pageNum}/${table.pageSize}`}).then(res => {
     table.user = res.data.list
     table.total = res.data.total
