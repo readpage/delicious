@@ -42,7 +42,7 @@ const lock = {
 const menu = computed(() => menuState.menu)
 
 function before () {
-  window.open('http://food.f1dao.cn')
+  window.open('http://food.undraw.cn')
 }
 function resize() {
   window.addEventListener("resize", () => {

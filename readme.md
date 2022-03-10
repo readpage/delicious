@@ -1,8 +1,8 @@
 # 操作指南
 
-​	[前台地址:https://food.f1dao.cn](https://food.f1dao.cn)
+​	[前台地址:https://food.undraw.cn](https://food.undraw.cn)
 
-​	[后台地址:http://f-admin.f1dao.cn](http://f-admin.f1dao.cn)
+​	[后台地址:https://f-admin.undraw.cn](https://f-admin.undraw.cn)
 
 1. mysql创建数据库delicious,并导入数据脚本,在sql目录下delicious.sql文件.
 

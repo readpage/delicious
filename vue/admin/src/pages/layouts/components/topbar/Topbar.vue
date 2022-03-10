@@ -40,7 +40,7 @@ const router = useRouter()
 async function onCommand(name: string) {
   switch (name) {
     case "home":
-      window.location.href = "http://food.f1dao.cn"
+      window.location.href = "http://food.undraw.cn"
       break
     case "sign":
       router.push("/sign")

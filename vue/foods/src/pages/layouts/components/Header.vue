@@ -76,7 +76,7 @@ async function onCommand(name: string) {
       router.push("/info")
       break
     case "admin":
-      window.open("http://f-admin.f1dao.cn")
+      window.open("http://f-admin.undraw.cn")
       break
     case "sign":
       router.push("/sign")

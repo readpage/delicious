@@ -37,13 +37,13 @@ export default defineStore("user", {
     setToken(val: Itoken) {
       this.token = val
       cookie.set("f1dao-token", val)
-      // cookie.set("f1dao-token", val, {domain: ".f1dao.cn"})
+      // cookie.set("f1dao-token", val, {domain: ".undraw.cn"})
     },
   
     remToken() {
       this.token = null as any
       cookie.remove("f1dao-token")
-      // cookie.remove("f1dao-token", {domain: ".f1dao.cn"})
+      // cookie.remove("f1dao-token", {domain: ".undraw.cn"})
     },
   
     setSys(val: IsysInfo) {
