@@ -59,6 +59,7 @@ export default defineConfig({
           axios: 'axios',
           pinia: 'Pinia',
           'element-plus': "ElementPlus",
+          'element-plus/dist/index.css': 'element-plus/dist/index.css',
           '@lottiefiles/lottie-player': "@lottiefiles/lottie-player"
         })
       ]
