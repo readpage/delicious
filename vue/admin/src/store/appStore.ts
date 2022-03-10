@@ -36,15 +36,13 @@ export default defineStore("app", {
       Nprogress.done()
     },
 
-    appLoad(): Promise<any> {
+    async appLoad() {
       const user = userStore()
       const menu = menuStore()
-      return new Promise(async resolve => {
-        user.setUserInfo()
-        user.sysInfo()
-        await menu.permMenu()
-        closeLoad()
-      })
+      user.setUserInfo()
+      user.sysInfo()
+      await menu.permMenu()
+      closeLoad()
     },
   }
 })
