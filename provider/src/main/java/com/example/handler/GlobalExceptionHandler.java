@@ -2,9 +2,9 @@ package com.example.handler;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import com.example.util.result.Result;
-import com.example.util.result.ResultEnum;
-import com.example.util.result.ResultUtils;
+import com.example.utils.result.Result;
+import com.example.utils.result.ResultEnum;
+import com.example.utils.result.ResultUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

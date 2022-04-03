@@ -1,8 +1,8 @@
 package com.example.controller;
 
 import com.example.service.FileService;
-import com.example.util.result.Result;
-import com.example.util.result.ResultUtils;
+import com.example.utils.result.Result;
+import com.example.utils.result.ResultUtils;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

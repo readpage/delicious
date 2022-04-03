@@ -9,7 +9,7 @@ import com.example.service.FoodsService;
 import com.example.service.OrdersFoodsService;
 import com.example.service.OrdersService;
 import com.example.service.UserService;
-import com.example.util.PageInfo;
+import com.example.utils.PageInfo;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -2,10 +2,10 @@ package com.example.aop;
 
 import com.example.entity.LogInfo;
 import com.example.service.LogInfoService;
-import com.example.util.log.BrowserInfo;
-import com.example.util.log.LogUtils;
-import com.example.util.result.Result;
-import com.example.util.result.ResultUtils;
+import com.example.utils.log.BrowserInfo;
+import com.example.utils.log.LogUtils;
+import com.example.utils.result.Result;
+import com.example.utils.result.ResultUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;

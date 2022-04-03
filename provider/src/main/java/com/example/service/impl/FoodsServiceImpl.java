@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.entity.Foods;
 import com.example.mapper.FoodsMapper;
 import com.example.service.FoodsService;
-import com.example.util.PageInfo;
+import com.example.utils.PageInfo;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

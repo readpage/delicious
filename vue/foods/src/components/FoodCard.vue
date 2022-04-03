@@ -7,7 +7,7 @@
           <span class="overlay"></span>
         </div>
         <div class="detail p-1.5 leading-4">
-          <div class="title truncate">{{data.name}}</div>
+          <div class="title truncate px-1 py-2">{{data.name}}</div>
           <div class="desc mt-1.5">
             <span class="is-price">{{data.price}}</span>
             <span class="ml-2 text-gray-400 text-xs">销售{{data.sales}}单</span>
@@ -16,15 +16,15 @@
       </div>
       <div class="px-1.5 text-sm text-gray-400">
         <span class="mr-2">
-          <v-icon name="#iconyanjing" class="mr-1"></v-icon>
+          <u-icon name="iconyanjing" class="mr-1"></u-icon>
           <span>2988</span>
         </span>
         <span class="mr-2">
-          <v-icon name="#iconpinglun" class="mr-1"></v-icon>
+          <u-icon name="iconcomment" class="mr-1"></u-icon>
           <span>18</span>
         </span>
         <span class="mr-2">
-          <v-icon name="#icondianzan" class="mr-1"></v-icon>
+          <u-icon name="icondianzan" class="mr-1"></u-icon>
           <span>18</span>
         </span>
       </div>

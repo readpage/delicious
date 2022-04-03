@@ -3,7 +3,7 @@ package com.example.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.entity.Orders;
 import com.example.entity.OrdersFoods;
-import com.example.util.PageInfo;
+import com.example.utils.PageInfo;
 
 import java.util.List;
 

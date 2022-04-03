@@ -9,7 +9,6 @@ import "./assets/index.css"
 import 'element-plus/dist/index.css'
 import "@lottiefiles/lottie-player"
 
-
 createApp(App)
   .use(ElementPlus)
   .use(router)

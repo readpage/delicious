@@ -48,6 +48,10 @@ export interface Itable {
   total: number
 }
 
+export interface tableApi {
+  reload: Function
+}
+
 interface propsApi {
   table: Itable
   loading?: boolean
@@ -83,9 +87,6 @@ reload()
 
 
 
-export interface tableApi {
-  reload: Function
-}
 defineExpose({
   reload,
 })

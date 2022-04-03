@@ -6,11 +6,14 @@ import com.example.entity.User;
 import com.example.mapper.CommentMapper;
 import com.example.mapper.UserMapper;
 import com.example.service.CommentService;
-import com.example.util.PageInfo;
+import com.example.utils.HtmlUtil;
+import com.example.utils.PageInfo;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -41,7 +44,11 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         User user = userMapper.selectByUsername(auth.getName());
         Integer uid = user != null ? user.getId() : null;
         PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(commentMapper.vLike(fId,  parentId, uid));
+        List<Comment> comments = commentMapper.vLike(fId, parentId, uid);
+        for (Comment comment : comments) {
+            comment.setReply(new PageInfo<>(commentMapper.vLike(fId, comment.getId(), uid)));
+        }
+        return new PageInfo<>(comments);
     }
 
     @Override
@@ -49,7 +56,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         User user = userMapper.selectById(comment.getUid());
         comment.setAvatar(user.getHeadImg());
         comment.setUsername(user.getNickname());
-        comment.setState(false);
+        comment.setState(true);
+        comment.setContent(HtmlUtil.filter(comment.getContent()));
+        System.out.println(comment.getContent());
         commentMapper.insert(comment);
     }
 }

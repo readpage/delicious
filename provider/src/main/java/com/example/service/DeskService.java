@@ -2,7 +2,7 @@ package com.example.service;
 
 import com.example.entity.Desk;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.util.PageInfo;
+import com.example.utils.PageInfo;
 
 /**
  * <p>

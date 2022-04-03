@@ -75,7 +75,7 @@
                     <span>好评率100%</span>
                   </div>
                   <div class="comment__content">
-                    <v-comment :fId="$route.params.id"></v-comment>
+                    <u-comment :comments="comments" @submit="submit"></u-comment>
                   </div>
                 </template>
               </el-skeleton>
@@ -129,14 +129,16 @@
 </template>
 
 <script setup lang="ts">
-import { Afood } from "@/api";
-import { computed, reactive, ref, toRefs, watch } from "vue";
+import { Acomment, Afood } from "@/api";
+import { computed, onMounted, reactive, ref, toRefs, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import Drawer from "../components/Drawer.vue";
 import type { DrawerApi } from "../components/Drawer.vue";
 import FoodCard from "@/components/FoodCard.vue"
 import appStore from "@/store/appStore";
 import { storeToRefs } from "pinia";
+import { Utoast } from "@/packages/components/toast";
+import userStore from "@/store/userStore";
 
 const app = appStore()
 const { loading } = storeToRefs(app)
@@ -157,6 +159,7 @@ watch(
   () => route.params.id,
   (val) => {
     if (val) {
+      page()
       app.showLoading()
       if (scrollbar.value) {
         scrollbar.value.setScrollTop(0);
@@ -219,6 +222,38 @@ function onSelect(val: any) {
 }
 
 const { food, foods, type } = toRefs(data);
+
+const store = userStore()
+const { userInfo } = storeToRefs(store)
+
+function submit(clear: Function, content: string, parentId: number) {
+  if (userInfo.value.id) {
+    let data = {
+      content: content,
+      fId: route.params.id,
+      uid: userInfo.value.id,
+      parentId: parentId
+    }
+    console.log(data);
+    Acomment.add(data).then(res => {
+      Utoast({message: "评论成功!", type: "info"})
+      clear()
+      page()
+    })
+  } else {
+    router.push("/sign")
+  }
+}
+
+const comments = ref([] as commentApi[])
+
+
+function page() {
+  Acomment.page({urlParam: `/1/10`, fId: route.params.id}).then(res => {
+    comments.value = res.data.list
+  })
+}
+page()
 </script>
 
 <style lang="scss">
@@ -275,14 +310,6 @@ const { food, foods, type } = toRefs(data);
             background-color: rgba(0, 0, 0, 0.3);
             padding: 0 5px;
           }
-        }
-      }
-
-      .comment {
-        margin: 10px 0;
-        .header {
-          display: flex;
-          justify-content: space-between;
         }
       }
 

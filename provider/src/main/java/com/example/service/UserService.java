@@ -2,8 +2,8 @@ package com.example.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.entity.User;
-import com.example.util.PageInfo;
-import com.example.util.result.Result;
+import com.example.utils.PageInfo;
+import com.example.utils.result.Result;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;

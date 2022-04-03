@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.entity.Desk;
 import com.example.mapper.DeskMapper;
 import com.example.service.DeskService;
-import com.example.util.PageInfo;
+import com.example.utils.PageInfo;
 import com.github.pagehelper.PageHelper;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import org.springframework.beans.factory.annotation.Autowired;

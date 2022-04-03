@@ -1,6 +1,7 @@
 package com.example.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.example.utils.PageInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -57,6 +58,8 @@ public class Comment implements Serializable {
     @Version
     private Integer version;
 
+    @TableField(exist = false)
+    private PageInfo<Comment> reply;
 
     public Integer getId() {
         return id;
@@ -146,6 +149,14 @@ public class Comment implements Serializable {
         this.version = version;
     }
 
+    public PageInfo<Comment> getReply() {
+        return reply;
+    }
+
+    public void setReply(PageInfo<Comment> reply) {
+        this.reply = reply;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
@@ -160,6 +171,7 @@ public class Comment implements Serializable {
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 ", version=" + version +
+                ", reply=" + reply +
                 '}';
     }
 }

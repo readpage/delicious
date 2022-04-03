@@ -3,9 +3,9 @@ package com.example.controller;
 
 import com.example.entity.Foods;
 import com.example.service.FoodsService;
-import com.example.util.PageInfo;
-import com.example.util.result.Result;
-import com.example.util.result.ResultUtils;
+import com.example.utils.PageInfo;
+import com.example.utils.result.Result;
+import com.example.utils.result.ResultUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

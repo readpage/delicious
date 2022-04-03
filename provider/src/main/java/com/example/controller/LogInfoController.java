@@ -3,9 +3,9 @@ package com.example.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.service.LogInfoService;
-import com.example.util.result.Result;
-import com.example.util.result.ResultEnum;
-import com.example.util.result.ResultUtils;
+import com.example.utils.result.Result;
+import com.example.utils.result.ResultEnum;
+import com.example.utils.result.ResultUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

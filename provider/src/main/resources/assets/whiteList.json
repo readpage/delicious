@@ -1,0 +1,82 @@
+{
+  "addTags": [
+    "p",
+    "strong",
+    "em",
+    "u",
+    "s",
+    "blockquote",
+    "pre",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "br",
+    "ol",
+    "li",
+    "ul",
+    "sub",
+    "sup",
+    "span",
+    "iframe",
+    "a",
+    "img"
+  ],
+  "addAttributes": [
+    {
+      "tag": ":all",
+      "attributes": [
+        "class",
+        "id",
+        "src",
+        "style"
+      ]
+    },
+    {
+      "tag": "pre",
+      "attributes": [
+        "spellcheck"
+      ]
+    },
+    {
+      "tag": "iframe",
+      "attributes": [
+        "frameborder",
+        "allowfullscreen",
+        "src"
+      ]
+    },
+    {
+      "tag": "a",
+      "attributes": [
+        "rel",
+        "target"
+      ]
+    },
+    {
+      "tag": "img",
+      "attributes": [
+        "align",
+        "alt",
+        "height",
+        "src",
+        "title",
+        "width"
+      ]
+    }
+  ],
+  "addProtocols": [
+    {
+      "tag": "xx",
+      "attribute": "src",
+      "protocols": [
+        "src",
+        "http",
+        "https",
+        "data"
+      ]
+    }
+  ]
+}

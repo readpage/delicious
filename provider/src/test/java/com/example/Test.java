@@ -1,6 +1,6 @@
 package com.example;
 
-import com.example.util.system.SysUtil;
+import com.example.utils.system.SysUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

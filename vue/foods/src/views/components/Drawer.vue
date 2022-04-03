@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { Vtoast } from "@/modules/toast";
+import { Utoast } from "@/packages/components/toast";
 import cartStore from "@/store/cartStore";
 import { ElMessage } from "element-plus";
 import { ref, reactive, computed } from "vue"
@@ -78,7 +78,7 @@ const emit = defineEmits(["onSelect"])
 
 function setCart() {
   cart.addCart(props.food)
-  Vtoast({message: "添加购物车成功"})
+  Utoast({message: "添加购物车成功"})
   drawer.value = false
 }
 

@@ -28,15 +28,15 @@
       </div>
       <div class="px-1.5 mt-1.5 text-sm text-gray-400">
         <span class="mr-2">
-          <v-icon name="#iconyanjing" class="mr-1"></v-icon>
+          <u-icon name="iconyanjing" class="mr-1"></u-icon>
           <span>2988</span>
         </span>
         <span class="mr-2">
-          <v-icon name="#iconpinglun" class="mr-1"></v-icon>
+          <u-icon name="iconcomment" class="mr-1"></u-icon>
           <span>18</span>
         </span>
         <span class="mr-2">
-          <v-icon name="#icondianzan" class="mr-1"></v-icon>
+          <u-icon name="icondianzan" class="mr-1"></u-icon>
           <span>18</span>
         </span>
       </div>
