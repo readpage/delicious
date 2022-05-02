@@ -1,6 +1,7 @@
 package com.example.controller;
 
 
+import com.example.entity.Role;
 import com.example.entity.User;
 import com.example.entity.UserRole;
 import com.example.service.UserRoleService;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -46,6 +48,22 @@ public class UserController {
     @PostMapping("/save")
     public Result<Object> save(@RequestBody User user) {
         try {
+            userService.mySave(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtils.save(false);
+        }
+        return ResultUtils.save(true);
+    }
+
+    @ApiOperation(value = "注册账户", notes = "请求实列还需要添加password(密码)字段" )
+    @ApiOperationSupport(includeParameters = {"user.username", "user.password"})
+    @PostMapping("/register")
+    public Result<Object> register(@RequestBody User user) {
+        try {
+            user.setNickname(user.getUsername());
+            user.setStatus(true);
+            user.setRoles(Arrays.asList(new Role(3)));
             userService.mySave(user);
         } catch (Exception e) {
             e.printStackTrace();

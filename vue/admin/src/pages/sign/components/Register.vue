@@ -118,7 +118,7 @@ const rules = reactive({
 function register() {
   ruleFormRef.value.validate((valid: any) => {
     if (valid) {
-      Auser.add(ruleForm).then(res => {
+      Auser.register(ruleForm).then(res => {
         window.location.href = "/sign"
       })
     }

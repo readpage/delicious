@@ -42,6 +42,13 @@ public class Role implements Serializable {
     @Version
     private Integer version;
 
+    public Role() {
+        super();
+    }
+
+    public Role(Integer id) {
+        this.id = id;
+    }
 
     public Integer getId() {
         return id;

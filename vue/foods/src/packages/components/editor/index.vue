@@ -43,7 +43,7 @@ const emit = defineEmits<{
 }>()
 
 
-const unwatch = watch(() => props.modelValue, val => {
+watch(() => props.modelValue, val => {
   if (!isLocked.value) text.value = val
 })
 
@@ -109,10 +109,6 @@ onMounted(() => {
       el.innerHTML = ''
     }
   })
-})
-
-onUnmounted(() => {
-  unwatch()
 })
 
 defineExpose({

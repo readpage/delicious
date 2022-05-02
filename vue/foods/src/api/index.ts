@@ -14,6 +14,7 @@ const Afood = {
 const Auser = {
   info: apiAxios<Iuser>("/user/info"),
   add: apiAxios("/user/save", "post"),
+  register: apiAxios('/user/register', 'post'),
   isUser: apiAxios("/user/selectIsUser"),
   auto: apiAxios("/user/auto")
 }

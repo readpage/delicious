@@ -57,7 +57,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         comment.setAvatar(user.getHeadImg());
         comment.setUsername(user.getNickname());
         comment.setState(true);
+        System.out.println(comment.getContent());
         comment.setContent(HtmlUtil.filter(comment.getContent()));
+        System.out.println(comment.getContent());
         System.out.println(comment.getContent());
         commentMapper.insert(comment);
     }

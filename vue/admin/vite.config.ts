@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import path from "path"
 import viteCompression from 'vite-plugin-compression'
 import externalGlobals from "rollup-plugin-external-globals"
+import DefineOptions from 'unplugin-vue-define-options/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -15,6 +16,7 @@ export default defineConfig({
         }
       }
     }), 
+    DefineOptions(),
     viteCompression(),
   ],
   resolve: {

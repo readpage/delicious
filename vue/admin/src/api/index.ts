@@ -20,6 +20,7 @@ const Auser = {
  page: apiAxios("/user/page"),
  info: apiAxios("/user/info"),
  add: apiAxios("/user/save", "post"),
+ register: apiAxios('/user/register', 'post'),
  update: apiAxios("/user/update", "put"),
  isUser: apiAxios("/user/selectIsUser"),
  del: apiAxios("/user/removeByIds", "delete"),

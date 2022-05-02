@@ -1,9 +1,7 @@
 <template>
   <el-config-provider :locale="locale">
     <router-view v-slot="{ Component }">
-      <keep-alive max="10">
-        <component :is="Component" />
-      </keep-alive>
+      <component :is="Component" />
     </router-view>
   </el-config-provider>
 </template>
@@ -13,6 +11,7 @@ import { } from "vue";
 import { ElConfigProvider } from "element-plus";
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
 import appStore from "./store/appStore";
+
 
 const app = appStore()
 app.appLoad()

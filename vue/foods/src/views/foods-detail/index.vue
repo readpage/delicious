@@ -127,7 +127,6 @@
     <Drawer :type="type" :food="food" ref="drawerRef" @onSelect="onSelect" />
   </div>
 </template>
-
 <script setup lang="ts">
 import { Acomment, Afood } from "@/api";
 import { computed, onMounted, reactive, ref, toRefs, watch } from "vue";
@@ -235,6 +234,7 @@ function submit(clear: Function, content: string, parentId: number) {
       parentId: parentId
     }
     console.log(data);
+    
     Acomment.add(data).then(res => {
       Utoast({message: "评论成功!", type: "info"})
       clear()

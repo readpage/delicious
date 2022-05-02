@@ -109,12 +109,11 @@
     </el-scrollbar>
   </div>
 </template>
-
 <script setup lang="ts">
 import { Arole, Auser } from "@/api";
 import appStore from "@/store/appStore";
 import { IroleKey, IuserFormKey } from "@/symbols";
-import { inject, onMounted, provide, reactive, ref } from "vue"
+import { defineComponent, inject, onMounted, provide, reactive, ref } from "vue"
 import Add from "./components/Add.vue";
 import Delete from "./components/Delete.vue";
 import Edit from "./components/Edit.vue";
