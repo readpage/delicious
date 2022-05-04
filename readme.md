@@ -3,7 +3,13 @@
 ​	[前台地址:https://food.undraw.cn](https://food.undraw.cn)
 
 ​	[后台地址:https://f-admin.undraw.cn](https://f-admin.undraw.cn)
-体验账户: 用户名:user, 密码:user
+账户:
+
+&emsp;&emsp;普通用户: 用户名: user, 密码: user
+
+&emsp;&emsp;管理员: 用户名: root, 密码: root
+
+
 
 1. mysql创建数据库delicious,并导入数据脚本,在sql目录下delicious.sql文件.
 
@@ -26,3 +32,4 @@
 
 - 账户:root, 密码: root
   
+
