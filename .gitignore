@@ -5,4 +5,5 @@ target/
 out/
 deploy/
 static/
+!vue/**/static/
 *.zip
