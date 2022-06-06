@@ -32,5 +32,9 @@
 6. 登录
 
 - 账户:root, 密码: root
-  
+
+
+## 开发交流
+
+QQ群:[undraw(682265529)](https://jq.qq.com/?_wv=1027&k=NsgARkfw)
 
