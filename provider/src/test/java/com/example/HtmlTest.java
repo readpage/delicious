@@ -1,7 +1,6 @@
 package com.example;
 
 import com.example.utils.HtmlUtils;
-import com.example.utils.SensitiveUtil;
 import org.junit.Test;
 
 import java.io.*;
@@ -35,8 +34,7 @@ public class HtmlTest {
 
     @Test
     public void test3() {
-        System.out.println(HtmlUtils.filter("abcdefghijklmnopqrstuvwxyz`"));
-        System.out.println(SensitiveUtil.xor("a"));
+        System.out.println(HtmlUtils.filter("abcde色情fghijklmnopqrstuvwxyz`"));
         System.out.println(xor("abcdefghijklmnopqrstuvwxyz"));
     }
 
