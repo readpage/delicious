@@ -40,16 +40,30 @@ public class SensitiveUtil {
     static {
         try (
                 InputStream is = new ClassPathResource(SENSITIVE_WORD).getInputStream();
+                // 提前判断对象是否为空，如果对象为空的话，提前抛出异常。而不是走到调用对象的具体方法的时候抛异常
                 BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(is)))
         ) {
             String keyword;
             while ((keyword = reader.readLine()) != null) {
                 // 添加到前缀树
-                addKeyword(keyword);
+                addKeyword(xor(keyword));
             }
         } catch (Exception e) {
             log.warn("加载敏感词文件失败: " + e.getMessage());
         }
+    }
+
+    /**
+     * 异或加密
+     * @param s
+     * @return
+     */
+    public static String xor(String s) {
+        char[] chars = s.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            chars[i] = (char) (chars[i] ^ 2);
+        }
+        return new String(chars);
     }
 
     public static boolean isBlank(String str) {

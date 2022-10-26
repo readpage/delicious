@@ -13,7 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class HtmlUtil {
+public class HtmlUtils {
 
     private static final ClassPathResource WHITE_LIST = new ClassPathResource("/assets/whiteList.json");
 

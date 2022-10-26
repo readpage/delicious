@@ -36,9 +36,9 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 
-# 配置日志
 mybatis-plus:
   configuration:
+    # 配置日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     # 开启驼峰命名
     map-underscore-to-camel-case: true

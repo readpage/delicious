@@ -37,6 +37,7 @@ public class User implements Serializable, UserDetails {
     @ApiModelProperty(value = "昵称")
     private String nickname;
 
+    // 返回字段为null
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ApiModelProperty(value = "密码")
     private String password;

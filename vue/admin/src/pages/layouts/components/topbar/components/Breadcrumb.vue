@@ -24,10 +24,24 @@ import menuStore from "@/store/menuStore";
 import userStore from "@/store/userStore";
 
 const route = useRoute();
-const menu = menuStore()
-const user = userStore()
+const menu = menuStore();
+const user = userStore();
 
 const list = ref<Imenu[]>([]);
+
+/**
+ * b = a.filter(Boolean) 等价与 b = a.filter(function (x) { return Boolean(x); })
+ *
+ * 
+ * Boolean(0) // false
+ * Boolean(true) // true
+ * Boolean(1) // true
+ * Boolean("") // false
+ * Boolean("false") // true. "false"是一个非空字符串
+ * Boolean([])      // true
+ * 
+ */
+
 
 watch(
   route,
@@ -49,11 +63,7 @@ watch(
       }
     };
 
-    list.value = _(menu.menu)
-      .map(deep)
-      .filter(Boolean)
-      .flattenDeep()
-      .value();
+    list.value = _(menu.menu).map(deep).filter(Boolean).flattenDeep().value();
 
     if (isEmpty(list.value)) {
       list.value.push(val);

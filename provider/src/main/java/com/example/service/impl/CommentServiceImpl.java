@@ -6,7 +6,7 @@ import com.example.entity.User;
 import com.example.mapper.CommentMapper;
 import com.example.mapper.UserMapper;
 import com.example.service.CommentService;
-import com.example.utils.HtmlUtil;
+import com.example.utils.HtmlUtils;
 import com.example.utils.PageInfo;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +58,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         comment.setUsername(user.getNickname());
         comment.setState(true);
         System.out.println(comment.getContent());
-        comment.setContent(HtmlUtil.filter(comment.getContent()));
+        comment.setContent(HtmlUtils.filter(comment.getContent()));
         System.out.println(comment.getContent());
         System.out.println(comment.getContent());
         commentMapper.insert(comment);
